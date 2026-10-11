@@ -1,5 +1,5 @@
-# Enterprise Knowledge Loop
-## Concept & Composition v1
+# enterprise-knowledge-loop
+## Enterprise Knowledge Loop — Concept & Composition v1
 
 > **Git 1차 공개용 컨셉서**
 >
@@ -8,6 +8,29 @@
 
 ---
 
+## Repository Navigation
+
+이 문서는 Git 저장소 **`enterprise-knowledge-loop`**의 1차 공개용 컨셉서다.
+
+- Repository root: `enterprise-knowledge-loop/`
+- README: [`../README.md`](../README.md)
+- Concept Markdown: `docs/Enterprise_Knowledge_Loop_Concept_and_Composition_v1.md`
+- Concept DOCX: [`./Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx`](./Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx)
+- UI Prototype: [`../prototype/enterprise-knowledge-loop-prototype.html`](../prototype/enterprise-knowledge-loop-prototype.html)
+
+권장 저장 구조:
+
+```text
+enterprise-knowledge-loop/
+├─ README.md
+├─ docs/
+│  ├─ Enterprise_Knowledge_Loop_Concept_and_Composition_v1.md
+│  └─ Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx
+└─ prototype/
+   └─ enterprise-knowledge-loop-prototype.html
+```
+
+---
 ## 1. 프로젝트 한 줄 정의
 
 **Enterprise Knowledge Loop는 사내 문서와 VOC 처리 경험을 사람이 검증한 기업 지식으로 전환하고, 사용자의 현재 권한 범위 안에서 AI가 안전하게 검색·추천·답변하며, 그 결과가 다시 새로운 지식으로 이어지는 엔터프라이즈 지식 순환 플랫폼이다.**
@@ -499,7 +522,32 @@ flowchart TB
 
 ---
 
-## 17. 프로젝트 메시지
+## 17. 이번 Git 1차 공개에서 의도적으로 제외하는 내용
+
+이 문서는 **컨셉서 + 구성안**이다.
+
+다음 내용은 구현 설계 문서에서 별도로 관리하며, 이번 공개본에는 포함하지 않는다.
+
+- DB 스키마
+- 테이블/컬럼 정의
+- ER 모델 / ERD
+- 상세 관계 모델
+- 정확한 ACL 저장 구조
+- ACE/Policy 내부 필드
+- 상태 전이 테이블
+- 상세 API Endpoint / Request / Response
+- 이벤트/Outbox 상세 Schema
+- 검색 인덱스 내부 Schema
+- Airflow DAG 상세 설계
+- 클래스/패키지 구조
+- 상세 Sequence Diagram
+- 마이그레이션 설계
+
+목적은 Git 첫 공개에서 **"무엇을 만들고 왜 만드는지, 어떻게 구성할 것인지"**를 이해할 수 있게 하는 것이다.
+
+---
+
+## 18. 프로젝트 메시지
 
 > **기업 문서를 AI로 검색하는 데서 끝나지 않고, 업무 과정에서 새롭게 생긴 판단과 처리 결과까지 사람이 검증한 지식으로 만들고 다시 업무에 활용한다.**
 >
