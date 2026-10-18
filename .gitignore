@@ -38,7 +38,9 @@ desktop.ini
 /architecture/er/
 /deliverables/build/img/er-*.png
 
-# 기획서와 빌드 스크립트: 포트폴리오 자료에만 포함 (build/는 기획서 전용)
+# 기획서 빌드 폴더: 기획서 md → docx·pdf 빌드 전용
+/deliverables/build/
+# 기획서: 포트폴리오 자료에만 포함
 /deliverables/
 
 # 내부 검토·작업 기록: 저장소에 올리지 않음
