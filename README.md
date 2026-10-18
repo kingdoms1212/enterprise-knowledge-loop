@@ -6,6 +6,9 @@
 사람이 검증한 기업 지식으로 전환하고, 사용자의 권한 범위 안에서 AI가 안전하게 검색·활용하도록 하는
 Enterprise AI Knowledge Platform 프로젝트입니다.
 
+사내 문서에 바로 묻는 **문서 LLM**과 **VOC RAG 파이프라인**을 하나의 로컬 RAG·LLM 기반 위에 구축하고,
+기업의 권한(ACL)을 검색과 AI 답변까지 그대로 적용합니다. 권한이 바뀌면 재색인 없이 다음 질문부터 반영됩니다.
+
 단순 문서 RAG나 VOC 분석 대시보드를 목표로 하지 않습니다.
 
 **Document / VOC → AI Assist → Human Decision → Outcome → Knowledge → ACL-aware RAG → Reuse**
@@ -16,7 +19,7 @@ Enterprise AI Knowledge Platform 프로젝트입니다.
 
 현재 단계는 **Concept & Composition / UI Prototype**입니다.
 
-Git 1차 공개에서는 프로젝트의 문제 정의, 핵심 업무 흐름, 시스템 구성, 보안 원칙, MVP 및 포트폴리오 시연 범위를 공개합니다.
+이 저장소에서는 프로젝트의 문제 정의, 핵심 업무 흐름, 시스템 구성, 보안 원칙, MVP 및 포트폴리오 시연 범위를 공개합니다.
 
 DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인 상세 모델링은 개발 단계에서 별도 문서로 관리할 예정입니다.
 
@@ -30,7 +33,7 @@ DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인
 ## Core Concept
 
 - Human-Verified Knowledge
-- Enterprise RAG
+- Enterprise RAG (Document Q&A + VOC RAG)
 - VOC / Case Workflow
 - Human-in-the-loop AI
 - ACL-aware Retrieval
@@ -38,6 +41,8 @@ DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인
 - Department Collaboration
 - Local / Private AI
 - Knowledge Reuse & Feedback
+- Evaluation Gate & Rollback
+- Folder-based Document Permission
 
 ## Repository Structure
 
@@ -56,23 +61,36 @@ enterprise-knowledge-loop/
 | `design/` | 시안 원본 (prototype.html과 CSS·JS, 로고) |
 | `architecture/` | 시스템 구성도(svg)와 생성 스크립트 |
 
-권한 판단은 모두 Core(Spring) 서버가 합니다. 권한이 바뀌면 재색인 없이 다음 질문부터 반영합니다.
 시안의 데이터와 권한 동작은 모두 가상이며, 실제 권한 검증은 아래 Security Direction 원칙을 따라 서버에서 수행합니다.
+
+## Tech Direction
+
+| 영역 | 방향 |
+|---|---|
+| 업무 Core | Java / Spring (Modular Monolith). 권한 판단과 검색 실행을 맡음 |
+| AI Service | Python / FastAPI, 내부 전용 (파싱·정제·임베딩·Reranker·생성) |
+| 데이터·검색 | PostgreSQL 하나에 업무 원장 + pgvector 벡터 검색 + FTS 키워드 검색 (Hybrid, RRF, Reranker) |
+| 파이프라인·평가 | outbox 실시간 처리 + Airflow 배치, 고정 평가셋·평가 관문·롤백, MLflow 로컬 기록 |
+| AI 모델 | 로컬 생성 모델 + 로컬 임베딩 + 로컬 Reranker (외부 AI API 미사용) |
+| 웹 | React / TypeScript |
 
 ## Prototype Scope
 
 현재 프로토타입에서는 다음 흐름을 시연합니다.
 
-1. VOC 운영 반입 또는 내부 테스트 접수
-2. 개인정보 정제와 AI 분석
-3. AI의 유형·긴급도·메인 부서·처리 경로 제안
-4. 사람의 확정과 Case 생성
-5. 메인 부서 / 관련 부서 협업
-6. 권한 범위 내 관련 문서·Knowledge 활용
-7. Human Decision / Action / Outcome 검증
-8. Knowledge Draft / Review / Approval / Publish
-9. ACL-aware RAG 검색
-10. 다음 유사 VOC에서 Knowledge 재사용
+1. 문서함에 문서 등록과 게시 (폴더 권한 상속)
+2. 게시 문서 질의응답과 권한 변경 직후 답변 변화
+3. VOC 운영 반입 또는 내부 테스트 접수
+4. 개인정보 정제와 AI 분석
+5. AI의 유형·긴급도·메인 부서·처리 경로 제안 (바로 종결 / 일반 처리 / 지식화)
+6. 사람의 확정과 Case 생성
+7. 메인 부서 / 관련 부서 협업
+8. 권한 범위 내 관련 문서·Knowledge 활용
+9. Human Decision / Action / Outcome 검증
+10. Knowledge 초안 → 공식 근거·배포 대상 선택 → 승인하고 게시
+11. 색인 준비 후 부서 지식함 자동 전달
+12. ACL-aware RAG 검색과 다음 유사 VOC에서 Knowledge 재사용
+13. 평가 관문·롤백과 피드백 검토
 
 ## Security Direction
 
@@ -82,9 +100,13 @@ Enterprise 환경을 전제로 다음 원칙을 적용합니다.
 - Role / Department / Customer / Project / Security Level 기반 접근 제어
 - Resource별 ACL
 - Retrieval 이전 권한 사전 필터
+- 권한 변경은 재색인 없이 다음 질문부터 반영
+- 권한 판단은 업무 Core 서버가 수행 (AI 서비스와 DB는 판단하지 않음)
+- 폴더 → 하위 폴더·문서 권한 상속, 사유가 있는 객체 예외, 넓히는 변경의 별도 승인
 - Raw VOC와 정제 Knowledge의 권한 분리
 - 관련 부서 협업과 문서 권한 확대의 분리
-- 권한 없는 Source/Chunk의 AI Context 유입 차단
+- 권한 없는 Source/Chunk의 AI Context 유입 차단 (제목·ID·건수도 비노출)
+- 지식 제출자와 승인자 분리
 - 접근·변경·승인 이력 추적
 
 ## Project Message
