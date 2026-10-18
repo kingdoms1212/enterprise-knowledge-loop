@@ -6,11 +6,11 @@
 # 이전 버전 보관용 (git 이력으로 대체)
 /backup/
 
-# 기획서 빌드 산출물: deliverables/build/build.py로 .md에서 다시 만듦
-/deliverables/*.docx
-/deliverables/*.pdf
+# 기획서 빌드 산출물: plan/build/build.py로 .md에서 다시 만듦
+/plan/*.docx
+/plan/*.pdf
 # ER 그림 사본: architecture/er/*.py로 다시 만듦
-/deliverables/ER-*.png
+/plan/ER-*.png
 
 # 그림 생성 결과: architecture.gen.py, er_*.py로 다시 만듦 (svg는 보기용으로 유지)
 /architecture/architecture.png
@@ -36,11 +36,13 @@ desktop.ini
 # DB 스키마·ER 모델: 기능 설계 확정 전까지 저장소에 올리지 않음 (포트폴리오 자료에만 포함)
 /db/
 /architecture/er/
-/deliverables/build/img/er-*.png
+/plan/build/img/er-*.png
 
 # 기획서 빌드 폴더: 기획서 md → docx·pdf 빌드 전용
-/deliverables/build/
+/plan/build/
 # 기획서: 포트폴리오 자료에만 포함
+/plan/
+# 옛 기획서 폴더 이름
 /deliverables/
 
 # 내부 검토·작업 기록: 저장소에 올리지 않음
