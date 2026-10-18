@@ -24,7 +24,8 @@ DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인
 
 - [Concept & Composition — Markdown](./docs/Enterprise_Knowledge_Loop_Concept_and_Composition_v1.md)
 - [Concept & Composition — DOCX](./docs/Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx)
-- [UI Prototype](./prototype/enterprise-knowledge-loop-prototype.html)
+- [UI Prototype (디자인 시안, 단일 HTML)](./prototype/enterprise-knowledge-loop-prototype.html)
+- [Architecture](./architecture/)
 
 ## Core Concept
 
@@ -43,12 +44,20 @@ DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인
 ```text
 enterprise-knowledge-loop/
 ├─ README.md
-├─ docs/
-│  ├─ Enterprise_Knowledge_Loop_Concept_and_Composition_v1.md
-│  └─ Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx
-└─ prototype/
-   └─ enterprise-knowledge-loop-prototype.html
+├─ docs/            # Concept & Composition 문서 (md, docx)
+├─ prototype/       # UI 프로토타입 (단일 HTML, 브라우저에서 바로 열림)
+├─ design/          # 시안 원본 (prototype.html, CSS·JS, 로고, portfolio-review)
+└─ architecture/    # 시스템 구성도와 생성 스크립트
 ```
+
+| 위치 | 내용 |
+|---|---|
+| `prototype/enterprise-knowledge-loop-prototype.html` | 디자인 시안 (파일 하나, 브라우저에서 바로 열림) |
+| `design/` | 시안 원본 (prototype.html과 CSS·JS, 로고) |
+| `architecture/` | 시스템 구성도(svg)와 생성 스크립트 |
+
+권한 판단은 모두 Core(Spring) 서버가 합니다. 권한이 바뀌면 재색인 없이 다음 질문부터 반영합니다.
+시안의 데이터와 권한 동작은 모두 가상이며, 실제 권한 검증은 아래 Security Direction 원칙을 따라 서버에서 수행합니다.
 
 ## Prototype Scope
 

@@ -1,0 +1,482 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2858" width="1600" height="2858" font-family="Noto Sans KR, sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTphMTI2NTIyNy0zZGFkLTQyYjEtODUyMC0yODQwNzNlODY3MjQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaNJs4Ed5i+Hy/ObvTrUwZ0AAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpkM2ZlNzRmOS0zMzk2LTQ5MTctODExOS1kNjEwODljYjcwMTlscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoLVaRFfrqry/AVWueIKpV4wAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggkNpYRxNxyDcMw7cdZLqbJ2J8ETGoLgIL8ruf26yQE5ykZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaHBJuyVUKQOoZP75U8Pmwg0AAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCC7sQR9RINJU4CEvP/uxu/zkueqOPKwKDppDibfifPshGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjBZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmExMjY1MjI3LTNkYWQtNDJiMS04NTIwLTI4NDA3M2U4NjcyNC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjkwMGJkMDM1LWY0ZGUtNDBjMi04ZGZmLTJmYzFjMTA5ZDk4MXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCCQ2lhHE3HINwzDtx1kupsnYnwRMaguAgvyu5/brJATnKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggSr63v+S7D3Fg/SKVNMc4YwVPYKivfsV1uu12gyLRxlOiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggD02YfcSagtQjK0YJNZwdYsGaCfSFUtyIZplX3PpiVLN0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQIHO9nCw3i+sC9tOVoe69qT9SqeixIPsP3GGNtsGjy9B2R1kuause+GsqHZV0BIX8GH8XhTovEbHhEalD8awdCc=</c2pa:manifest></metadata>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker></defs>
+<rect width="1600" height="2858" fill="#ffffff"/>
+<text x="40" y="56" font-size="28" font-weight="700" fill="#1f2328" text-anchor="start">Enterprise Knowledge Loop · 전체 아키텍처</text>
+<text x="40" y="88" font-size="15" font-weight="400" fill="#57606a" text-anchor="start">기획서 v1.5 · 시안 v2.1 기준 (2026-10-07) · 개발·MVP 검증은 단일 노드, 운영은 N중화(하단 배포 구성) · 모든 AI 연산 내부 실행 · 업무 원장은 Spring Core만 소유</text>
+<rect x="40" y="106" width="18" height="18" rx="4" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="66" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">업무 Core</text>
+<rect x="182.39999999999998" y="106" width="18" height="18" rx="4" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="208.39999999999998" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">v1.5 추가·변경</text>
+<rect x="364.4" y="106" width="18" height="18" rx="4" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="390.4" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">AI 서비스</text>
+<rect x="493.59999999999997" y="106" width="18" height="18" rx="4" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="519.5999999999999" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">저장소·색인</text>
+<rect x="622.8" y="106" width="18" height="18" rx="4" fill="#eaf6ee" stroke="#2e7d4f" stroke-width="1.5"/>
+<text x="648.8" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">로컬 모델</text>
+<rect x="738.8" y="106" width="18" height="18" rx="4" fill="#e9f6f6" stroke="#0f766e" stroke-width="1.5"/>
+<text x="764.8" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">사내 연동 시스템</text>
+<rect x="907.5999999999999" y="106" width="18" height="18" rx="4" fill="#f6f8fa" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="933.5999999999999" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">고도화(인터페이스만)</text>
+<rect x="1102.8" y="106" width="18" height="18" rx="4" fill="#fdecec" stroke="#c62828" stroke-width="1.5"/>
+<text x="1128.8" y="120" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">사용 안 함</text>
+<rect x="340" y="145" width="1230" height="1050" rx="14" fill="none" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="360" y="170" font-size="13.5" font-weight="700" fill="#57606a" text-anchor="start">사내망 경계 · 외부 반출 없음</text>
+<rect x="40" y="185" width="270" height="300" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="56" y="213" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">사내 사용자</text>
+<text x="56" y="237" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">담당자(AGENT) · 의견 작성자</text>
+<text x="56" y="259" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">검토·승인자(APPROVER)</text>
+<text x="56" y="281" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">원본 소유 측 · 정책 담당</text>
+<text x="56" y="303" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">지식 관리자 · 운영 ADMIN</text>
+<text x="56" y="325" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">타 부서 VIEWER(수신 부서)</text>
+<text x="56" y="347" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">본직/겸직 소속 전환</text>
+<text x="56" y="369" font-size="13" font-weight="400" fill="#57606a" text-anchor="start"></text>
+<text x="56" y="391" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">입력: VOC·내부 의견(수동·CSV)</text>
+<text x="56" y="413" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">사내 문서 PDF·DOCX·TXT</text>
+<text x="56" y="435" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">역할만으로 권한 우회 불가</text>
+<rect x="40" y="505" width="270" height="165" rx="10" fill="#e9f6f6" stroke="#0f766e" stroke-width="1.5"/>
+<text x="56" y="533" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">사내 연동 시스템</text>
+<text x="56" y="557" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">인사·조직 원천</text>
+<text x="56" y="579" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">  초기 Dummy/CSV → 인사 API</text>
+<text x="56" y="601" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">사내 IdP</text>
+<text x="56" y="623" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">  사번 로그인 → OIDC/SAML</text>
+<text x="56" y="645" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">staging → 검증 → diff → 적용</text>
+<rect x="40" y="690" width="270" height="200" rx="10" fill="#f6f8fa" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="56" y="718" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">메일 · 메신저 (고도화)</text>
+<text x="56" y="742" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">부서 간 업무 스레드 자산화</text>
+<text x="56" y="764" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">EmlFileConnector(수동 반입)</text>
+<text x="56" y="786" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">ImapConnector · 메신저 채널</text>
+<text x="56" y="808" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">opt-in 채널만, 개인함 임의 열람 X</text>
+<text x="56" y="830" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">이번 범위: 인터페이스만 정의</text>
+<text x="56" y="852" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">구현 착수 조건: 기획서 8.2</text>
+<rect x="40" y="1040" width="270" height="125" rx="10" fill="#fdecec" stroke="#c62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="56" y="1068" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">외부 AI · 클라우드</text>
+<text x="56" y="1092" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">외부 LLM·임베딩 API</text>
+<text x="56" y="1114" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">클라우드 모델·인터넷 검색</text>
+<text x="56" y="1136" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">외부 fallback 없음</text>
+<path d="M314,1092 L334,1112 M334,1092 L314,1112" stroke="#c62828" stroke-width="3"/>
+<rect x="360" y="190" width="770" height="120" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="376" y="218" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">React / TypeScript 웹 · 12개 화면 (시안 v2.1)</text>
+<text x="376" y="242" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">순환·업무: 지식 순환 현황 · 접수된 VOC · 부서 협업·해결</text>
+<text x="376" y="264" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">지식: 지식화 검토 · 부서 지식함(배포 현황·직접 지정) · 통합 검색 · 지식·문서 자산</text>
+<text x="376" y="286" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">운영: 배포 현황 대시보드 · 수집·처리 흐름 · 조직·사용자 연동 · 권한·감사 · 품질·운영</text>
+<rect x="1160" y="190" width="390" height="120" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="1176" y="218" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">내부 HTTPS Reverse Proxy</text>
+<text x="1176" y="242" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">TLS · HttpOnly 세션 쿠키 · CSRF</text>
+<text x="1176" y="264" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">AI·DB·모델 포트는 노출하지 않음</text>
+<path d="M310,250 L358,250" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1130,250 L1158,250" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1355,310 L1355,338" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<rect x="360" y="340" width="1010" height="420" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="2"/>
+<text x="376" y="368" font-size="18" font-weight="700" fill="#1f2328" text-anchor="start">Spring Core · Modular Monolith</text>
+<text x="376" y="392" font-size="13.5" font-weight="400" fill="#57606a" text-anchor="start">Java 21 · /api/v1 · 업무 원장 단일 소유 · Flyway V1~V8 · 낙관적 잠금 · Idempotency-Key</text>
+<rect x="380" y="410" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="396" y="438" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Identity · Organization</text>
+<text x="396" y="461" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">사번 로그인 · 인증 어댑터</text>
+<text x="396" y="482" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">조직·발령 동기화 · 겸직</text>
+<rect x="625" y="410" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="641" y="438" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Permission · AuthzGate</text>
+<text x="641" y="461" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">RBAC·ABAC·ACL 중앙 판정</text>
+<text x="641" y="482" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">정책 승인 · 검색 자격</text>
+<rect x="870" y="410" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="886" y="438" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Intake (Document/Voice)</text>
+<text x="886" y="461" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">원본 · 정제 · 출처 계보</text>
+<text x="886" y="482" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">권한 기반 수집 · 격리</text>
+<rect x="1115" y="410" width="237" height="105" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1131" y="438" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Triage</text>
+<rect x="1304" y="420" width="38" height="20" rx="10" fill="#e8590c"/>
+<text x="1323.0" y="434" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">신규</text>
+<text x="1131" y="461" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">처리 경로 3갈래 확정</text>
+<text x="1131" y="482" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">지식화 후보 자동 감지</text>
+<rect x="380" y="525" width="237" height="105" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="396" y="553" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Casework</text>
+<rect x="569" y="535" width="38" height="20" rx="10" fill="#e8590c"/>
+<text x="588.0" y="549" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">변경</text>
+<text x="396" y="576" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">결정·의견 반영 · Outcome 검증</text>
+<text x="396" y="597" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">바로 종결 · 경로 변경 이력</text>
+<rect x="625" y="525" width="237" height="105" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="641" y="553" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Knowledge</text>
+<rect x="814" y="535" width="38" height="20" rx="10" fill="#e8590c"/>
+<text x="833.0" y="549" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">변경</text>
+<text x="641" y="576" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">초안 자동 생성 → 제출</text>
+<text x="641" y="597" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">조건부 확대 승인 → 승인하고 게시</text>
+<rect x="870" y="525" width="237" height="105" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="886" y="553" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Distribution</text>
+<rect x="1059" y="535" width="38" height="20" rx="10" fill="#e8590c"/>
+<text x="1078.0" y="549" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">변경</text>
+<text x="886" y="576" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">자동 배포(승인 시 예약)</text>
+<text x="886" y="597" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">조직도 대상 규칙 · 대시보드</text>
+<rect x="1115" y="525" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1131" y="553" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Retrieval · Reuse</text>
+<text x="1131" y="576" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">검색 조정 · 재검증 · 출처</text>
+<text x="1131" y="597" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">후속 Case 지식 적용 기록</text>
+<rect x="380" y="640" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="396" y="668" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Job · outbox worker</text>
+<text x="396" y="691" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">lease · 재시도 · 멱등 · 계보</text>
+<text x="396" y="712" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">게시→색인→배포 연쇄</text>
+<rect x="625" y="640" width="237" height="105" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="641" y="668" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Audit · Evaluation</text>
+<text x="641" y="691" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">감사 이벤트 · 고정 평가셋</text>
+<text x="641" y="712" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">실행 그래프(운영 화면)</text>
+<rect x="870" y="640" width="237" height="105" rx="10" fill="#f6f8fa" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="886" y="668" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">WorkThread 포트</text>
+<text x="886" y="691" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Connector · Import · AclMapper</text>
+<text x="886" y="712" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">OpinionExtraction (고도화)</text>
+<rect x="1115" y="640" width="237" height="105" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="1131" y="668" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">contracts/</text>
+<text x="1131" y="691" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">OpenAPI · JSON Schema</text>
+<text x="1131" y="712" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Java DTO ↔ Pydantic 계약 테스트</text>
+<rect x="1390" y="340" width="160" height="420" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="1406" y="368" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">관측 (선택)</text>
+<text x="1406" y="392" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Prometheus</text>
+<text x="1406" y="414" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Grafana</text>
+<text x="1406" y="436" font-size="13" font-weight="400" fill="#57606a" text-anchor="start"></text>
+<text x="1406" y="458" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">request · job ID</text>
+<text x="1406" y="480" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">p50 / p95</text>
+<text x="1406" y="502" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">index lag</text>
+<text x="1406" y="524" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">timeout</text>
+<text x="1406" y="546" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">실패 수</text>
+<text x="1406" y="568" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">배포 대기 건수</text>
+<path d="M310,590 L378,470" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M310,800 L378,700" stroke="#57606a" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<rect x="360" y="800" width="300" height="175" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="376" y="828" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">PostgreSQL 16</text>
+<text x="376" y="852" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">유일한 업무 원장 · 스키마 8개</text>
+<text x="376" y="874" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">iam · audit · ops · intake</text>
+<text x="376" y="896" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">casework · knowledge</text>
+<text x="376" y="918" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">distribution · eval</text>
+<text x="376" y="940" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">track · 후보 · 배포 계획(V8)</text>
+<rect x="680" y="800" width="240" height="175" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="696" y="828" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">내부 파일 저장</text>
+<text x="696" y="852" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">원본 · 정제문</text>
+<text x="696" y="874" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">랜덤 키 · 로컬 볼륨</text>
+<text x="696" y="896" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">ObjectStore 어댑터</text>
+<path d="M510,760 L510,798" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M800,760 L800,798" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1245,760 L1245,798" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<text x="1255" y="784" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">/internal/* · 서비스 인증</text>
+<rect x="940" y="800" width="610" height="250" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="2"/>
+<text x="956" y="828" font-size="18" font-weight="700" fill="#1f2328" text-anchor="start">FastAPI AI · 내부 전용</text>
+<text x="956" y="852" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Python 3.12 · request nonce · deadline · 원장을 직접 바꾸지 않고 결과를 Core에 반환</text>
+<rect x="958" y="880" width="192" height="76" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="974" y="908" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">parse · clean</text>
+<text x="974" y="930" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">파싱 · 마스킹 · 품질 검사</text>
+<rect x="1156" y="880" width="192" height="76" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1172" y="908" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">analyze · triage</text>
+<text x="1172" y="930" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">분류 · 경로·부서 제안</text>
+<rect x="1354" y="880" width="192" height="76" rx="10" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1370" y="908" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">draft</text>
+<text x="1370" y="930" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">검증 결과 → 지식 초안</text>
+<rect x="958" y="966" width="192" height="76" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="974" y="994" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">embed · index</text>
+<text x="974" y="1016" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">청킹 · 임베딩 · 두 색인</text>
+<rect x="1156" y="966" width="192" height="76" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="1172" y="994" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">retrieve · rerank</text>
+<text x="1172" y="1016" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">자격 목록 사전 필터</text>
+<rect x="1354" y="966" width="192" height="76" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="1370" y="994" font-size="14.5" font-weight="700" fill="#1f2328" text-anchor="start">generate · evaluate</text>
+<text x="1370" y="1016" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">검증 문맥만 생성 · 평가</text>
+<rect x="360" y="995" width="560" height="180" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="376" y="1023" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">실행 장비 (개발 기준)</text>
+<text x="376" y="1047" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Ryzen 9800X3D · RAM 64GB · RTX 5080 VRAM 16GB</text>
+<text x="376" y="1069" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Windows 개발 도구 + WSL2/Linux 컨테이너</text>
+<text x="376" y="1091" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Core · AI · DB · 검색은 Compose로 구성</text>
+<text x="376" y="1113" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">DB·검색·Core/AI 메모리 예산 20–28GB(출발점)</text>
+<text x="376" y="1135" font-size="13" font-weight="400" fill="#57606a" text-anchor="start">Local LLM 7–8B 4bit부터 실측</text>
+<rect x="940" y="1070" width="197" height="105" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="956" y="1098" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Qdrant</text>
+<text x="956" y="1120" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">벡터 색인</text>
+<text x="956" y="1140" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">index_revision_id</text>
+<text x="956" y="1160" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">IN 자격 목록 필터</text>
+<path d="M1038,1050 L1038,1068" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<rect x="1147" y="1070" width="197" height="105" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="1163" y="1098" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">OpenSearch</text>
+<text x="1163" y="1120" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">BM25 색인</text>
+<text x="1163" y="1140" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">bool.filter에</text>
+<text x="1163" y="1160" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">같은 자격 목록</text>
+<path d="M1245,1050 L1245,1068" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<rect x="1354" y="1070" width="197" height="105" rx="10" fill="#eaf6ee" stroke="#2e7d4f" stroke-width="1.5"/>
+<text x="1370" y="1098" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">로컬 모델 런타임</text>
+<text x="1370" y="1120" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Ollama 생성 · NO_CLOUD</text>
+<text x="1370" y="1140" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">임베딩 · Reranker</text>
+<text x="1370" y="1160" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">(CPU 우선)</text>
+<path d="M1452,1050 L1452,1068" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<text x="40" y="1235" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">VOC 처리 경로 3갈래 · AI가 제안하고 담당자가 확정 (기본 일반 처리, 지식화는 선택 경로)</text>
+<rect x="40" y="1249" width="140" height="54" rx="8" fill="#e8590c"/>
+<text x="110" y="1282" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">바로 종결</text>
+<polygon points="196.0,1249 518.5,1249 532.5,1276.0 518.5,1303 196.0,1303" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="357.25" y="1272.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">기존 지식 매칭</text>
+<text x="357.25" y="1291.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">AI가 게시 지식 제시</text>
+<polygon points="538.5,1249 861.0,1249 875.0,1276.0 861.0,1303 538.5,1303 552.5,1276.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="706.75" y="1272.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">지식 선택 · 적용 사유</text>
+<text x="706.75" y="1291.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">권한·게시 상태 확인</text>
+<polygon points="881.0,1249 1203.5,1249 1217.5,1276.0 1203.5,1303 881.0,1303 895.0,1276.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1049.25" y="1272.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">1클릭 종결</text>
+<text x="1049.25" y="1291.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">Case·결정·Outcome 일괄</text>
+<polygon points="1223.5,1249 1546.0,1249 1560.0,1276.0 1546.0,1303 1223.5,1303 1237.5,1276.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1391.75" y="1272.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">재사용 기록</text>
+<text x="1391.75" y="1291.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">지식 효과 집계</text>
+<rect x="40" y="1311" width="140" height="54" rx="8" fill="#e8590c"/>
+<text x="110" y="1344" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">일반 처리</text>
+<polygon points="196.0,1311 518.5,1311 532.5,1338.0 518.5,1365 196.0,1365" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="357.25" y="1334.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Case 생성</text>
+<text x="357.25" y="1353.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">부서 배정</text>
+<polygon points="538.5,1311 861.0,1311 875.0,1338.0 861.0,1365 538.5,1365 552.5,1338.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="706.75" y="1334.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">결정 · 조치</text>
+<text x="706.75" y="1353.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">의견 반영/보류 함께</text>
+<polygon points="881.0,1311 1203.5,1311 1217.5,1338.0 1203.5,1365 881.0,1365 895.0,1338.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1049.25" y="1334.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">결과 기록 · 종결</text>
+<text x="1049.25" y="1353.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">지식화 안 함</text>
+<polygon points="1223.5,1311 1546.0,1311 1560.0,1338.0 1546.0,1365 1223.5,1365 1237.5,1338.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1391.75" y="1334.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">반복 감지</text>
+<text x="1391.75" y="1353.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">30일 3건 → 지식화 후보</text>
+<rect x="40" y="1373" width="140" height="54" rx="8" fill="#e8590c"/>
+<text x="110" y="1406" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">지식화</text>
+<polygon points="196.0,1373 518.5,1373 532.5,1400.0 518.5,1427 196.0,1427" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="357.25" y="1396.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">① 접수</text>
+<text x="357.25" y="1415.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">경로 확정 · Case</text>
+<polygon points="538.5,1373 861.0,1373 875.0,1400.0 861.0,1427 538.5,1427 552.5,1400.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="706.75" y="1396.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">② 처리</text>
+<text x="706.75" y="1415.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">결정 · 증거 검증</text>
+<polygon points="881.0,1373 1203.5,1373 1217.5,1400.0 1203.5,1427 881.0,1427 895.0,1400.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1049.25" y="1396.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">③ 승인</text>
+<text x="1049.25" y="1415.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">제출 · 승인하고 게시</text>
+<polygon points="1223.5,1373 1546.0,1373 1560.0,1400.0 1546.0,1427 1223.5,1427 1237.5,1400.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1391.75" y="1396.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">④ 공유 (자동)</text>
+<text x="1391.75" y="1415.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">게시 → 색인 → 전달</text>
+<text x="40" y="1469" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">지식화 흐름 · 사람 동작 5회(공유 확대 시 7회), 공유는 자동, 진행 표시는 4단계 바 하나</text>
+<polygon points="40.0,1483 189.55555555555554,1483 203.55555555555554,1516.0 189.55555555555554,1549 40.0,1549" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="114.77777777777777" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">AI 분석 · 경로 제안</text>
+<text x="114.77777777777777" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">반입·정제·분류</text>
+<polygon points="209.55555555555554,1483 359.1111111111111,1483 373.1111111111111,1516.0 359.1111111111111,1549 209.55555555555554,1549 223.55555555555554,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="291.3333333333333" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">담당자 확정</text>
+<text x="291.3333333333333" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">Case 생성/연결</text>
+<polygon points="379.1111111111111,1483 528.6666666666666,1483 542.6666666666666,1516.0 528.6666666666666,1549 379.1111111111111,1549 393.1111111111111,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="460.88888888888886" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">결정 저장</text>
+<text x="460.88888888888886" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">의견 반영 토글</text>
+<polygon points="548.6666666666666,1483 698.2222222222222,1483 712.2222222222222,1516.0 698.2222222222222,1549 548.6666666666666,1549 562.6666666666666,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="630.4444444444443" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">결과·증거 검증</text>
+<text x="630.4444444444443" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">→ 초안·대상 자동 제안</text>
+<polygon points="718.2222222222222,1483 867.7777777777777,1483 881.7777777777777,1516.0 867.7777777777777,1549 718.2222222222222,1549 732.2222222222222,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="800.0" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">초안·배포 대상 확정</text>
+<text x="800.0" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">제출 = 승인 hash 포함</text>
+<polygon points="887.7777777777777,1483 1037.3333333333333,1483 1051.3333333333333,1516.0 1037.3333333333333,1549 887.7777777777777,1549 901.7777777777777,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="969.5555555555554" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">조건부 확대 승인</text>
+<text x="969.5555555555554" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">원본 소유·정책 병렬</text>
+<polygon points="1057.3333333333333,1483 1206.8888888888887,1483 1220.8888888888887,1516.0 1206.8888888888887,1549 1057.3333333333333,1549 1071.3333333333333,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1139.111111111111" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">승인하고 게시</text>
+<text x="1139.111111111111" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">게시·배포 함께 실행</text>
+<polygon points="1226.8888888888887,1483 1376.4444444444443,1483 1390.4444444444443,1516.0 1376.4444444444443,1549 1226.8888888888887,1549 1240.8888888888887,1516.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1308.6666666666665" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">게시 → 양 색인</text>
+<text x="1308.6666666666665" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">준비 후 수신함 전달</text>
+<polygon points="1396.4444444444443,1483 1546.0,1483 1560.0,1516.0 1546.0,1549 1396.4444444444443,1549 1410.4444444444443,1516.0" fill="#fff4e5" stroke="#e8590c" stroke-width="1.5"/>
+<text x="1478.2222222222222" y="1512.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">게시 후 직접 지정</text>
+<text x="1478.2222222222222" y="1531.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">S09 · 사유 필수</text>
+<text x="40" y="1593" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">배포 상태 · 자동 배포와 수동 지정이 같은 상태를 쓴다 (대상 지정은 권한 부여가 아님, 수신 확인 기본 미요청)</text>
+<polygon points="40.0,1607 238.0,1607 252.0,1638.0 238.0,1669 40.0,1669" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="139.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">PLANNED</text>
+<text x="139.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">제출 시 · 범위 밖 수동 지정</text>
+<polygon points="258.0,1607 456.0,1607 470.0,1638.0 456.0,1669 258.0,1669 272.0,1638.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="364.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">QUEUED</text>
+<text x="364.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">승인·게시 · 범위 안 수동 지정</text>
+<polygon points="476.0,1607 674.0,1607 688.0,1638.0 674.0,1669 476.0,1669 490.0,1638.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="582.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">색인 준비 대기</text>
+<text x="582.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">한 색인 실패 시 QUEUED 유지</text>
+<polygon points="694.0,1607 892.0,1607 906.0,1638.0 892.0,1669 694.0,1669 708.0,1638.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="800.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">DELIVERED</text>
+<text x="800.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">READ 가능자만 수신함 생성</text>
+<polygon points="912.0,1607 1110.0,1607 1124.0,1638.0 1110.0,1669 912.0,1669 926.0,1638.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1018.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">PARTIAL_FAILED·FAILED</text>
+<text x="1018.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">실패 부서만 재배포</text>
+<polygon points="1130.0,1607 1328.0,1607 1342.0,1638.0 1328.0,1669 1130.0,1669 1144.0,1638.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1236.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">SUPERSEDED·WITHDRAWN</text>
+<text x="1236.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">새 버전 이어 전달 · 폐기 철회</text>
+<polygon points="1348.0,1607 1546.0,1607 1560.0,1638.0 1546.0,1669 1348.0,1669 1362.0,1638.0" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="1454.0" y="1634.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">CANCELLED</text>
+<text x="1454.0" y="1653.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">반려 · 확대 승인 반려</text>
+<text x="40" y="1713" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">RAG 요청 경로 · 권한은 검색 전부터 매 전달 경계마다 다시 확인</text>
+<polygon points="40.0,1727 189.55555555555554,1727 203.55555555555554,1756.0 189.55555555555554,1785 40.0,1785" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="114.77777777777777" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">① 인증</text>
+<text x="114.77777777777777" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">세션 · 현재 소속</text>
+<polygon points="209.55555555555554,1727 359.1111111111111,1727 373.1111111111111,1756.0 359.1111111111111,1785 209.55555555555554,1785 223.55555555555554,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="291.3333333333333" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">② AuthzGate</text>
+<text x="291.3333333333333" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">자격 revision 산출</text>
+<polygon points="379.1111111111111,1727 528.6666666666666,1727 542.6666666666666,1756.0 528.6666666666666,1785 379.1111111111111,1785 393.1111111111111,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="460.88888888888886" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">③ 사전 필터 검색</text>
+<text x="460.88888888888886" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">Qdrant + OpenSearch</text>
+<polygon points="548.6666666666666,1727 698.2222222222222,1727 712.2222222222222,1756.0 698.2222222222222,1785 548.6666666666666,1785 562.6666666666666,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="630.4444444444443" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">④ Core 재검증</text>
+<text x="630.4444444444443" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">ID · 버전 · 권한</text>
+<polygon points="718.2222222222222,1727 867.7777777777777,1727 881.7777777777777,1756.0 867.7777777777777,1785 718.2222222222222,1785 732.2222222222222,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="800.0" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑤ 로컬 Rerank</text>
+<text x="800.0" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">검증 청크만</text>
+<polygon points="887.7777777777777,1727 1037.3333333333333,1727 1051.3333333333333,1756.0 1037.3333333333333,1785 887.7777777777777,1785 901.7777777777777,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="969.5555555555554" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑥ 문맥 예산</text>
+<text x="969.5555555555554" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">출처 매핑 확인</text>
+<polygon points="1057.3333333333333,1727 1206.8888888888887,1727 1220.8888888888887,1756.0 1206.8888888888887,1785 1057.3333333333333,1785 1071.3333333333333,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1139.111111111111" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑦ 로컬 LLM 생성</text>
+<text x="1139.111111111111" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">검증 문맥만</text>
+<polygon points="1226.8888888888887,1727 1376.4444444444443,1727 1390.4444444444443,1756.0 1376.4444444444443,1785 1226.8888888888887,1785 1240.8888888888887,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1308.6666666666665" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑧ 출력 검사</text>
+<text x="1308.6666666666665" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">citation 키 · 상태</text>
+<polygon points="1396.4444444444443,1727 1546.0,1727 1560.0,1756.0 1546.0,1785 1396.4444444444443,1785 1410.4444444444443,1756.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1478.2222222222222" y="1752.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑨ 답변 반환</text>
+<text x="1478.2222222222222" y="1771.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">근거 없음 별도 처리</text>
+<text x="40" y="1829" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">권한 판정 · 모든 조건이 AND, 하나라도 실패하면 거부 (관리자도 동일)</text>
+<polygon points="40.0,1843 189.55555555555554,1843 203.55555555555554,1872.0 189.55555555555554,1901 40.0,1901" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="114.77777777777777" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">① 인증·활성</text>
+<text x="114.77777777777777" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">조직 일치</text>
+<polygon points="209.55555555555554,1843 359.1111111111111,1843 373.1111111111111,1872.0 359.1111111111111,1901 209.55555555555554,1901 223.55555555555554,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="291.3333333333333" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">② 역할 행위</text>
+<text x="291.3333333333333" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">RBAC</text>
+<polygon points="379.1111111111111,1843 528.6666666666666,1843 542.6666666666666,1872.0 528.6666666666666,1901 379.1111111111111,1901 393.1111111111111,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="460.88888888888886" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">③ 상태 허용</text>
+<text x="460.88888888888886" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">행위별</text>
+<polygon points="548.6666666666666,1843 698.2222222222222,1843 712.2222222222222,1872.0 698.2222222222222,1901 548.6666666666666,1901 562.6666666666666,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="630.4444444444443" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">④ 보안등급</text>
+<text x="630.4444444444443" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">clearance ≥ 등급</text>
+<polygon points="718.2222222222222,1843 867.7777777777777,1843 881.7777777777777,1872.0 867.7777777777777,1901 718.2222222222222,1901 732.2222222222222,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="800.0" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑤ 업무 범위</text>
+<text x="800.0" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">부서·고객·프로젝트</text>
+<polygon points="887.7777777777777,1843 1037.3333333333333,1843 1051.3333333333333,1872.0 1037.3333333333333,1901 887.7777777777777,1901 901.7777777777777,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="969.5555555555554" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑥ DENY 없음</text>
+<text x="969.5555555555554" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">부모 DENY 우선</text>
+<polygon points="1057.3333333333333,1843 1206.8888888888887,1843 1220.8888888888887,1872.0 1206.8888888888887,1901 1057.3333333333333,1901 1071.3333333333333,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1139.111111111111" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑦ ALLOW 존재</text>
+<text x="1139.111111111111" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">직접 또는 상속</text>
+<polygon points="1226.8888888888887,1843 1376.4444444444443,1843 1390.4444444444443,1872.0 1376.4444444444443,1901 1226.8888888888887,1901 1240.8888888888887,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1308.6666666666665" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑧ 출처 의존</text>
+<text x="1308.6666666666665" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">복수 출처 교집합</text>
+<polygon points="1396.4444444444443,1843 1546.0,1843 1560.0,1872.0 1546.0,1901 1396.4444444444443,1901 1410.4444444444443,1872.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1478.2222222222222" y="1868.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">⑨ 시간 경계</text>
+<text x="1478.2222222222222" y="1887.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">valid_until 재평가</text>
+<rect x="20" y="1921" width="1560" height="2" fill="#d0d7de"/>
+<text x="40" y="1959" font-size="20" font-weight="700" fill="#1f2328" text-anchor="start">운영 N중화 배포 구성 (ADR11) · 무상태 계층은 N대 Active-Active, 상태 계층은 복제·쿼럼 3노드</text>
+<text x="40" y="1985" font-size="14" font-weight="400" fill="#57606a" text-anchor="start">각 계층의 N대는 최소 2대 물리 서버(가능하면 랙·전원 분리)에 흩어 둔다 · N·RPO·RTO·DR·Kubernetes 여부는 O08에서 확정 · 기본 가정: 노드별 Compose + L4 VIP</text>
+<rect x="40" y="2013" width="130" height="150" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="105" y="2093.0" font-size="15" font-weight="700" fill="#1f2328" text-anchor="middle">진입</text>
+<rect x="40" y="2185" width="130" height="165" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="105" y="2272.5" font-size="15" font-weight="700" fill="#1f2328" text-anchor="middle">애플리케이션</text>
+<rect x="40" y="2372" width="130" height="190" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="105" y="2472.0" font-size="15" font-weight="700" fill="#1f2328" text-anchor="middle">상태 · 저장</text>
+<rect x="40" y="2584" width="130" height="120" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="105" y="2649.0" font-size="15" font-weight="700" fill="#1f2328" text-anchor="middle">운영</text>
+<rect x="200" y="2037" width="220" height="100" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="216" y="2065" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">사내 사용자</text>
+<text x="216" y="2087" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">브라우저 · 사번 로그인</text>
+<text x="216" y="2107" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">TLS</text>
+<rect x="470" y="2037" width="420" height="100" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="486" y="2065" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">L4 VIP</text>
+<text x="486" y="2087" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">사내 L4 장비, 없으면 keepalived + HAProxy</text>
+<text x="486" y="2107" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">2대 Active-Standby · 헬스체크로 노드 제외</text>
+<rect x="948" y="2029" width="610" height="100" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.2" opacity="0.7"/>
+<rect x="944" y="2033" width="610" height="100" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.2" opacity="0.7"/>
+<rect x="940" y="2037" width="610" height="100" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="956" y="2065" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Reverse Proxy · 정적 웹</text>
+<rect x="1502" y="2047" width="38" height="20" rx="10" fill="#8c959f"/>
+<text x="1521.0" y="2061" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×N</text>
+<text x="956" y="2087" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">TLS 종료 · CSRF · 내부 포트 비노출</text>
+<text x="956" y="2107" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Core API N대로 분산, sticky session 없음</text>
+<path d="M420,2087 L468,2087" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M890,2087 L938,2087" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<rect x="208" y="2205" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.2" opacity="0.7"/>
+<rect x="204" y="2209" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.2" opacity="0.7"/>
+<rect x="200" y="2213" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="216" y="2241" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Spring Core API</text>
+<rect x="472" y="2223" width="38" height="20" rx="10" fill="#2f6fdb"/>
+<text x="491.0" y="2237" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×N</text>
+<text x="216" y="2263" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Active-Active · 세션은 DB 공유(V9)</text>
+<text x="216" y="2283" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">멱등 키·낙관적 잠금·AuthzGate lock</text>
+<text x="216" y="2303" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">모두 DB에 있어 인스턴스 무관</text>
+<rect x="568" y="2205" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.2" opacity="0.7"/>
+<rect x="564" y="2209" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.2" opacity="0.7"/>
+<rect x="560" y="2213" width="320" height="118" rx="10" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="576" y="2241" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Core worker</text>
+<rect x="832" y="2223" width="38" height="20" rx="10" fill="#2f6fdb"/>
+<text x="851.0" y="2237" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×N</text>
+<text x="576" y="2263" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">outbox FOR UPDATE SKIP LOCKED</text>
+<text x="576" y="2283" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">lease 만료 시 재획득 · 멱등·CAS</text>
+<text x="576" y="2303" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">주기 작업은 DB lock으로 1회만</text>
+<rect x="928" y="2205" width="300" height="118" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.2" opacity="0.7"/>
+<rect x="924" y="2209" width="300" height="118" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.2" opacity="0.7"/>
+<rect x="920" y="2213" width="300" height="118" rx="10" fill="#f3efff" stroke="#7c4dff" stroke-width="1.5"/>
+<text x="936" y="2241" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">FastAPI AI · CPU 풀</text>
+<rect x="1172" y="2223" width="38" height="20" rx="10" fill="#7c4dff"/>
+<text x="1191.0" y="2237" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×N</text>
+<text x="936" y="2263" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">parse · clean · embed · rerank</text>
+<text x="936" y="2283" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">무상태 · 내부 LB · deadline</text>
+<text x="936" y="2303" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">결과 반영은 Core가 revision 판정</text>
+<rect x="1268" y="2205" width="290" height="118" rx="10" fill="#eaf6ee" stroke="#2e7d4f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1264" y="2209" width="290" height="118" rx="10" fill="#eaf6ee" stroke="#2e7d4f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1260" y="2213" width="290" height="118" rx="10" fill="#eaf6ee" stroke="#2e7d4f" stroke-width="1.5"/>
+<text x="1276" y="2241" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">AI GPU 풀 + 로컬 모델</text>
+<rect x="1502" y="2223" width="38" height="20" rx="10" fill="#2e7d4f"/>
+<text x="1521.0" y="2237" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×N</text>
+<text x="1276" y="2263" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">generate · Ollama(NO_CLOUD)</text>
+<text x="1276" y="2283" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">노드마다 같은 모델·checksum</text>
+<text x="1276" y="2303" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">장애 시 동시성 제한, 외부 X</text>
+<path d="M1000,2137 L1000,2174 L360,2174 L360,2205" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<text x="1010" y="2170" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">API 요청 → Core N대</text>
+<rect x="200" y="2402" width="470" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="216" y="2430" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">PostgreSQL 16 · 유일한 원장</text>
+<rect x="598" y="2412" width="62" height="20" rx="10" fill="#b7791f"/>
+<text x="629.0" y="2426" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×2+3</text>
+<text x="216" y="2452" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Primary ⇄ 동기 Standby (+선택 비동기)</text>
+<text x="216" y="2472" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Patroni + etcd ×3 자동 failover · DB VIP</text>
+<text x="216" y="2492" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">권한 판정은 Primary에서만 읽음(복제본 X)</text>
+<text x="216" y="2512" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">failover 중 쓰기·검색 fail-closed, 유실 없음</text>
+<rect x="700" y="2402" width="300" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="716" y="2430" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">공유 파일 저장</text>
+<text x="716" y="2452" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">로컬 볼륨 → 공유 저장소</text>
+<text x="716" y="2472" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">사내 NAS(이중 컨트롤러) 또는</text>
+<text x="716" y="2492" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">S3 호환 분산 저장(erasure)</text>
+<text x="716" y="2512" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">ObjectStore 어댑터만 교체</text>
+<rect x="1038" y="2394" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1034" y="2398" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1030" y="2402" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="1046" y="2430" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">Qdrant</text>
+<rect x="1232" y="2412" width="38" height="20" rx="10" fill="#b7791f"/>
+<text x="1251.0" y="2426" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×3</text>
+<text x="1046" y="2452" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">클러스터 3노드</text>
+<text x="1046" y="2472" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">replication_factor 2</text>
+<text x="1046" y="2492" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">전체 장애 시 원장에서 재색인</text>
+<rect x="1308" y="2394" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1304" y="2398" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.2" opacity="0.7"/>
+<rect x="1300" y="2402" width="250" height="140" rx="10" fill="#fdf6e3" stroke="#b7791f" stroke-width="1.5"/>
+<text x="1316" y="2430" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">OpenSearch</text>
+<rect x="1502" y="2412" width="38" height="20" rx="10" fill="#b7791f"/>
+<text x="1521.0" y="2426" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">×3</text>
+<text x="1316" y="2452" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">3노드 · 관리자 쿼럼</text>
+<text x="1316" y="2472" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">replica 1</text>
+<text x="1316" y="2492" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">한 엔진 장애 시 degraded</text>
+<path d="M360,2331 L360,2394" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M720,2331 L720,2394" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1090,2331 L1090,2394" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<path d="M1405,2331 L1405,2394" stroke="#57606a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+<rect x="200" y="2604" width="430" height="82" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="216" y="2632" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">관측</text>
+<text x="216" y="2654" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">Prometheus ×2 · Grafana · 알림 · index lag·failover 감시</text>
+<rect x="660" y="2604" width="430" height="82" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="676" y="2632" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">백업 · 복구</text>
+<text x="676" y="2654" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">WAL 아카이브 PITR + 파일 스냅샷을 같은 복구 지점으로</text>
+<text x="676" y="2674" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">검색 색인은 복구 후 원장에서 재생성</text>
+<rect x="1120" y="2604" width="430" height="82" rx="10" fill="#ffffff" stroke="#8c959f" stroke-width="1.5"/>
+<text x="1136" y="2632" font-size="15" font-weight="700" fill="#1f2328" text-anchor="start">배포</text>
+<text x="1136" y="2654" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">롤링 배포 · Flyway는 단일 Job으로 1회</text>
+<text x="1136" y="2674" font-size="12.5" font-weight="400" fill="#57606a" text-anchor="start">스키마는 확장 → 전환 → 축소(구·신 동시 동작)</text>
+<text x="40" y="2746" font-size="17" font-weight="700" fill="#1f2328" text-anchor="start">장애 시 동작 · 인수 시험 T65~T69 (최소 Core 2 · worker 2 · AI 2 · PG Primary+Standby · Qdrant 3 · OpenSearch 3)</text>
+<polygon points="40.0,2760 325.2,2760 339.2,2789.0 325.2,2818 40.0,2818" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="182.6" y="2785.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">Core 1대 장애</text>
+<text x="182.6" y="2804.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">세션 유지 · 재요청 성공</text>
+<polygon points="345.2,2760 630.4,2760 644.4,2789.0 630.4,2818 345.2,2818 359.2,2789.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="494.79999999999995" y="2785.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">DB failover</text>
+<text x="494.79999999999995" y="2804.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">fail-closed · 회수 권한 유지</text>
+<polygon points="650.4,2760 935.5999999999999,2760 949.5999999999999,2789.0 935.5999999999999,2818 650.4,2818 664.4,2789.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="800.0" y="2785.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">worker 중복·lease</text>
+<text x="800.0" y="2804.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">색인·배포 1회만</text>
+<polygon points="955.5999999999999,2760 1240.8,2760 1254.8,2789.0 1240.8,2818 955.5999999999999,2818 969.5999999999999,2789.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1105.1999999999998" y="2785.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">검색·GPU 노드 장애</text>
+<text x="1105.1999999999998" y="2804.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">계속 · 동시성 제한</text>
+<polygon points="1260.8,2760 1546.0,2760 1560.0,2789.0 1546.0,2818 1260.8,2818 1274.8,2789.0" fill="#eef4fd" stroke="#2f6fdb" stroke-width="1.5"/>
+<text x="1410.3999999999999" y="2785.0" font-size="14" font-weight="700" fill="#1f2328" text-anchor="middle">롤링 배포</text>
+<text x="1410.3999999999999" y="2804.0" font-size="12" font-weight="400" fill="#57606a" text-anchor="middle">구·신 동시 동작</text>
+</svg>

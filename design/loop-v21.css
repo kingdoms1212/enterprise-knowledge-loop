@@ -1,0 +1,39 @@
+/* v2.1: 처리 경로·단일 진행 표시 */
+.stagebar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.stage{padding:13px 16px;border-right:1px solid var(--line);min-width:0}.stage:last-child{border-right:0}
+.stage small{display:block;font-size:11px;color:var(--muted)}.stage strong{display:block;margin:3px 0}.stage span{display:block;font-size:12px;color:var(--muted)}
+.stage.done strong{color:var(--deep)}.stage.now{background:var(--soft);box-shadow:inset 0 3px var(--green)}.stage.now strong{color:var(--deep)}
+.track-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.track-card{border:1px solid var(--line);background:#fff;border-radius:8px;padding:15px 16px;text-align:left;min-width:0}
+.track-card strong{display:block;font-size:25px;line-height:1.5;margin-top:6px}.track-card strong span{font-size:12px;font-weight:400}.track-card p{font-size:12px}
+.candidate{margin-bottom:18px;border-color:#dccff0}
+.voice-layout{display:grid;grid-template-columns:minmax(250px,.8fr) minmax(0,1.6fr);gap:20px;align-items:start}
+.voice-row{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;padding:14px 18px}.voice-row:last-child{border-bottom:0}
+.voice-row strong{display:block;margin:3px 0 6px}.voice-row.active{background:var(--soft);box-shadow:inset 3px 0 var(--green)}
+.voice-layout blockquote{margin:14px 0;border-left:3px solid #cfd9dd;padding:12px 15px;background:#f5f7f8}
+.track-pick{border:1px solid var(--line);border-radius:7px;padding:10px 12px;margin:15px 0;display:flex;gap:8px;flex-wrap:wrap}
+.track-pick legend{font-size:12px;font-weight:700;padding:0 4px}
+.track-pick label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:7px 11px;font-size:13px;cursor:pointer}
+.track-pick label.on{border-color:#7fafcf;background:var(--soft);color:var(--deep);font-weight:700}.track-pick small{font-size:10px;color:var(--purple)}
+.kcard{border:1px solid #cfdde6;background:#f6f9fb;border-radius:7px;padding:14px 16px;margin:12px 0}.kcard h3{margin:8px 0 4px}.kcard p{font-size:13px}
+.op-row{display:grid;grid-template-columns:minmax(0,1.6fr) 90px minmax(0,1fr);gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.op-row p{font-size:12px}.op-row select,.op-row input{padding:8px;border:1px solid #cdd5db;border-radius:6px;min-width:0;font-size:13px}
+.ext-slot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.action-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 20px;margin-top:20px}.action-bar .check{margin:0 0 8px}
+.deny{color:#ae4436}
+@media(max-width:900px){.stagebar,.track-grid{grid-template-columns:1fr 1fr}.voice-layout{grid-template-columns:1fr}.op-row{grid-template-columns:1fr}.stage:nth-child(2){border-right:0}.stage:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+/* 배포 대상 조직도 선택 */
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}.chip{display:inline-flex;align-items:center;gap:6px;background:#eef3f6;border:1px solid #cfdbe3;border-radius:16px;padding:4px 6px 4px 12px;font-size:13px}.chip button{border:0;background:none;font-size:16px;line-height:1;padding:0 4px;color:#64788c}
+.cover{display:flex;flex-wrap:wrap;gap:6px 16px;background:#f4f6f8;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:12px;margin:12px 0}.cover b{font-size:14px}
+.org-search{width:100%;padding:10px 12px;border:1px solid #cdd5db;border-radius:6px;font-size:14px}.org-list{max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:6px;margin:10px 0}
+.org-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px;border-bottom:1px solid var(--line);font-size:13px}.org-row:last-child{border:0}.org-row input{accent-color:var(--deep)}.org-row.excluded{opacity:.5;text-decoration:line-through}
+/* 배포 현황 대시보드 */
+.dash-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.dash-stats .stat strong{display:block;font-size:22px;margin:4px 0 2px}
+@media (max-width:1100px){.dash-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}@media (max-width:640px){.dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dbar{height:6px;background:#e6ebef;border-radius:3px;margin-top:5px;min-width:80px}.dbar span{display:block;height:100%;background:var(--deep);border-radius:3px}
+/* 하늘색 테마: 상태 색(완료)은 브랜드색과 구분되게 차분한 녹색 유지 */
+.tag.green{background:#e7f6ee;color:#15803d}
+
+/* 로고: 구름 + 순환 링(지식·문서·AI) */
+.brand .logo{display:flex;flex:none}.brand .logo svg{display:block}
+.login-brand{display:flex;align-items:center;gap:14px;padding:4px 0 16px;margin-bottom:12px;border-bottom:1px solid var(--line)}.login-brand svg{width:84px;height:auto}.login-brand b{display:block;font-size:20px;color:var(--ink)}.login-brand small{color:var(--muted);font-size:12px}
