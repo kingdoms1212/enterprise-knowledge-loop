@@ -1,56 +1,55 @@
-# 묶음 zip: 폴더 전체를 압축한 사본이라 git 이력과 중복
-/Enterprise-Knowledge-Loop-전체.zip
-/design/Enterprise-Knowledge-Loop-디자인-비교안.zip
-*.zip
+# ── 비공개 자료: 공개 범위는 컨셉 수준(README·docs·prototype·architecture·design)
+# 상세 기획서(빌드 폴더 포함): 포트폴리오 자료에만 포함
+/plan/
+# DB 스키마·ER 모델: 기능 설계 확정 전까지 올리지 않음
+/db/
+/architecture/er/
+# 내부 검토·작업 기록
+/review/
+# 파트별 개발 프롬프트: 상세 기획서·DB를 참조하므로 공개 범위가 정해질 때까지 올리지 않음
+/PROMPTS.md
+/core/PROMPT.md
+/ai/PROMPT.md
+/llm/PROMPT.md
+/web/PROMPT.md
+/infra/PROMPT.md
 
-# 이전 버전 보관용 (git 이력으로 대체)
+# ── 이전 산출물 보관
 /backup/
+# 옛 기획서 폴더 이름
+/deliverables/
 
-# 기획서 빌드 산출물: plan/build/build.py로 .md에서 다시 만듦
-/plan/*.docx
-/plan/*.pdf
-# ER 그림 사본: architecture/er/*.py로 다시 만듦
-/plan/ER-*.png
-
-# 그림 생성 결과: architecture.gen.py, er_*.py로 다시 만듦 (svg는 보기용으로 유지)
+# ── 생성물: 스크립트로 다시 만듦
+# 폴더 전체 묶음 zip 등
+*.zip
+# 구성도 png: architecture.gen.py로 생성 (svg는 보기용으로 유지)
 /architecture/architecture.png
-/architecture/er/*.png
-
-# 검증 스크립트 결과: verify*.cjs 실행 시 다시 생김
+# 시안 검증 스크립트 결과
 /design/portfolio-review/screenshots/
 /design/portfolio-review/verification.json
 
-# 실행 환경 부산물
+# ── 코드·실행 환경
+# 비밀값·인증서 개인키
+.env
+*.env.local
+*.pem
+*.key
+# 빌드 결과
+/core/build/
+/core/.gradle/
+/web/dist/
+coverage/
+# 의존성·캐시
+node_modules/
+.venv/
 __pycache__/
 *.pyc
-.venv/
-node_modules/
+.pytest_cache/
 
-# Office 임시 파일, OS 부산물
+# ── 편집기·OS 부산물
+.idea/
 ~$*
 .~lock.*#
 Thumbs.db
 desktop.ini
 .DS_Store
-
-# DB 스키마·ER 모델: 기능 설계 확정 전까지 저장소에 올리지 않음 (포트폴리오 자료에만 포함)
-/db/
-/architecture/er/
-/plan/build/img/er-*.png
-
-# 기획서 빌드 폴더: 기획서 md → docx·pdf 빌드 전용
-/plan/build/
-# 기획서: 포트폴리오 자료에만 포함
-/plan/
-# 옛 기획서 폴더 이름
-/deliverables/
-
-# 내부 검토·작업 기록: 저장소에 올리지 않음
-/review/
-
-/ai/PROMPT.md
-/core/PROMPT.md
-/infra/PROMPT.md
-/llm/PROMPT.md
-/web/PROMPT.md
-/PROMPTS.md
