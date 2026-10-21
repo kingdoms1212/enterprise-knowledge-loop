@@ -47,3 +47,10 @@ desktop.ini
 
 # 내부 검토·작업 기록: 저장소에 올리지 않음
 /review/
+
+/ai/PROMPT.md
+/core/PROMPT.md
+/infra/PROMPT.md
+/llm/PROMPT.md
+/web/PROMPT.md
+/PROMPTS.md
