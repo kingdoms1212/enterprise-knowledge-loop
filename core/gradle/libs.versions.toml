@@ -1,0 +1,22 @@
+[versions]
+java = "21"
+spring-boot = "4.2.0"
+
+[libraries]
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-log4j2 = { module = "org.springframework.boot:spring-boot-starter-log4j2" }
+spring-boot-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-boot-session-jdbc = { module = "org.springframework.boot:spring-boot-starter-session-jdbc" }
+spring-boot-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
+spring-boot-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
+spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql" }
+flyway-core = { module = "org.flywaydb:flyway-core" }
+postgresql = { module = "org.postgresql:postgresql" }
+testcontainers-junit = { module = "org.testcontainers:testcontainers-junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

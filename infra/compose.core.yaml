@@ -1,0 +1,23 @@
+name: ekl-core-dev
+
+services:
+  db:
+    image: pgvector/pgvector:0.8.1-pg16
+    environment:
+      POSTGRES_DB: ekl
+      POSTGRES_PASSWORD: ${EKL_DB_ADMIN_PASSWORD:?Set EKL_DB_ADMIN_PASSWORD}
+      EKL_DB_OWNER_PASSWORD: ${EKL_DB_OWNER_PASSWORD:?Set EKL_DB_OWNER_PASSWORD}
+      EKL_DB_APP_PASSWORD: ${EKL_DB_APP_PASSWORD:?Set EKL_DB_APP_PASSWORD}
+    ports:
+      - "127.0.0.1:${EKL_DB_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db/init-ekl.sh:/docker-entrypoint-initdb.d/10-ekl.sh:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "postgres", "-d", "ekl"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  postgres-data:

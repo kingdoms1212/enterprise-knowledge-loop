@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: ekl-core
+  datasource:
+    url: ${EKL_DB_URL:jdbc:postgresql://127.0.0.1:5432/ekl}
+    username: ekl_app
+    password: ${EKL_DB_APP_PASSWORD}
+  flyway:
+    user: ekl_owner
+    password: ${EKL_DB_OWNER_PASSWORD}
+    default-schema: public
+    fail-on-missing-locations: true
+  session:
+    jdbc:
+      table-name: iam.http_sessions
+      initialize-schema: never
+      flush-mode: immediate
+  mvc:
+    problemdetails:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+
+ekl:
+  blob-root: ${EKL_BLOB_ROOT:./var/blobs}
+
+server:
+  address: ${EKL_SERVER_ADDRESS:127.0.0.1}
+  port: ${EKL_SERVER_PORT:8080}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+        same-site: lax
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

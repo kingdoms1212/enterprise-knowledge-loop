@@ -1,0 +1,3 @@
+/infra/db/*.sh text eol=lf
+/core/gradlew text eol=lf
+/core/gradlew.bat text eol=crlf

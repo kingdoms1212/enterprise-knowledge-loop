@@ -36,7 +36,13 @@
 *.key
 # 빌드 결과
 /core/build/
+/core/target/
 /core/.gradle/
+/core/.jdk/
+/core/var/blobs/
+/.gradle/
+/build/
+/core/framework/build/
 /web/dist/
 coverage/
 # 의존성·캐시
