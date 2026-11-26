@@ -41,8 +41,12 @@ class CoreSecurity {
                                 "/api/v1/authentication/providers").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/sessions").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/me", "/api/v1/me/assignments").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/documents/{id}").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/documents", "/api/v1/documents/{id}/versions",
+                        .requestMatchers(HttpMethod.GET, "/api/v1/documents", "/api/v1/documents/{id}",
+                                "/api/v1/document-folders", "/api/v1/document-library/capabilities").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/voices", "/api/v1/voices/capabilities",
+                                "/api/v1/voices/{id}", "/api/v1/cases", "/api/v1/cases/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/documents", "/api/v1/documents/policy-preview",
+                                "/api/v1/documents/{id}/versions",
                                 "/api/v1/documents/{id}/versions/{version}/publish",
                                 "/api/v1/documents/{id}/versions/{version}/unpublish", "/api/v1/documents/{id}/retire",
                                 "/api/v1/document-folders", "/api/v1/voices/intake", "/api/v1/voices/{id}/triage",

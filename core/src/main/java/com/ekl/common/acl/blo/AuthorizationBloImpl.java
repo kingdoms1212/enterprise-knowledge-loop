@@ -1,7 +1,9 @@
 package com.ekl.common.acl.blo;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,16 +39,44 @@ class AuthorizationBloImpl implements AuthorizationBlo {
 
     @Override
     public AccessDecision check(SessionContext session, UUID resourceId, String resourceType, String action) {
+        var actor = loadActor(session);
+        return actor == null ? new AccessDecision(null, "ASSIGNMENT_REQUIRED", null, false)
+                : check(actor, resourceId, resourceType, action);
+    }
+
+    @Override
+    public Map<UUID, ResourceReadScope> readableScopes(SessionContext session, List<UUID> ids, String type) {
+        if (ids.isEmpty()) {
+            return Map.of();
+        }
+        var actor = loadActor(session);
+        if (actor == null || !actor.actions().contains("READ")) {
+            return Map.of();
+        }
+        Map<UUID, ResourceReadScope> readable = new HashMap<>();
+        for (var id : ids) {
+            var result = check(actor, id, type, "READ");
+            if (result.allowed() && !result.emergency()) {
+                readable.put(id, result.scope());
+            }
+        }
+        return Map.copyOf(readable);
+    }
+
+    private Actor loadActor(SessionContext session) {
         if (session.assignmentId() == null) {
-            return new AccessDecision(null, "ASSIGNMENT_REQUIRED", null, false);
+            return null;
         }
         var subject = dao.loadSubject(session).orElse(null);
         if (subject == null) {
-            return new AccessDecision(null, "ASSIGNMENT_REQUIRED", null, false);
+            return null;
         }
-        var actor = new Actor(session.organizationId(), session.accountId(), subject.personId(), subject.clearance(),
+        return new Actor(session.organizationId(), session.accountId(), subject.personId(), subject.clearance(),
                 Set.copyOf(dao.loadPrincipals(session, subject)), Set.copyOf(dao.loadActions(session.assignmentId())),
                 Set.copyOf(dao.loadSubjectScopes(session)));
+    }
+
+    private AccessDecision check(Actor actor, UUID resourceId, String resourceType, String action) {
         var policy = dao.loadPolicy(actor.organizationId(), resourceId).orElse(null);
         if (policy == null || !policy.resourceType().equals(resourceType)) {
             return new AccessDecision(null, "RESOURCE_NOT_FOUND", actor.personId(), false);

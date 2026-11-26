@@ -1,0 +1,9 @@
+.brand {
+  display: inline-flex; align-items: center; gap: .65rem; color: var(--color-ink);
+  font-size: .9375rem; font-weight: 800; line-height: 1.23; white-space: nowrap;
+}
+.brandMark {
+  position: relative; width: 2.5rem; height: 2.5rem; display: grid; place-items: center;
+  border-radius: 9px; color: white; background: var(--color-primary);
+}
+.brandMark svg + svg { position: absolute; top: .82rem; }

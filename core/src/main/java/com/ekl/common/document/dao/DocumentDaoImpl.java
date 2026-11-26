@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 class DocumentDaoImpl extends BaseDao<DocumentSummary> implements DocumentDao {
     private static final String READ_SQL = """
                 select d.id, d.title, d.owner_department_id, d.folder_id,
-                       v.id as version_id, v.version_no, v.parse_status
+                       v.id as version_id, v.version_no, v.parse_status, d.row_version
                   from intake.documents d
                   join iam.resource_policies p on p.resource_id = d.id
                   left join intake.document_versions v on v.id = d.current_version_id
@@ -44,7 +44,8 @@ class DocumentDaoImpl extends BaseDao<DocumentSummary> implements DocumentDao {
                 row.getObject("folder_id", UUID.class),
                 row.getObject("version_id", UUID.class),
                 row.getObject("version_no", Integer.class),
-                row.getString("parse_status")));
+                row.getString("parse_status"),
+                row.getLong("row_version")));
     }
 
     @Override

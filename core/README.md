@@ -55,6 +55,8 @@ com.ekl
 | 지식 | 원본 근거를 지정하는 `POST /knowledge`, 초안 본문을 수정하는 `PATCH /knowledge/{id}/versions/{version}`, `POST /knowledge/{id}/versions/{version}/retire` |
 | 배포 | 기존 공유 범위 내 수동 배포 `POST /distributions`, 실패 건 재전달 요청 `POST /distributions/{id}/redeliver`, `POST /distributions/{id}/acknowledgements` |
 
+웹 작업 공간에서 `GET /documents`, `GET /document-folders`, `GET /voices`, `GET /cases`로 현재 업무 소속에서 열람할 수 있는 목록을 조회합니다. 문서 업로드 전에 `POST /documents/policy-preview`로 적용할 템플릿 또는 폴더 상속 규칙을 확인합니다. VOC 상세는 정제가 완료된 본문만 반환합니다.
+
 등록 전에 조직 또는 소유 부서의 활성 정책 템플릿이 필요합니다. 하위 폴더와 그 안의 문서는 부모 폴더의 정책을 상속할 수 있습니다. 문서 업로드는 PDF·DOCX·UTF-8 TXT를 파일당 10 MiB까지 받습니다. 원본과 VOC 원문은 `EKL_BLOB_ROOT`로 지정한 로컬 디렉터리에 보관합니다. 기본 경로는 실행 디렉터리의 `var/blobs`입니다. 파싱·색인·배포·재전달 요청의 `job_id`는 DB outbox의 작업 ID입니다.
 
 ### 문서 유형 확장

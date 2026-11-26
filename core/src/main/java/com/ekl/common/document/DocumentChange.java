@@ -5,6 +5,10 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class DocumentChange {
+    public record PolicyPreview(@JsonProperty("owner_department_id") UUID department,
+                                @JsonProperty("classification_level") Integer classification,
+                                @JsonProperty("folder_id") UUID folder) {
+    }
     private DocumentChange() {
     }
 

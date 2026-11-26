@@ -1,0 +1,31 @@
+.page { display: grid; gap: var(--space-5); }
+.heading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
+.crumb { color: var(--color-primary); font-size: var(--text-small); font-weight: 700; }
+.intro { color: var(--color-muted); font-size: var(--text-small); margin-top: .25rem; }
+.columns { display: grid; grid-template-columns: minmax(14rem, .85fr) minmax(0, 1.65fr); gap: var(--space-4); align-items: start; }
+.panel { min-width: 0; border: 1px solid var(--color-line); background: var(--color-surface); border-radius: var(--radius-panel); }
+.panelHeading { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-line); }
+.body, .form { display: grid; gap: var(--space-4); padding: var(--space-4); min-width: 0; }
+.form { padding: 0; }
+.row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .5rem; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.formActions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; }
+.queue { list-style: none; margin: 0; padding: 0; }
+.queue li + li { border-top: 1px solid var(--color-line); }
+.queue button {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem; align-items: start; width: 100%;
+  padding: .65rem .8rem; color: var(--color-ink); background: transparent; text-align: left; border: 0;
+}
+.queue button:hover { background: var(--color-bg); }
+.queue button[aria-current] { background: var(--color-selected); color: var(--color-primary); }
+.queue button strong, .title { overflow-wrap: anywhere; }
+.queue button small { color: var(--color-muted); text-align: left; font-size: var(--text-small); }
+.queue button span:first-child { display: grid; gap: .2rem; }
+.queueFooter { padding: .65rem .8rem; display: grid; gap: .5rem; justify-items: start; }
+.meta { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .35rem .75rem; margin: 0; font-size: var(--text-small); }
+.meta dt { color: var(--color-muted); }
+.meta dd { margin: 0; overflow-wrap: anywhere; }
+.text { color: var(--color-ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.section { display: grid; gap: .375rem; border-top: 1px solid var(--color-line); padding-top: .875rem; }
+@media (max-width: 960px) { .columns { grid-template-columns: minmax(12rem, .8fr) minmax(0, 1.2fr); } }
+@media (max-width: 660px) { .columns { grid-template-columns: minmax(0, 1fr); } }

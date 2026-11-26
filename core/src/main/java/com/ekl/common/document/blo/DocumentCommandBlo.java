@@ -3,10 +3,12 @@ package com.ekl.common.document.blo;
 import java.util.UUID;
 
 import com.ekl.common.auth.RequestActor;
+import com.ekl.common.acl.RegistrationPolicyPreview;
 import com.ekl.common.document.DocumentChange;
 import com.ekl.common.support.CommandResult;
 
 public interface DocumentCommandBlo {
+    RegistrationPolicyPreview preview(RequestActor actor, DocumentChange.PolicyPreview input);
     CommandResult create(RequestActor actor, String key, DocumentChange.Create input);
 
     CommandResult addVersion(RequestActor actor, UUID id, String key, Long version, DocumentChange.File file);

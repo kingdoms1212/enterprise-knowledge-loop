@@ -1,0 +1,20 @@
+.screen { min-height: 100vh; display: grid; align-content: center; justify-items: center; gap: 1rem; padding: clamp(1rem, 4vw, 3rem); }
+.frame { width: min(100%, 54rem); display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); border: 1px solid var(--color-line); border-radius: var(--radius-panel); overflow: hidden; background: var(--color-surface); }
+.brandPanel { display: grid; gap: 1.6rem; align-content: start; background: var(--color-selected); border-right: 1px solid #ccdfec; padding: clamp(1.5rem, 4vw, 2.75rem); }
+.brandPanel p { color: var(--color-muted); font-size: .9375rem; }
+.panel, .assignment { padding: clamp(1.25rem, 4vw, 2.75rem); display: grid; gap: var(--space-5); }
+.assignment { width: min(100%, 38rem); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+.description { margin-top: .375rem; color: var(--color-muted); font-size: var(--text-small); }
+.form { display: grid; gap: var(--space-4); }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+.options { border: 0; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.options legend { margin-bottom: .5rem; font-weight: 700; font-size: .875rem; }
+.option { display: flex; align-items: center; gap: .75rem; min-height: 50px; padding: .5rem .75rem; border: 1px solid var(--color-line); border-radius: var(--radius-control); cursor: pointer; }
+.option:has(input:checked) { background: var(--color-selected); border-color: #9fc8e1; }
+.option input { margin: 0; accent-color: var(--color-primary); }
+.option small { margin-left: auto; color: var(--color-muted); }
+.footer { width: min(100%, 54rem); color: var(--color-muted); text-align: right; font-size: var(--text-small); }
+@media (max-width: 660px) {
+  .frame { grid-template-columns: minmax(0, 1fr); }
+  .brandPanel { border-right: 0; border-bottom: 1px solid #ccdfec; gap: .75rem; }
+}

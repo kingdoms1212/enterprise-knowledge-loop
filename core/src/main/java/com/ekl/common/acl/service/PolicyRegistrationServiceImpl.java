@@ -1,6 +1,7 @@
 package com.ekl.common.acl.service;
 
 import com.ekl.common.acl.ResourcePolicyRegistration;
+import com.ekl.common.acl.RegistrationPolicyPreview;
 import com.ekl.common.acl.blo.PolicyRegistrationBlo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,6 +13,12 @@ class PolicyRegistrationServiceImpl implements PolicyRegistrationService {
 
     PolicyRegistrationServiceImpl(PolicyRegistrationBlo blo) {
         this.blo = blo;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public RegistrationPolicyPreview preview(ResourcePolicyRegistration registration) {
+        return blo.preview(registration);
     }
 
     @Override

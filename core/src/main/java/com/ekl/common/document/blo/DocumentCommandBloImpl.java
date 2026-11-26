@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.zip.ZipFile;
 
 import com.ekl.common.acl.ResourcePolicyRegistration;
+import com.ekl.common.acl.RegistrationPolicyPreview;
 import com.ekl.common.acl.service.AuthorizationService;
 import com.ekl.common.acl.service.PolicyRegistrationService;
 import com.ekl.common.auth.RequestActor;
@@ -46,18 +47,27 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
     }
 
     @Override
+    public RegistrationPolicyPreview preview(RequestActor actor, DocumentChange.PolicyPreview input) {
+        var session = login.current(actor.sessionId(), actor.accountId());
+        requireUploadTarget(session, input.department(), input.classification());
+        if (input.folder() != null) {
+            var read = auth.checkRead(session, input.folder(), "FOLDER");
+            if (!read.allowed() || read.emergency()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            requireFolderWrite(session, input.folder());
+        }
+        return policies.preview(new ResourcePolicyRegistration(session.organizationId(), actor.accountId(), null,
+                "DOCUMENT", input.department(), input.classification(), input.folder()));
+    }
+
+    @Override
     public CommandResult create(RequestActor actor, String key, DocumentChange.Create input) {
         var session = login.current(actor.sessionId(), actor.accountId());
         var title = CommandRules.required(input.title(), 255);
-        if (input.department() == null || input.classification() == null
-                || input.classification() < 0 || input.classification() > 3) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_CONTENT);
-        }
-        requireUpload(session, input.department());
+        requireUploadTarget(session, input.department(), input.classification());
         commands.lockOrganization(session.organizationId());
-        if (input.folder() != null && !auth.check(session, input.folder(), "FOLDER", "WRITE").allowed()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        requireFolderWrite(session, input.folder());
         var file = validatedFile(input.file());
         return commands.once(session, "POST /documents", key,
                 CommandRules.digest(title, input.department(), input.folder(), input.classification(), file.mime(), file.hash()),
@@ -148,6 +158,19 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
     private void requireUpload(SessionContext session, UUID department) {
         if (!auth.hasRole(session, "DOCUMENT_UPLOAD", department)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    private void requireUploadTarget(SessionContext session, UUID department, Integer classification) {
+        if (department == null || classification == null || classification < 0 || classification > 3) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_CONTENT);
+        }
+        requireUpload(session, department);
+    }
+
+    private void requireFolderWrite(SessionContext session, UUID folder) {
+        if (folder != null && !auth.check(session, folder, "FOLDER", "WRITE").allowed()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

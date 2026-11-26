@@ -1,0 +1,18 @@
+.badge {
+  display: inline-flex; align-items: center; gap: .35rem; min-height: 1.5rem;
+  padding: .125rem .5rem; border-radius: 4px; font-size: .8125rem; font-weight: 650; line-height: 1.4;
+}
+.neutral { background: var(--color-neutral-bg); color: var(--color-muted); }
+.info { background: var(--color-selected); color: var(--color-primary); }
+.success { background: var(--color-success-bg); color: var(--color-success); }
+.warning { background: var(--color-warning-bg); color: var(--color-warning); }
+.danger { background: var(--color-danger-bg); color: var(--color-danger); }
+.ai { background: var(--color-ai-bg); color: var(--color-ai); }
+.notice { border-left: 3px solid currentColor; padding: .625rem .875rem; border-radius: var(--radius-control); font-size: .875rem; }
+.notice strong + p { margin-top: .125rem; }
+.empty { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-5); }
+.empty p { color: var(--color-muted); font-size: var(--text-small); }
+.skeleton { display: grid; gap: var(--space-3); padding: var(--space-5); }
+.skeleton span { display: block; height: .75rem; border-radius: 4px; background: #e5edf4; }
+.skeleton span:nth-child(2) { width: 76%; }
+.skeleton span:nth-child(3) { width: 56%; }

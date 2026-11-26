@@ -375,6 +375,9 @@ class CoreBootstrapTest {
             var noRole = authRequest(client, "GET", documentPath, null, authenticatedCookie, null);
             assertThat(noRole.statusCode()).isEqualTo(404);
             assertThat(noRole.body()).doesNotContain("ACL-filtered operating manual");
+            var noList = authRequest(client, "GET", "/api/v1/documents", null, authenticatedCookie, null);
+            assertThat(noList.statusCode()).isEqualTo(200);
+            assertThat(JSON.readTree(noList.body()).get("items").size()).isZero();
             var switchToPrimary = authRequest(client, "PUT", "/api/v1/sessions/current/assignment",
                     assignmentBody.formatted(loginFixtureId(41)).replace(":1", ":2"),
                     authenticatedCookie, authenticatedCsrf);
@@ -386,6 +389,9 @@ class CoreBootstrapTest {
             assertThat(detailJson.get("versions").get(0).get("versionNumber").asInt()).isEqualTo(2);
             assertThat(detailJson.get("versions").get(1).get("parseStatus").asString()).isEqualTo("PARSED");
             assertThat(detailJson.get("policy").get("classificationLevel").asInt()).isEqualTo(1);
+            var visible = authRequest(client, "GET", "/api/v1/documents?view=RECENT", null, authenticatedCookie, null);
+            assertThat(visible.statusCode()).as(visible.body()).isEqualTo(200);
+            assertThat(visible.body()).contains("ACL-filtered operating manual").doesNotContain(loginFixtureId(57).toString());
             assertThat(jdbc.queryForObject("""
                     select count(*) from audit.audit_events
                     where actor_id = ? and target_resource_id = ? and decision = 'ALLOW' and action = 'READ'
@@ -396,6 +402,9 @@ class CoreBootstrapTest {
                     """, documentId, loginFixtureId(57));
             assertThat(authRequest(client, "GET", documentPath, null, authenticatedCookie, null)
                     .statusCode()).isEqualTo(404);
+            var restricted = authRequest(client, "GET", "/api/v1/documents?view=RECENT", null, authenticatedCookie, null);
+            assertThat(restricted.statusCode()).isEqualTo(200);
+            assertThat(JSON.readTree(restricted.body()).get("items").size()).isZero();
             assertThat(jdbc.queryForObject("""
                     select count(*) from audit.audit_events where actor_id = ? and target_resource_id = ?
                     and decision = 'DENY' and reason_code = 'SOURCE_READ_REQUIRED'
@@ -457,10 +466,38 @@ class CoreBootstrapTest {
         assertThat(authRequest(client, "PATCH", folderPath, """
                 {"name":"Stale rename","expected_version":0}
                 """, cookie, token).statusCode()).isEqualTo(409);
+        var secondFolder = keyedRequest(client, "/api/v1/document-folders",
+                folderBody.replace("Write test folder", "Second test folder"), cookie, token, "folder-2");
+        assertThat(secondFolder.statusCode()).as(secondFolder.body()).isEqualTo(201);
+        var foldersPath = "/api/v1/document-folders?owner_department_id=" + department + "&limit=1";
+        var firstPage = authRequest(client, "GET", foldersPath, null, cookie, null);
+        assertThat(firstPage.statusCode()).as(firstPage.body()).isEqualTo(200);
+        var firstFolders = JSON.readTree(firstPage.body());
+        assertThat(firstFolders.get("items").size()).isEqualTo(1);
+        assertThat(firstFolders.get("nextCursor").isNull()).isFalse();
+        var nextPage = authRequest(client, "GET", foldersPath + "&cursor=" + firstFolders.get("nextCursor").asString(),
+                null, cookie, null);
+        assertThat(nextPage.statusCode()).as(nextPage.body()).isEqualTo(200);
+        var nextFolders = JSON.readTree(nextPage.body());
+        assertThat(nextFolders.get("items").size()).isEqualTo(1);
+        assertThat(nextFolders.get("nextCursor").isNull()).isTrue();
+        assertThat(nextFolders.get("items").get(0)).isNotEqualTo(firstFolders.get("items").get(0));
+
+        var previewBody = """
+                {"owner_department_id":"%s","classification_level":2,"folder_id":"%s"}
+                """.formatted(department, folder);
+        var preview = authRequest(client, "POST", "/api/v1/documents/policy-preview", previewBody, cookie, token);
+        assertThat(preview.statusCode()).as(preview.body()).isEqualTo(200);
+        assertThat(preview.body()).contains("INHERITED", "Renamed folder", "READ").doesNotContain(loginFixtureId(52).toString());
+        assertThat(authRequest(client, "POST", "/api/v1/documents/policy-preview",
+                previewBody.replace(folder.toString(), UUID.randomUUID().toString()), cookie, token).statusCode()).isEqualTo(404);
 
         var upload = uploadTextDocument(client, cookie, token, folder, department);
         assertThat(upload.statusCode()).as(upload.body()).isEqualTo(202);
         var document = UUID.fromString(JSON.readTree(upload.body()).get("document_id").asString());
+        var folderDocuments = authRequest(client, "GET", "/api/v1/documents?folder_id=" + folder, null, cookie, null);
+        assertThat(folderDocuments.statusCode()).as(folderDocuments.body()).isEqualTo(200);
+        assertThat(folderDocuments.body()).contains(document.toString());
         var version = jdbc.queryForObject("select current_version_id from intake.documents where id = ?", UUID.class,
                 document);
         assertThat(jdbc.queryForObject("""
@@ -520,19 +557,38 @@ class CoreBootstrapTest {
                  "expected_version":0}
                 """.formatted(department, actor);
         jdbc.update("update iam.employments set clearance_level = 3 where id = ?", loginFixtureId(31));
+        var voicePath = "/api/v1/voices/" + voice;
+        var unclean = authRequest(client, "GET", voicePath, null, cookie, null);
+        assertThat(unclean.statusCode()).as(unclean.body()).isEqualTo(200);
+        assertThat(JSON.readTree(unclean.body()).get("cleanText").isNull()).isTrue();
+        assertThat(unclean.body()).doesNotContain("VOC body canary");
+        assertThat(authRequest(client, "GET", "/api/v1/voices", null, cookie, null).body())
+                .contains(voice.toString()).doesNotContain("VOC body canary");
         assertThat(keyedRequest(client, triage, triageBody, cookie, token, "triage-1").statusCode()).isEqualTo(409);
         jdbc.update("""
                 update intake.voices set pii_status = 'CLEANED', clean_text = 'Cleaned test input',
                     triage_status = 'ANALYSIS_FAILED' where id = ?
                 """, voice);
+        var cleaned = authRequest(client, "GET", voicePath, null, cookie, null);
+        assertThat(cleaned.statusCode()).as(cleaned.body()).isEqualTo(200);
+        assertThat(cleaned.body()).contains("Cleaned test input").doesNotContain("VOC body canary");
+        assertThat(JSON.readTree(cleaned.body()).get("canTriage").asBoolean()).isTrue();
         var triaged = keyedRequest(client, triage, triageBody, cookie, token, "triage-1");
         assertThat(triaged.statusCode()).as(triaged.body()).isEqualTo(201);
         var caseId = UUID.fromString(JSON.readTree(triaged.body()).get("case_id").asString());
+        var openedCase = authRequest(client, "GET", "/api/v1/cases/" + caseId, null, cookie, null);
+        assertThat(openedCase.statusCode()).as(openedCase.body()).isEqualTo(200);
+        assertThat(JSON.readTree(openedCase.body()).get("canDecide").asBoolean()).isTrue();
+        assertThat(authRequest(client, "GET", "/api/v1/cases", null, cookie, null).body()).contains(caseId.toString());
         var close = "/api/v1/cases/" + caseId + "/close";
         var closed = keyedRequest(client, close, """
                 {"close_type":"NO_REPLY_NEEDED","close_note":"No reply required","expected_version":0}
                 """, cookie, token, "close-1");
         assertThat(closed.statusCode()).as(closed.body()).isEqualTo(200);
+        var closedCase = authRequest(client, "GET", "/api/v1/cases/" + caseId, null, cookie, null);
+        assertThat(closedCase.statusCode()).as(closedCase.body()).isEqualTo(200);
+        assertThat(closedCase.body()).contains("NO_REPLY_NEEDED", "No reply required");
+        assertThat(JSON.readTree(closedCase.body()).get("canDecide").asBoolean()).isFalse();
         assertThat(jdbc.queryForObject("select close_type from casework.cases where id = ?", String.class, caseId))
                 .isEqualTo("NO_REPLY_NEEDED");
         assertThat(jdbc.queryForObject("select count(*) from casework.outcomes where case_id = ?", Integer.class,

@@ -1,0 +1,20 @@
+.dialog {
+  width: min(35rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); padding: 0;
+  border: 1px solid var(--color-line); border-radius: var(--radius-panel);
+  background: var(--color-surface); color: var(--color-ink);
+}
+.dialog::backdrop { background: rgb(15 42 67 / 44%); }
+.head { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .75rem 1.25rem; border-bottom: 1px solid var(--color-line); }
+.body { padding: var(--space-5); }
+.table { width: 100%; border-collapse: collapse; text-align: left; font-size: var(--text-small); }
+.table th, .table td { padding: .65rem .8rem; vertical-align: middle; overflow-wrap: anywhere; border-bottom: 1px solid var(--color-line); }
+.table th { color: var(--color-muted); font-weight: 700; background: var(--color-bg); }
+.table tbody tr:last-child td { border-bottom: 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: var(--space-1); border-bottom: 1px solid var(--color-line); padding: var(--space-2); }
+.tab {
+  min-height: var(--control-height); padding: .375rem .75rem; border: 0; border-radius: var(--radius-control);
+  background: transparent; color: var(--color-muted); font-size: var(--text-small);
+}
+.tab:hover { background: var(--color-bg); }
+.tab[aria-selected=true] { background: var(--color-selected); color: var(--color-primary); font-weight: 700; }
+.tabContent { padding: var(--space-4); }

@@ -1,8 +1,11 @@
 package com.ekl.common.acl.service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.ekl.common.acl.AccessDecision;
+import com.ekl.common.acl.ResourceReadScope;
 import com.ekl.common.acl.blo.AuthorizationBlo;
 import com.ekl.common.auth.SessionContext;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,12 @@ class AuthorizationServiceImpl implements AuthorizationService {
 
     AuthorizationServiceImpl(AuthorizationBlo blo) {
         this.blo = blo;
+    }
+
+    @Override
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    public Map<UUID, ResourceReadScope> readableScopes(SessionContext session, List<UUID> ids, String type) {
+        return blo.readableScopes(session, ids, type);
     }
 
     @Override

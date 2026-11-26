@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.ekl.common.auth.RequestActor;
+import com.ekl.common.acl.RegistrationPolicyPreview;
 import com.ekl.common.document.DocumentChange;
 import com.ekl.common.document.service.DocumentCommandService;
 import com.ekl.common.support.CommandResult;
@@ -31,6 +32,13 @@ class DocumentCommandController {
 
     DocumentCommandController(DocumentCommandService documents) {
         this.documents = documents;
+    }
+
+    @PostMapping("/policy-preview")
+    @PreAuthorize("isAuthenticated()")
+    public RegistrationPolicyPreview preview(HttpServletRequest request, Authentication authentication,
+                                             @RequestBody DocumentChange.PolicyPreview input) {
+        return documents.preview(RequestActor.from(request, authentication), input);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

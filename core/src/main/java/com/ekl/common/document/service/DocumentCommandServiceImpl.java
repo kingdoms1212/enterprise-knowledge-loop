@@ -3,6 +3,7 @@ package com.ekl.common.document.service;
 import java.util.UUID;
 
 import com.ekl.common.auth.RequestActor;
+import com.ekl.common.acl.RegistrationPolicyPreview;
 import com.ekl.common.document.DocumentChange;
 import com.ekl.common.support.CommandResult;
 import com.ekl.common.document.blo.DocumentCommandBlo;
@@ -15,6 +16,12 @@ class DocumentCommandServiceImpl implements DocumentCommandService {
 
     DocumentCommandServiceImpl(DocumentCommandBlo blo) {
         this.blo = blo;
+    }
+
+    @Override
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
+    public RegistrationPolicyPreview preview(RequestActor actor, DocumentChange.PolicyPreview input) {
+        return blo.preview(actor, input);
     }
 
     @Override

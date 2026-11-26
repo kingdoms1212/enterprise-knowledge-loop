@@ -1,0 +1,37 @@
+:root {
+  color-scheme: light;
+  --color-ink: #0f2a43;
+  --color-muted: #52687c;
+  --color-primary: #0369a1;
+  --color-accent: #0ea5e9;
+  --color-bg: #f5f8fb;
+  --color-surface: #ffffff;
+  --color-line: #dde6ee;
+  --color-field-line: #8a9cad;
+  --color-selected: #e6f3fb;
+  --color-success: #216548;
+  --color-success-bg: #e8f4ed;
+  --color-warning: #805414;
+  --color-warning-bg: #fff1d8;
+  --color-danger: #a33329;
+  --color-danger-bg: #ffedea;
+  --color-ai: #674496;
+  --color-ai-bg: #f0eafa;
+  --color-neutral-bg: #edf1f4;
+  --font-sans: Pretendard, "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-mono: Consolas, ui-monospace, monospace;
+  --text-small: .875rem;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --radius-control: 6px;
+  --radius-panel: 9px;
+  --control-height: 2.5rem;
+}
+@media (pointer: coarse) {
+  :root { --control-height: 2.75rem; }
+}

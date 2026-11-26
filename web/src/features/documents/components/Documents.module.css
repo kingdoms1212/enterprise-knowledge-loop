@@ -1,0 +1,15 @@
+.form, .content { display: grid; gap: var(--space-4); min-width: 0; }
+.content { padding: var(--space-4); }
+.content button { justify-self: start; }
+.actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--space-2); }
+.title { font-size: 1.125rem; overflow-wrap: anywhere; }
+.summary { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .375rem .75rem; margin: 0; font-size: var(--text-small); }
+.summary dt { color: var(--color-muted); }
+.summary dd { margin: 0; font-weight: 650; }
+.preview { display: grid; gap: .25rem; padding: .75rem; background: var(--color-bg); border: 1px solid var(--color-line); border-radius: var(--radius-control); font-size: var(--text-small); }
+.preview ul { display: flex; flex-wrap: wrap; gap: .25rem .75rem; margin: .25rem 0 0; padding-inline-start: 1rem; }
+.preview button { justify-self: start; }
+.toolbar { display: flex; flex-wrap: wrap; gap: .5rem; }
+.versionTable { overflow-x: auto; }
+.versionTable table { min-width: 18rem; }
+.versionAction small { color: var(--color-muted); }

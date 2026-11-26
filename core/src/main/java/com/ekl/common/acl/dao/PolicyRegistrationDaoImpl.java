@@ -45,7 +45,7 @@ class PolicyRegistrationDaoImpl implements PolicyRegistrationDao {
     public Optional<Template> template(ResourcePolicyRegistration r) {
         return jdbc.sql("""
                 select id, revision, sharing_scope, department_scope_mode, customer_scope_mode,
-                       project_scope_mode, inherit_acl
+                       project_scope_mode, inherit_acl, name
                   from iam.policy_templates t
                  where organization_id = :org and resource_type = :type and classification_level = :level
                    and (department_id = :dept or department_id is null) and status = 'ACTIVE'
@@ -56,7 +56,7 @@ class PolicyRegistrationDaoImpl implements PolicyRegistrationDao {
                 """).param("org", r.organizationId()).param("type", r.resourceType())
                 .param("level", r.classification()).param("dept", r.departmentId())
                 .query((row, index) -> new Template(row.getObject(1, UUID.class), row.getLong(2), row.getString(3),
-                        row.getString(4), row.getString(5), row.getString(6), row.getBoolean(7))).optional();
+                        row.getString(4), row.getString(5), row.getString(6), row.getBoolean(7), row.getString(8))).optional();
     }
 
     @Override
@@ -86,6 +86,30 @@ class PolicyRegistrationDaoImpl implements PolicyRegistrationDao {
                  order by p.id, e.action, e.effect
                 """).param("org", r.organizationId()).param("dept", r.departmentId()).param("template", template)
                 .query((row, index) -> new Rule(row.getObject(1, UUID.class), row.getString(2), row.getString(3))).list();
+    }
+
+    @Override
+    public Optional<FolderPolicy> inheritedPolicy(ResourcePolicyRegistration r) {
+        return jdbc.sql("""
+                select p.acl_id, f.name, coalesce(:level, p.classification_level), p.sharing_scope
+                  from iam.resource_policies p join intake.document_folders f on f.id = p.resource_id
+                 where p.resource_id = :parent and p.organization_id = :org and p.owner_department_id = :dept
+                   and f.archived_at is null and not p.blocked and p.classification_level is not null
+                   and coalesce(:level, p.classification_level) <= p.classification_level
+                """).param("level", r.classification()).param("parent", r.parentId()).param("org", r.organizationId())
+                .param("dept", r.departmentId()).query((row, index) ->
+                        new FolderPolicy(row.getObject(1, UUID.class), row.getString(2), row.getInt(3), row.getString(4))).optional();
+    }
+
+    @Override
+    public List<Rule> currentRules(UUID acl) {
+        return jdbc.sql("""
+                select principal_id, action, effect from iam.aces
+                 where acl_id = :acl and emergency_grant_id is null and valid_from <= now()
+                   and (expires_at is null or expires_at > now())
+                 order by action, effect, principal_id
+                """).param("acl", acl).query((row, index) ->
+                        new Rule(row.getObject(1, UUID.class), row.getString(2), row.getString(3))).list();
     }
 
     @Override
