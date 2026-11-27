@@ -3,7 +3,7 @@ package com.ekl.core.job.dao;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.ekl.core.job.DocumentParseJob;
+import com.ekl.core.job.DocumentOutboxJob;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +16,12 @@ class DocumentParseJobDaoImpl implements DocumentParseJobDao {
     }
 
     @Override
-    public Optional<DocumentParseJob> claim() {
+    public Optional<DocumentOutboxJob> claim(String eventType) {
         var lease = UUID.randomUUID();
         return jdbc.sql("""
                 with candidate as (
                     select event_id, attempts >= max_attempts as exhausted from ops.outbox
-                    where aggregate_type = 'DOCUMENT' and event_type = 'ParseRequested'
+                    where aggregate_type = 'DOCUMENT' and event_type = :eventType
                       and ((state in ('PENDING', 'RETRY_WAIT') and available_at <= now())
                         or (state = 'RUNNING' and lease_until <= now()))
                     order by available_at, created_at, event_id
@@ -33,14 +33,14 @@ class DocumentParseJobDaoImpl implements DocumentParseJobDao {
                 from candidate c where o.event_id = c.event_id
                 returning o.event_id, o.aggregate_id, (o.payload ->> 'version_id')::uuid, o.attempts,
                           o.max_attempts, c.exhausted
-                """).param("lease", lease.toString())
-                .query((row, index) -> new DocumentParseJob(row.getObject(1, UUID.class),
+                """).param("lease", lease.toString()).param("eventType", eventType)
+                .query((row, index) -> new DocumentOutboxJob(row.getObject(1, UUID.class),
                         row.getObject(2, UUID.class), row.getObject(3, UUID.class), lease,
                         row.getInt(4), row.getInt(5), row.getBoolean(6))).optional();
     }
 
     @Override
-    public Optional<DocumentParseJob.Input> input(DocumentParseJob job) {
+    public Optional<DocumentOutboxJob.Input> input(DocumentOutboxJob job) {
         return jdbc.sql("""
                 select v.blob_key, v.mime, v.sha256 from intake.document_versions v
                 join intake.documents d on d.id = v.document_id
@@ -48,12 +48,12 @@ class DocumentParseJobDaoImpl implements DocumentParseJobDao {
                 where v.id = :version and d.id = :document and d.disposed_at is null
                   and v.parse_status = 'PENDING' and b.state = 'ACTIVE' and b.zone = 'QUARANTINE'
                 """).param("document", job.document()).param("version", job.version())
-                .query((row, index) -> new DocumentParseJob.Input(row.getString(1), row.getString(2),
+                .query((row, index) -> new DocumentOutboxJob.Input(row.getString(1), row.getString(2),
                         row.getBytes(3))).optional();
     }
 
     @Override
-    public boolean lockLease(DocumentParseJob job) {
+    public boolean lockLease(DocumentOutboxJob job) {
         return jdbc.sql("""
                 select event_id from ops.outbox
                 where event_id = :id and state = 'RUNNING' and lease_owner = :lease and lease_until > now()
@@ -63,7 +63,7 @@ class DocumentParseJobDaoImpl implements DocumentParseJobDao {
     }
 
     @Override
-    public void updateDocument(DocumentParseJob job, String status, String result) {
+    public void updateDocument(DocumentOutboxJob job, String status, String result) {
         var active = jdbc.sql("""
                 select id from intake.documents where id = :document and disposed_at is null for update
                 """).param("document", job.document()).query(UUID.class).optional();
@@ -77,7 +77,7 @@ class DocumentParseJobDaoImpl implements DocumentParseJobDao {
     }
 
     @Override
-    public void finish(DocumentParseJob job, String state, String error) {
+    public void finish(DocumentOutboxJob job, String state, String error) {
         jdbc.sql("""
                 update ops.outbox set state = :state, last_error_code = :error,
                     lease_owner = null, lease_until = null,

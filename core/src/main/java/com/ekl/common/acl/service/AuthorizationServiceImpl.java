@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.ekl.common.acl.AccessDecision;
 import com.ekl.common.acl.ResourceReadScope;
+import com.ekl.common.acl.ResourceSearchScope;
 import com.ekl.common.acl.blo.AuthorizationBlo;
 import com.ekl.common.auth.SessionContext;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ class AuthorizationServiceImpl implements AuthorizationService {
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public Map<UUID, ResourceReadScope> readableScopes(SessionContext session, List<UUID> ids, String type) {
         return blo.readableScopes(session, ids, type);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResourceSearchScope> searchableScopes(SessionContext session, List<UUID> ids, String type) {
+        return blo.searchableScopes(session, ids, type);
     }
 
     @Override

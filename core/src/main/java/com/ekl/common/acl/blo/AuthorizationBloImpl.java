@@ -1,6 +1,7 @@
 package com.ekl.common.acl.blo;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 import com.ekl.common.acl.AccessDecision;
 import com.ekl.common.acl.ResourceReadScope;
+import com.ekl.common.acl.ResourceSearchScope;
 import com.ekl.common.acl.dao.AuthorizationDao;
 import com.ekl.common.acl.dao.AuthorizationDao.DimensionValue;
 import com.ekl.common.acl.dao.AuthorizationDao.Policy;
@@ -61,6 +63,26 @@ class AuthorizationBloImpl implements AuthorizationBlo {
             }
         }
         return Map.copyOf(readable);
+    }
+
+    @Override
+    public List<ResourceSearchScope> searchableScopes(SessionContext session, List<UUID> ids, String type) {
+        var actor = loadActor(session);
+        if (actor == null || !actor.actions().containsAll(Set.of("READ", "SEARCH"))) {
+            return List.of();
+        }
+        var scopes = new ArrayList<ResourceSearchScope>();
+        for (UUID id : ids) {
+            var policy = dao.loadPolicy(session.organizationId(), id).orElse(null);
+            if (policy == null || !type.equals(policy.resourceType())) {
+                continue;
+            }
+            var read = evaluate(actor, policy, "READ", new HashSet<>());
+            if (read.allowed() && !read.emergency() && evaluate(actor, policy, "SEARCH", new HashSet<>()).allowed()) {
+                scopes.add(new ResourceSearchScope(session.organizationId(), id, policy.aclId(), policy.revision()));
+            }
+        }
+        return List.copyOf(scopes);
     }
 
     private Actor loadActor(SessionContext session) {

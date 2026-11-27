@@ -46,6 +46,7 @@ class CoreSecurity {
                         .requestMatchers(HttpMethod.GET, "/api/v1/voices", "/api/v1/voices/capabilities",
                                 "/api/v1/voices/{id}", "/api/v1/cases", "/api/v1/cases/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/documents", "/api/v1/documents/policy-preview",
+                                "/api/v1/rag/queries",
                                 "/api/v1/documents/{id}/versions",
                                 "/api/v1/documents/{id}/versions/{version}/publish",
                                 "/api/v1/documents/{id}/versions/{version}/unpublish", "/api/v1/documents/{id}/retire",

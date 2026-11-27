@@ -21,10 +21,12 @@ import com.ekl.common.group.service.GroupService;
 import com.ekl.common.support.service.IdempotencyService;
 import com.ekl.common.user.service.UserService;
 import com.ekl.core.audit.service.AuditService;
+import com.ekl.core.ai.GenerationPort;
 import com.ekl.core.casework.service.CaseService;
 import com.ekl.core.distribution.service.DistributionService;
 import com.ekl.core.job.service.JobService;
 import com.ekl.core.job.service.DocumentParseJobService;
+import com.ekl.core.job.service.DocumentIndexService;
 import com.ekl.common.document.port.DocumentParsingPort.ParseStatus;
 import com.ekl.common.document.port.DocumentParsingPort.ParsedDocument;
 import com.ekl.common.document.port.DocumentParsingPort.ParsedSegment;
@@ -42,7 +44,9 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,7 +66,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(CoreBootstrapTest.TransactionProbeService.class)
+@Import({CoreBootstrapTest.TransactionProbeService.class, CoreBootstrapTest.DummyGenerationConfiguration.class})
 class CoreBootstrapTest {
     private static final JsonMapper JSON = JsonMapper.builder().build();
     private static final Path ROOT = Path.of("..").toAbsolutePath().normalize();
@@ -137,6 +141,9 @@ class CoreBootstrapTest {
 
     @Autowired
     private DocumentParseJobService parseJobs;
+
+    @Autowired
+    private DocumentIndexService indexJobs;
 
     @Autowired
     private KnowledgeService knowledge;
@@ -542,6 +549,7 @@ class CoreBootstrapTest {
         assertThat(published.statusCode()).as(published.body()).isEqualTo(202);
         assertThat(keyedRequest(client, publish, versionOne, cookie, token, "publish-1").body())
                 .isEqualTo(published.body());
+        exerciseDocumentQuery(client, cookie, token, document, folder, version, actor);
         exerciseKnowledgeAndDistribution(client, cookie, token, version, department, actor);
         var versionsPath = documentPath + "/versions";
         var documentBlob = jdbc.queryForObject("select blob_key from intake.document_versions where id = ?",
@@ -565,6 +573,11 @@ class CoreBootstrapTest {
         assertThat(withdrawal.statusCode()).as(withdrawal.body()).isEqualTo(200);
         assertThat(jdbc.queryForObject("select published_version_id from intake.documents where id = ?", UUID.class,
                 document)).isNull();
+        var retireIndex = indexJobs.claim("IndexRetire").orElseThrow();
+        indexJobs.handle(retireIndex, "IndexRetire");
+        assertThat(jdbc.queryForObject("""
+                select count(*) from knowledge.index_revisions where document_id = ? and superseded_at is not null
+                """, Integer.class, document)).isEqualTo(1);
         assertThat(authRequest(client, "GET", documentPath, null, cookie, null).statusCode()).isEqualTo(200);
         assertThat(authRequest(client, "POST", documentPath + "/retire", """
                 {"reason":"Test disposal","expected_version":5}
@@ -620,6 +633,84 @@ class CoreBootstrapTest {
                 .isEqualTo("NO_REPLY_NEEDED");
         assertThat(jdbc.queryForObject("select count(*) from casework.outcomes where case_id = ?", Integer.class,
                 caseId)).isZero();
+    }
+
+    private void exerciseDocumentQuery(HttpClient client, String cookie, Csrf token, UUID document, UUID folder,
+                                       UUID version, UUID actor) throws Exception {
+        var query = "{\"question\":\"contents canary\",\"top_k\":3}";
+        var before = authRequest(client, "POST", "/api/v1/rag/queries", query, cookie, token);
+        assertThat(before.statusCode()).as(before.body()).isEqualTo(200);
+        assertThat(JSON.readTree(before.body()).get("status").asString()).isEqualTo("NO_EVIDENCE");
+        var job = indexJobs.claim("IndexRequested").orElseThrow();
+        assertThat(job.version()).isEqualTo(version);
+        indexJobs.handle(job, "IndexRequested");
+        var revision = jdbc.queryForObject("select active_index_revision_id from intake.documents where id = ?",
+                UUID.class, document);
+        assertThat(revision).isNotNull();
+        assertThat(jdbc.queryForObject("""
+                select i.vector_state = 'PENDING' and i.keyword_state = 'READY' and c.acl_id = p.acl_id
+                from knowledge.index_revisions i join knowledge.chunks c on c.index_revision_id = i.id
+                join iam.resource_policies p on p.resource_id = i.document_id
+                where i.id = ?
+                """, Boolean.class, revision)).isTrue();
+
+        var answer = authRequest(client, "POST", "/api/v1/rag/queries", query, cookie, token);
+        assertThat(answer.statusCode()).as(answer.body()).isEqualTo(200);
+        var body = JSON.readTree(answer.body());
+        assertThat(body.get("status").asString()).as(answer.body()).isEqualTo("ANSWERED");
+        assertThat(body.get("generation_mode").asString()).isEqualTo("DUMMY");
+        assertThat(body.get("degraded").asBoolean()).isTrue();
+        assertThat(body.get("sources").get(0).get("document_version_id").asString()).isEqualTo(version.toString());
+        assertThat(body.get("sources").get(0).get("paragraph").asInt()).isEqualTo(1);
+        assertThat(answer.body()).doesNotContain("Document contents canary");
+        var requestId = UUID.fromString(body.get("request_id").asString());
+        assertThat(jdbc.queryForList("""
+                select stage from ops.rag_request_sources where request_id = ?
+                """, String.class, requestId)).containsExactlyInAnyOrder("RETRIEVED", "CONTEXT", "CITED");
+
+        // Change the folder's SEARCH policy for the requester while preserving its normal READ grants.
+        var acl = UUID.randomUUID();
+        var principal = UUID.randomUUID();
+        var organization = loginFixtureId(1);
+        jdbc.update("""
+                insert into iam.principals (id, organization_id, kind, user_id, person_id)
+                values (?, ?, 'USER', ?, ?)
+                """, principal, organization, actor, loginFixtureId(11));
+        jdbc.update("""
+                insert into iam.acls (id, organization_id, canonical_hash, canonical_json, policy_version, created_by)
+                values (?, ?, sha256('folder-search-revocation-test'), '{}', 1, ?)
+                """, acl, organization, actor);
+        jdbc.update("""
+                insert into iam.aces(acl_id, principal_id, action, effect, valid_from, created_by)
+                select ?, a.principal_id, a.action, a.effect, a.valid_from, a.created_by
+                from iam.aces a join iam.resource_policies p on p.acl_id = a.acl_id where p.resource_id = ?
+                """, acl, folder);
+        jdbc.update("""
+                insert into iam.aces(acl_id, principal_id, action, effect, valid_from, created_by)
+                values (?, ?, 'SEARCH', 'DENY', now(), ?)
+                """, acl, principal, actor);
+        jdbc.update("""
+                update iam.resource_policies set acl_id = ?, policy_revision = policy_revision + 1,
+                    effective_policy_hash = sha256('folder-search-revocation-test'), acl_origin = 'OVERRIDE',
+                    inherit_acl = false, override_reason = 'Integration test'
+                where resource_id = ?
+                """, acl, folder);
+        jdbc.update("update iam.policy_epoch set revision = revision + 1 where organization_id = ?", organization);
+        var denied = authRequest(client, "POST", "/api/v1/rag/queries", query, cookie, token);
+        assertThat(denied.statusCode()).as(denied.body()).isEqualTo(200);
+        var deniedBody = JSON.readTree(denied.body());
+        assertThat(deniedBody.get("status").asString()).isEqualTo("NO_EVIDENCE");
+        assertThat(deniedBody.get("sources").size()).isZero();
+        var deniedId = UUID.fromString(deniedBody.get("request_id").asString());
+        assertThat(jdbc.queryForObject("select count(*) from ops.rag_request_sources where request_id = ?",
+                Integer.class, deniedId)).isZero();
+        assertThat(jdbc.queryForObject("select outcome_reason from ops.rag_requests where id = ?",
+                String.class, deniedId)).isEqualTo("ALL_FILTERED");
+        assertThat(denied.body()).doesNotContain(document.toString(), version.toString(), "Document contents canary");
+        assertThat(authRequest(client, "GET", "/api/v1/documents/" + document, null, cookie, null).statusCode())
+                .isEqualTo(200);
+        assertThat(jdbc.queryForObject("select active_index_revision_id from intake.documents where id = ?",
+                UUID.class, document)).isEqualTo(revision);
     }
 
     private void exerciseKnowledgeAndDistribution(HttpClient client, String cookie, Csrf token, UUID source,
@@ -839,6 +930,16 @@ class CoreBootstrapTest {
 
     private HttpRequest request(String path) {
         return HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + path)).build();
+    }
+
+    @TestConfiguration(proxyBeanMethods = false)
+    static class DummyGenerationConfiguration {
+        @Bean
+        GenerationPort dummyGeneration() {
+            return (context, sources, tokenBudget, promptVersion) -> new GenerationPort.GeneratedAnswer(
+                    "Dummy response", sources.keySet().stream().limit(1).toList(),
+                    new GenerationPort.Usage(0, 0), "DUMMY");
+        }
     }
 
     static class TransactionProbeService {

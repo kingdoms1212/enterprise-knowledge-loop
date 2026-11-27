@@ -10,7 +10,7 @@ import com.ekl.common.document.port.DocumentParsingPort.ParseRequest;
 import com.ekl.common.document.port.DocumentParsingPort.ParsedDocument;
 import com.ekl.common.support.service.LocalBlobStore;
 import com.ekl.core.ai.AiCallFailure;
-import com.ekl.core.job.DocumentParseJob;
+import com.ekl.core.job.DocumentOutboxJob;
 import com.ekl.core.job.service.DocumentParseJobService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ class DocumentParseBloImpl implements DocumentParseBlo {
         jobs.claim().ifPresent(this::process);
     }
 
-    private void process(DocumentParseJob job) {
+    private void process(DocumentOutboxJob job) {
         var input = jobs.input(job);
         if (input.isEmpty()) {
             jobs.succeed(job, null);

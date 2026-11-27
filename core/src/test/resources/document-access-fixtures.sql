@@ -30,7 +30,7 @@ VALUES ('82000000-0000-0000-0000-000000000054', '82000000-0000-0000-0000-0000000
 
 INSERT INTO iam.role_permissions (role_id, permission_code)
 SELECT '82000000-0000-0000-0000-000000000051', p.action
-FROM (VALUES ('WRITE'), ('DOCUMENT_MANAGE'), ('DOCUMENT_UPLOAD'), ('VOICE_INTAKE_CREATE'),
+FROM (VALUES ('SEARCH'), ('WRITE'), ('DOCUMENT_MANAGE'), ('DOCUMENT_UPLOAD'), ('VOICE_INTAKE_CREATE'),
     ('VOICE_TRIAGE'), ('DECIDE'), ('RETIRE'), ('ACKNOWLEDGE'), ('CREATE'), ('DISTRIBUTE')) p(action);
 
 INSERT INTO iam.policy_change_requests (id, organization_id, target_resource_id, change_type, is_expansion,
@@ -52,8 +52,9 @@ FROM (VALUES ('82000000-0000-0000-0000-000000000061', 'FOLDER', 2),
 
 INSERT INTO iam.policy_template_entries (template_id, subject_kind, action, effect)
 SELECT t.id, 'OWNER_DEPARTMENT', a.action, 'ALLOW'
-FROM iam.policy_templates t CROSS JOIN (VALUES ('READ'), ('WRITE'), ('DECIDE'), ('DOCUMENT_MANAGE')) a(action)
+FROM iam.policy_templates t CROSS JOIN (VALUES ('READ'), ('SEARCH'), ('WRITE'), ('DECIDE'), ('DOCUMENT_MANAGE')) a(action)
 WHERE t.policy_change_id = '82000000-0000-0000-0000-000000000059'
+  AND (a.action <> 'SEARCH' OR t.resource_type = 'FOLDER')
   AND (a.action <> 'DOCUMENT_MANAGE' OR t.resource_type = 'FOLDER');
 
 INSERT INTO iam.policy_template_entries (template_id, subject_kind, action, effect)
@@ -68,3 +69,19 @@ INSERT INTO ops.pipeline_versions (id, code, parser_config, chunk_config, embedd
 VALUES ('82000000-0000-0000-0000-000000000067','command-test','{}','{}',
     '82000000-0000-0000-0000-000000000065','82000000-0000-0000-0000-000000000066',
     'command-test','command-test',sha256('command test'));
+
+-- Synthetic evaluation and activation for the isolated Core integration-test database.
+INSERT INTO eval.eval_sets(id, task, split, version, fixtures_hash) VALUES
+    ('82000000-0000-0000-0000-000000000068', 'ACL_LEAK', 'HOLDOUT', 82, sha256('document-fts-test'));
+INSERT INTO eval.eval_runs(id, eval_set_id, pipeline_version_id, environment_json, acl_leak_count, security_passed,
+    verdict, gate_criteria, started_by, finished_at) VALUES
+    ('82000000-0000-0000-0000-000000000069', '82000000-0000-0000-0000-000000000068',
+     '82000000-0000-0000-0000-000000000067', '{}', 0, true, 'PASS', '{"acl_leak_max":0}',
+     '82000000-0000-0000-0000-000000000021', now());
+INSERT INTO ops.pipeline_activations(id, organization_id, pipeline_version_id, kind, gate_eval_run_id, actor_account_id)
+VALUES ('82000000-0000-0000-0000-000000000070', '82000000-0000-0000-0000-000000000001',
+        '82000000-0000-0000-0000-000000000067', 'ACTIVATE', '82000000-0000-0000-0000-000000000069',
+        '82000000-0000-0000-0000-000000000021');
+INSERT INTO ops.active_pipeline(organization_id, pipeline_version_id, switched_by, activation_id)
+VALUES ('82000000-0000-0000-0000-000000000001', '82000000-0000-0000-0000-000000000067',
+        '82000000-0000-0000-0000-000000000021', '82000000-0000-0000-0000-000000000070');

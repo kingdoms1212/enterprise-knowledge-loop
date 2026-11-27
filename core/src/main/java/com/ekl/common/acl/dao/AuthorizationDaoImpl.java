@@ -27,9 +27,9 @@ class AuthorizationDaoImpl implements AuthorizationDao {
                                    and u.organization_id = e.organization_id
                  where a.id = :assignmentId and a.employment_id = :employmentId and a.organization_id = :orgId
                    and u.active and u.deactivated_at is null
-                   and a.status = 'ACTIVE' and a.valid_from <= now() and (a.valid_to is null or a.valid_to > now())
-                   and e.status = 'ACTIVE' and e.valid_from <= now() and (e.valid_to is null or e.valid_to > now())
-                   and d.active and d.valid_from <= now() and (d.valid_to is null or d.valid_to > now())
+                   and a.status = 'ACTIVE' and a.valid_from <= statement_timestamp() and (a.valid_to is null or a.valid_to > statement_timestamp())
+                   and e.status = 'ACTIVE' and e.valid_from <= statement_timestamp() and (e.valid_to is null or e.valid_to > statement_timestamp())
+                   and d.active and d.valid_from <= statement_timestamp() and (d.valid_to is null or d.valid_to > statement_timestamp())
                 """)
                 .param("assignmentId", session.assignmentId()).param("employmentId", session.employmentId())
                 .param("orgId", session.organizationId()).param("accountId", session.accountId())
@@ -50,13 +50,13 @@ class AuthorizationDaoImpl implements AuthorizationDao {
                         or (p.kind = 'GROUP' and exists (
                             select 1 from iam.group_memberships m
                              where m.assignment_id = :assignmentId and m.organization_id = p.organization_id
-                               and m.group_id = p.group_id and m.valid_from <= now()
-                               and (m.valid_to is null or m.valid_to > now())))
+                               and m.group_id = p.group_id and m.valid_from <= statement_timestamp()
+                               and (m.valid_to is null or m.valid_to > statement_timestamp())))
                         or (p.kind = 'ROLE' and exists (
                             select 1 from iam.role_bindings rb
                              where rb.assignment_id = :assignmentId and rb.role_id = p.role_id
-                               and rb.status = 'ACTIVE' and rb.valid_from <= now()
-                               and (rb.valid_to is null or rb.valid_to > now()))))
+                               and rb.status = 'ACTIVE' and rb.valid_from <= statement_timestamp()
+                               and (rb.valid_to is null or rb.valid_to > statement_timestamp()))))
                 """)
                 .param("orgId", session.organizationId()).param("personId", subject.personId())
                 .param("departmentId", subject.departmentId()).param("assignmentId", session.assignmentId())
@@ -69,8 +69,8 @@ class AuthorizationDaoImpl implements AuthorizationDao {
                 select distinct rp.permission_code
                   from iam.role_bindings rb
                   join iam.role_permissions rp on rp.role_id = rb.role_id
-                 where rb.assignment_id = :assignmentId and rb.status = 'ACTIVE' and rb.valid_from <= now()
-                   and (rb.valid_to is null or rb.valid_to > now())
+                 where rb.assignment_id = :assignmentId and rb.status = 'ACTIVE' and rb.valid_from <= statement_timestamp()
+                   and (rb.valid_to is null or rb.valid_to > statement_timestamp())
                 """).param("assignmentId", assignmentId).query(String.class).list();
     }
 
@@ -80,7 +80,7 @@ class AuthorizationDaoImpl implements AuthorizationDao {
                 select dimension, coalesce(department_id, customer_id, project_id) as value_id
                   from iam.assignment_scope_grants
                  where assignment_id = :assignmentId and organization_id = :orgId and status = 'ACTIVE'
-                   and valid_from <= now() and (valid_to is null or valid_to > now())
+                   and valid_from <= statement_timestamp() and (valid_to is null or valid_to > statement_timestamp())
                 """).param("assignmentId", session.assignmentId()).param("orgId", session.organizationId())
                 .query((row, index) -> new DimensionValue(row.getString("dimension"),
                         row.getObject("value_id", UUID.class))).list();
@@ -117,9 +117,9 @@ class AuthorizationDaoImpl implements AuthorizationDao {
                   join iam.principals p on p.id = a.principal_id and p.organization_id = :orgId
                   left join iam.emergency_access_grants eg on eg.id = a.emergency_grant_id
                        and eg.organization_id = :orgId and eg.state = 'APPROVED'
-                       and eg.valid_from <= now() and eg.expires_at > now()
-                 where a.acl_id = :aclId and a.action = :action and a.valid_from <= now()
-                   and (a.expires_at is null or a.expires_at > now())
+                       and eg.valid_from <= statement_timestamp() and eg.expires_at > statement_timestamp()
+                 where a.acl_id = :aclId and a.action = :action and a.valid_from <= statement_timestamp()
+                   and (a.expires_at is null or a.expires_at > statement_timestamp())
                 """).param("orgId", organizationId).param("aclId", aclId).param("action", action)
                 .query((row, index) -> new Rule(row.getObject("principal_id", UUID.class), row.getString("effect"),
                         row.getObject("emergency_grant_id", UUID.class), row.getObject("resource_id", UUID.class),

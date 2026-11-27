@@ -43,6 +43,10 @@ com.ekl
 
 문서 파싱은 `common.document.port.DocumentParsingPort`의 HTTP 어댑터로 [내부 AI 서비스](../ai/README.md)에 연결됩니다. `EKL_AI_ENABLED=true`와 AI 서비스와 같은 `EKL_AI_SERVICE_TOKEN`을 설정하면 Core의 작업자가 업로드 outbox를 처리합니다. 기본 AI 주소는 `http://127.0.0.1:8001`이며 `EKL_AI_BASE_URL`로 바꿀 수 있습니다. 생성 인터페이스는 현재 더미 응답을 받습니다.
 
+게시된 문서는 `IndexRequested` 작업으로 파싱 결과를 페이지·문단 위치와 함께 PostgreSQL 키워드 색인에 저장합니다. 조직에 활성 파이프라인이 있어야 합니다. 비어 있으면 색인 작업이 대기 후 재시도하며, 예전에 파싱 상태만 넣은 버전은 실제 파싱 결과가 필요합니다.
+
+`POST /api/v1/rag/queries`는 선택한 업무 소속과 세션의 CSRF 토큰으로 호출합니다. 요청은 `{"question":"검색할 키워드","top_k":5}` 형식이며 최대 8개까지 조회합니다. 응답의 `sources`에서 문서 ID·버전·페이지 또는 문단 위치를 확인할 수 있습니다. 현재 검색은 PostgreSQL 키워드 방식으로 `degraded: true`를 반환하고, 생성 결과는 `generation_mode: "DUMMY"`로 표시합니다.
+
 ## 업무 쓰기 API
 
 모든 경로는 `/api/v1`로 시작하며 세션 쿠키, CSRF 헤더, 현재 업무 소속이 필요합니다. 생성·게시·배포·재전달 요청에는 `Idempotency-Key` 헤더를 보냅니다. 수정 요청의 `expected_version`에는 현재 `row_version`을 사용합니다.

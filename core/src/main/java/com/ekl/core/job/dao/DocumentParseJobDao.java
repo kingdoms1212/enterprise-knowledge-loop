@@ -2,12 +2,9 @@ package com.ekl.core.job.dao;
 
 import java.util.Optional;
 
-import com.ekl.core.job.DocumentParseJob;
+import com.ekl.core.job.DocumentOutboxJob;
 
-public interface DocumentParseJobDao {
-    Optional<DocumentParseJob> claim();
-    Optional<DocumentParseJob.Input> input(DocumentParseJob job);
-    boolean lockLease(DocumentParseJob job);
-    void updateDocument(DocumentParseJob job, String status, String result);
-    void finish(DocumentParseJob job, String state, String error);
+public interface DocumentParseJobDao extends DocumentOutboxDao {
+    Optional<DocumentOutboxJob.Input> input(DocumentOutboxJob job);
+    void updateDocument(DocumentOutboxJob job, String status, String result);
 }
