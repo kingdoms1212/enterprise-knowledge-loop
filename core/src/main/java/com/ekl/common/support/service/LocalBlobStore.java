@@ -2,6 +2,7 @@ package com.ekl.common.support.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
@@ -51,6 +52,17 @@ public class LocalBlobStore {
             throw new IllegalStateException("Blob storage failed", exception);
         }
         return key;
+    }
+
+    public byte[] read(String key, int maxBytes) throws IOException {
+        var path = root.resolve(UUID.fromString(key).toString());
+        try (var stream = Files.newInputStream(path, LinkOption.NOFOLLOW_LINKS)) {
+            var bytes = stream.readNBytes(maxBytes + 1);
+            if (bytes.length > maxBytes) {
+                throw new IOException("Blob exceeds the read limit");
+            }
+            return bytes;
+        }
     }
 
     public static byte[] sha256(byte[] bytes) {

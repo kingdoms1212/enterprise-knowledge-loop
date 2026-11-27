@@ -25,6 +25,11 @@ spring:
 
 ekl:
   blob-root: ${EKL_BLOB_ROOT:./var/blobs}
+  ai:
+    enabled: ${EKL_AI_ENABLED:false}
+    base-url: ${EKL_AI_BASE_URL:http://127.0.0.1:8001}
+    service-token: ${EKL_AI_SERVICE_TOKEN:}
+    parse-poll-ms: ${EKL_AI_PARSE_POLL_MS:1000}
 
 server:
   address: ${EKL_SERVER_ADDRESS:127.0.0.1}

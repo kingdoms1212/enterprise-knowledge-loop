@@ -41,7 +41,7 @@ com.ekl
 
 로컬 인증 계정의 `iam.users.login`은 재직의 `employee_no`와 일치해야 합니다. 비밀번호는 `iam.account_credentials`에 `{bcrypt}` 해시로 저장합니다. 변경 요청에는 세션 쿠키와 CSRF 헤더가 필요합니다. 로그인으로 세션이 바뀌면 새 CSRF 토큰을 조회합니다. 클라이언트는 HTTPS에서 Secure 세션 쿠키를 전송합니다.
 
-문서 파싱은 `common.document.port.DocumentParsingPort`로 연결할 수 있습니다. 이 인터페이스의 HTTP 어댑터는 AI 서비스 구현 단계에 추가합니다.
+문서 파싱은 `common.document.port.DocumentParsingPort`의 HTTP 어댑터로 [내부 AI 서비스](../ai/README.md)에 연결됩니다. `EKL_AI_ENABLED=true`와 AI 서비스와 같은 `EKL_AI_SERVICE_TOKEN`을 설정하면 Core의 작업자가 업로드 outbox를 처리합니다. 기본 AI 주소는 `http://127.0.0.1:8001`이며 `EKL_AI_BASE_URL`로 바꿀 수 있습니다. 생성 인터페이스는 현재 더미 응답을 받습니다.
 
 ## 업무 쓰기 API
 
@@ -65,7 +65,7 @@ com.ekl
 
 ## 로컬 실행
 
-Java 21, Docker Compose, 그리고 이전 프로젝트에서 복원한 `db/migration/`이 필요합니다. `core/`의 Gradle Wrapper가 Gradle 8.14.3을 사용하며, 빌드에서 원본 V1~V21 SQL을 리소스로 포함합니다.
+Java 21, Docker Compose, 그리고 이전 프로젝트에서 복원한 `db/migration/`이 필요합니다. `core/`의 Gradle Wrapper가 Gradle 8.14.3을 사용하며, 빌드에서 원본 V1~V21 SQL과 Core에 포함된 V22 파싱 결과 마이그레이션을 적용합니다.
 
 아래 명령은 저장소 루트에서 실행합니다. `EKL_DB_ADMIN_PASSWORD`, `EKL_DB_OWNER_PASSWORD`, `EKL_DB_APP_PASSWORD`를 셸 환경에 각각 설정한 뒤 시작합니다. PostgreSQL 초기화는 새 데이터 볼륨에서 실행됩니다. 기본 DB 포트가 사용 중이면 `EKL_DB_PORT`와 `EKL_DB_URL`을 같은 포트로 설정합니다.
 
@@ -98,6 +98,6 @@ docker run --rm --network host \
 
 ## 테스트
 
-Docker 데몬에 접근할 수 있는 환경에서 `core/`로 이동해 `sh ./gradlew test`를 실행합니다. 테스트는 별도의 PostgreSQL 16·pgvector 컨테이너를 시작해 V1~V21 적용, 복원한 SQL 스모크 테스트, 서비스 트랜잭션, 문서·폴더 조회, 헬스 응답 및 기본 API 차단을 확인합니다. 스모크 테스트는 복원한 `db/`에 있어야 합니다.
+Docker 데몬에 접근할 수 있는 환경에서 `core/`로 이동해 `sh ./gradlew test`를 실행합니다. 테스트는 별도의 PostgreSQL 16·pgvector 컨테이너를 시작해 V1~V22 적용, 복원한 SQL 스모크 테스트, 서비스 트랜잭션, 문서·폴더 조회, 헬스 응답 및 기본 API 차단을 확인합니다. 스모크 테스트는 복원한 `db/`에 있어야 합니다.
 
 실행 가능한 JAR은 `core/`에서 `sh ./gradlew bootJar`로 빌드하며 `core/build/libs/`에 생성됩니다.

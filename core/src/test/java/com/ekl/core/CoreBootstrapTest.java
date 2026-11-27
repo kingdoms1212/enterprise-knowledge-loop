@@ -24,6 +24,10 @@ import com.ekl.core.audit.service.AuditService;
 import com.ekl.core.casework.service.CaseService;
 import com.ekl.core.distribution.service.DistributionService;
 import com.ekl.core.job.service.JobService;
+import com.ekl.core.job.service.DocumentParseJobService;
+import com.ekl.common.document.port.DocumentParsingPort.ParseStatus;
+import com.ekl.common.document.port.DocumentParsingPort.ParsedDocument;
+import com.ekl.common.document.port.DocumentParsingPort.ParsedSegment;
 import com.ekl.core.knowledge.service.KnowledgeService;
 import com.ekl.core.retrieval.service.RetrievalService;
 import com.ekl.core.voice.service.VoiceService;
@@ -132,6 +136,9 @@ class CoreBootstrapTest {
     private JobService jobs;
 
     @Autowired
+    private DocumentParseJobService parseJobs;
+
+    @Autowired
     private KnowledgeService knowledge;
 
     @Autowired
@@ -152,7 +159,7 @@ class CoreBootstrapTest {
                 "select version from public.flyway_schema_history where success order by installed_rank");
         assertThat(history.getExitCode()).as(history.getStderr()).isZero();
         assertThat(history.getStdout().lines().toList()).containsExactlyElementsOf(
-                java.util.stream.IntStream.rangeClosed(1, 21).mapToObj(Integer::toString).toList());
+                java.util.stream.IntStream.rangeClosed(1, 22).mapToObj(Integer::toString).toList());
         assertThat(jdbc.queryForObject("select current_user", String.class)).isEqualTo("ekl_app");
         assertThat(jdbc.queryForObject("select has_schema_privilege(current_user, 'iam', 'CREATE')",
                 Boolean.class)).isFalse();
@@ -510,7 +517,27 @@ class CoreBootstrapTest {
         var publish = documentPath + "/versions/" + version + "/publish";
         var versionOne = "{\"expected_version\":1}";
         assertThat(keyedRequest(client, publish, versionOne, cookie, token, "publish-1").statusCode()).isEqualTo(409);
-        jdbc.update("update intake.document_versions set parse_status = 'PARSED' where id = ?", version);
+        var originalJob = parseJobs.claim().orElseThrow();
+        assertThat(originalJob.version()).isEqualTo(version);
+        assertThat(parseJobs.input(originalJob).orElseThrow().mime()).isEqualTo("text/plain");
+        parseJobs.fail(originalJob, "AI_UNAVAILABLE", true);
+        assertThat(jdbc.queryForObject("select state from ops.outbox where event_id = ?",
+                String.class, originalJob.id())).isEqualTo("RETRY_WAIT");
+        jdbc.update("update ops.outbox set available_at = now() where event_id = ?", originalJob.id());
+        var retry = parseJobs.claim().orElseThrow();
+        assertThat(retry.id()).isEqualTo(originalJob.id());
+        assertThat(retry.lease()).isNotEqualTo(originalJob.lease());
+        var parsed = new ParsedDocument(ParseStatus.PARSED,
+                List.of(new ParsedSegment(null, 1, "Document contents canary")));
+        parseJobs.succeed(originalJob, parsed);
+        assertThat(jdbc.queryForObject("select parse_status from intake.document_versions where id = ?",
+                String.class, version)).isEqualTo("PENDING");
+        parseJobs.succeed(retry, parsed);
+        assertThat(jdbc.queryForObject("""
+                select parse_result -> 0 ->> 'text' from intake.document_versions where id = ?
+                """, String.class, version)).isEqualTo("Document contents canary");
+        assertThat(jdbc.queryForObject("select state from ops.outbox where event_id = ?",
+                String.class, retry.id())).isEqualTo("SUCCEEDED");
         var published = keyedRequest(client, publish, versionOne, cookie, token, "publish-1");
         assertThat(published.statusCode()).as(published.body()).isEqualTo(202);
         assertThat(keyedRequest(client, publish, versionOne, cookie, token, "publish-1").body())

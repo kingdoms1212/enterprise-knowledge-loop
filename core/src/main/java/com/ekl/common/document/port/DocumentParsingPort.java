@@ -8,15 +8,20 @@ public interface DocumentParsingPort {
     ParsedDocument parse(ParseRequest request);
 
     record ParseRequest(UUID requestId, String schemaVersion, Instant deadline, UUID nonce,
-                        UUID taskId, String configVersion, UUID artifactId) {
+                        UUID taskId, String configVersion, UUID artifactId, String mime, byte[] content) {
     }
 
-    record ParsedDocument(List<ParsedPage> pages) {
+    record ParsedDocument(ParseStatus status, List<ParsedSegment> segments) {
         public ParsedDocument {
-            pages = List.copyOf(pages);
+            segments = List.copyOf(segments);
+            if (status == null || (status == ParseStatus.PARSED) != !segments.isEmpty()) {
+                throw new IllegalArgumentException("Invalid parser response");
+            }
         }
     }
 
-    record ParsedPage(int pageNumber, String text) {
+    enum ParseStatus { PARSED, OCR_REQUIRED, QUALITY_FAILED }
+
+    record ParsedSegment(Integer page, Integer paragraph, String text) {
     }
 }
