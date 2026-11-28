@@ -8,13 +8,17 @@ import { Button } from '../../common/components/Button'
 import { LoadingState, Notice } from '../../common/components/Feedback'
 import { FormField, TextInput } from '../../common/components/Fields'
 import { uuidPattern } from '../../common/utils/uuid'
+import { isLocalDemoLogin, localDemoLoginEnabled } from '../../features/session/api/sessionApi'
 import { useSession, useSessionActions } from '../../features/session/model/session'
 import styles from '../AuthPages.module.css'
 
 const credentialsSchema = z.object({
-  organization_id: z.string().trim().regex(uuidPattern, '조직 ID를 UUID 형식으로 입력해 주세요.'),
+  organization_id: z.string().trim(),
   employee_number: z.string().trim().min(1, '사번을 입력해 주세요.'),
   password: z.string().min(1, '비밀번호를 입력해 주세요.'),
+}).refine((credentials) => uuidPattern.test(credentials.organization_id) || isLocalDemoLogin(credentials), {
+  path: ['organization_id'],
+  message: '조직 ID를 UUID 형식으로 입력해 주세요.',
 })
 
 export function LoginPage() {
@@ -37,7 +41,7 @@ export function LoginPage() {
     }
   }
 
-  if (session.data) return <Navigate replace to={session.data.assignmentId ? '/work' : '/assignments'} />
+  if (session.data && !session.isError) return <Navigate replace to={session.data.assignmentId ? '/work' : '/assignments'} />
 
   return <main className={styles.screen}>
     <div className={styles.frame}>
@@ -46,7 +50,10 @@ export function LoginPage() {
         <p>문서를 정리하고, 업무에서 확인한 지식을 부서와 공유합니다.</p>
       </div>
       <section className={styles.panel} aria-labelledby="login-title">
-        <header><h1 id="login-title">사번 로그인</h1><p className={styles.description}>조직 계정의 정보로 접속해 주세요.</p></header>
+        <header><h1 id="login-title">사번 로그인</h1>
+          <p className={styles.description}>{localDemoLoginEnabled
+            ? '로컬 시연은 세 항목에 각각 1을 입력하세요.' : '조직 계정의 정보로 접속해 주세요.'}</p>
+        </header>
         {session.isPending
           ? <LoadingState label="세션 확인 중" />
           : <form className={styles.form} noValidate onSubmit={handleSubmit(login)}>

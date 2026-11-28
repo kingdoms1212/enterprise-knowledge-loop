@@ -37,7 +37,7 @@ class FolderCommandBloImpl implements FolderCommandBlo {
 
     @Override
     public CommandResult create(RequestActor actor, String key, FolderChange.Create input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         var name = CommandRules.required(input.name(), 255);
         if (input.department() == null || (input.parent() != null && input.classification() != null)) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_CONTENT);
@@ -63,7 +63,7 @@ class FolderCommandBloImpl implements FolderCommandBlo {
 
     @Override
     public CommandResult rename(RequestActor actor, UUID id, FolderChange.Rename input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var folder = findManagedFolder(session, id);
         CommandRules.requireVersion(folder.version(), input.expectedVersion());
@@ -77,7 +77,7 @@ class FolderCommandBloImpl implements FolderCommandBlo {
 
     @Override
     public void archive(RequestActor actor, UUID id) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         findManagedFolder(session, id);
         if (!dao.archiveEmpty(id, actor.accountId())) {

@@ -36,6 +36,6 @@ class CaseWorkspaceServiceImpl implements CaseWorkspaceService {
     }
 
     private SessionContext session(RequestActor actor) {
-        return login.current(actor.sessionId(), actor.accountId());
+        return login.current(actor);
     }
 }

@@ -8,6 +8,7 @@ import com.ekl.common.support.CommandResult;
 
 public interface CommandService {
     void lockOrganization(UUID organization);
+    void lockOrganizationForQuery(UUID organization);
     void bumpPolicyEpoch(UUID organization);
     UUID enqueue(String aggregateType, UUID aggregateId, long revision, String event, UUID actor, UUID version);
     CommandResult once(SessionContext session, String operation, String key, byte[] hash,

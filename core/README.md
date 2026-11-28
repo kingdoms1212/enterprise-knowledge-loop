@@ -39,6 +39,8 @@ com.ekl
 | `PUT /api/v1/sessions/current/assignment` | `assignment_id`와 `expected_revision`으로 업무 소속 선택 |
 | `DELETE /api/v1/sessions/current` | 현재 세션 로그아웃 |
 
+업무 API는 공통 세션 필터에서 현재 재직·발령을 확인합니다. 무효 세션은 `401 SESSION_REQUIRED`, 발령이 없거나 끝났으면 `403 ASSIGNMENT_REQUIRED`, 필터 이후 서비스가 소속 전환을 감지하면 `409 ASSIGNMENT_CHANGED`를 반환합니다. CSRF에 실패한 쓰기 요청은 `403 CSRF_REQUIRED`입니다.
+
 로컬 인증 계정의 `iam.users.login`은 재직의 `employee_no`와 일치해야 합니다. 비밀번호는 `iam.account_credentials`에 `{bcrypt}` 해시로 저장합니다. 변경 요청에는 세션 쿠키와 CSRF 헤더가 필요합니다. 로그인으로 세션이 바뀌면 새 CSRF 토큰을 조회합니다. 클라이언트는 HTTPS에서 Secure 세션 쿠키를 전송합니다.
 
 문서 파싱은 `common.document.port.DocumentParsingPort`의 HTTP 어댑터로 [내부 AI 서비스](../ai/README.md)에 연결됩니다. `EKL_AI_ENABLED=true`와 AI 서비스와 같은 `EKL_AI_SERVICE_TOKEN`을 설정하면 Core의 작업자가 업로드 outbox를 처리합니다. 기본 AI 주소는 `http://127.0.0.1:8001`이며 `EKL_AI_BASE_URL`로 바꿀 수 있습니다. 생성 인터페이스는 현재 더미 응답을 받습니다.
@@ -59,6 +61,8 @@ com.ekl
 | 지식 | 원본 근거를 지정하는 `POST /knowledge`, 초안 본문을 수정하는 `PATCH /knowledge/{id}/versions/{version}`, `POST /knowledge/{id}/versions/{version}/retire` |
 | 배포 | 기존 공유 범위 내 수동 배포 `POST /distributions`, 실패 건 재전달 요청 `POST /distributions/{id}/redeliver`, `POST /distributions/{id}/acknowledgements` |
 
+문서 기반 지식은 `GET /knowledge/drafts`, `GET /knowledge/versions/{version}`, `GET /knowledge/reviews`로 조회합니다. 작성자가 `POST /knowledge/{id}/versions/{version}/submit`으로 상신하면 소유 부서의 독립 승인자가 `POST /approval-steps/{id}/decision`에서 승인·보완 요청·반려를 합니다. 최종 승인과 게시·배포 예약은 한 트랜잭션에 기록됩니다. 자동 배포는 현재 정책과 일치하는 키워드·벡터 색인을 모두 준비한 뒤 열람 가능한 소유 부서에 전달합니다. 부서 지식함은 `GET /distributions/inbox`에서 현재 발령으로 유효한 수신 항목을 조회합니다.
+
 웹 작업 공간에서 `GET /documents`, `GET /document-folders`, `GET /voices`, `GET /cases`로 현재 업무 소속에서 열람할 수 있는 목록을 조회합니다. 문서 업로드 전에 `POST /documents/policy-preview`로 적용할 템플릿 또는 폴더 상속 규칙을 확인합니다. VOC 상세는 정제가 완료된 본문만 반환합니다.
 
 등록 전에 조직 또는 소유 부서의 활성 정책 템플릿이 필요합니다. 하위 폴더와 그 안의 문서는 부모 폴더의 정책을 상속할 수 있습니다. 문서 업로드는 PDF·DOCX·UTF-8 TXT를 파일당 10 MiB까지 받습니다. 원본과 VOC 원문은 `EKL_BLOB_ROOT`로 지정한 로컬 디렉터리에 보관합니다. 기본 경로는 실행 디렉터리의 `var/blobs`입니다. 파싱·색인·배포·재전달 요청의 `job_id`는 DB outbox의 작업 ID입니다.
@@ -69,7 +73,7 @@ com.ekl
 
 ## 로컬 실행
 
-Java 21, Docker Compose, 그리고 이전 프로젝트에서 복원한 `db/migration/`이 필요합니다. `core/`의 Gradle Wrapper가 Gradle 8.14.3을 사용하며, 빌드에서 원본 V1~V21 SQL과 Core에 포함된 V22 파싱 결과 마이그레이션을 적용합니다.
+Java 21, Docker Compose, 그리고 이전 프로젝트에서 복원한 `db/migration/`이 필요합니다. `core/`의 Gradle Wrapper가 Gradle 8.14.3을 사용하며, 빌드에서 원본 V1~V21 SQL과 Core에 포함된 V22 파싱 결과 및 V23 문서 지식 결재 마이그레이션을 적용합니다.
 
 아래 명령은 저장소 루트에서 실행합니다. `EKL_DB_ADMIN_PASSWORD`, `EKL_DB_OWNER_PASSWORD`, `EKL_DB_APP_PASSWORD`를 셸 환경에 각각 설정한 뒤 시작합니다. PostgreSQL 초기화는 새 데이터 볼륨에서 실행됩니다. 기본 DB 포트가 사용 중이면 `EKL_DB_PORT`와 `EKL_DB_URL`을 같은 포트로 설정합니다.
 
@@ -102,6 +106,6 @@ docker run --rm --network host \
 
 ## 테스트
 
-Docker 데몬에 접근할 수 있는 환경에서 `core/`로 이동해 `sh ./gradlew test`를 실행합니다. 테스트는 별도의 PostgreSQL 16·pgvector 컨테이너를 시작해 V1~V22 적용, 복원한 SQL 스모크 테스트, 서비스 트랜잭션, 문서·폴더 조회, 헬스 응답 및 기본 API 차단을 확인합니다. 스모크 테스트는 복원한 `db/`에 있어야 합니다.
+Docker 데몬에 접근할 수 있는 환경에서 `core/`로 이동해 `sh ./gradlew test`를 실행합니다. 테스트는 별도의 PostgreSQL 16·pgvector 컨테이너를 시작해 V1~V23 적용, 복원한 SQL 스모크 테스트, 서비스 트랜잭션, 발령 회수, 문서 근거 승인·배포 및 현재 권한 기반 조회를 확인합니다. 스모크 테스트는 복원한 `db/`에 있어야 합니다.
 
 실행 가능한 JAR은 `core/`에서 `sh ./gradlew bootJar`로 빌드하며 `core/build/libs/`에 생성됩니다.

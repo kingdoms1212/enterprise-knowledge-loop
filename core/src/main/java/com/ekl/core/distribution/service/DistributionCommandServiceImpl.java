@@ -39,6 +39,18 @@ class DistributionCommandServiceImpl implements DistributionCommandService {
 
     @Override
     @Transactional
+    public void planAutomatic(SessionContext session, UUID version, UUID department, String reason) {
+        blo.planAutomatic(session, version, department, reason);
+    }
+
+    @Override
+    @Transactional
+    public UUID queueAutomatic(SessionContext session, UUID version) {
+        return blo.queueAutomatic(session, version);
+    }
+
+    @Override
+    @Transactional
     public void withdrawVersion(SessionContext session, UUID version) {
         blo.withdrawVersion(session, version);
     }

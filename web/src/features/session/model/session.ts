@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../../common/api/client'
 import { useWorkTabs } from '../../work-tabs/model/workTabs'
 import { sessionApi } from '../api/sessionApi'
@@ -19,6 +19,23 @@ export function useSession(enabled = true) {
 export function useAssignments(session: Session) {
   return useQuery({ queryKey: assignmentKey(session.accountId), queryFn: ({ signal }) => sessionApi.assignments(signal),
     staleTime: 30_000 })
+}
+
+export async function recheckSession(client: QueryClient) {
+  const previous = client.getQueryData<Session>(sessionKey)
+  if (!previous) return
+
+  await client.invalidateQueries({ queryKey: sessionKey }, { cancelRefetch: false })
+  const { data: next, error } = client.getQueryState<Session, ApiError>(sessionKey) ?? {}
+  if (error?.status === 401 || (next && (next.contextRevision !== previous.contextRevision
+      || next.assignmentId !== previous.assignmentId || next.accountId !== previous.accountId))) {
+    const filter = { queryKey: workspaceKey(previous) }
+    await client.cancelQueries(filter)
+    client.removeQueries(filter)
+    void client.invalidateQueries({ queryKey: assignmentKey(previous.accountId) })
+    client.getMutationCache().clear()
+    useWorkTabs.getState().clear()
+  }
 }
 
 export function useSessionActions() {

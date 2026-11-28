@@ -42,6 +42,6 @@ class VoiceWorkspaceServiceImpl implements VoiceWorkspaceService {
     }
 
     private SessionContext session(RequestActor actor) {
-        return login.current(actor.sessionId(), actor.accountId());
+        return login.current(actor);
     }
 }

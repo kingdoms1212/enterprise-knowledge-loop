@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ekl.common.auth.AssignmentSummary;
+import com.ekl.common.auth.RequestActor;
 import com.ekl.common.auth.SessionContext;
 import com.ekl.common.auth.service.LoginService;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -73,7 +74,8 @@ class SessionController {
 
     @GetMapping("/me")
     SessionContext me(HttpServletRequest request, Authentication authentication) {
-        return service.current(sessionId(request), accountId(authentication));
+        var actor = RequestActor.from(request, authentication);
+        return actor.context() == null ? service.current(actor.sessionId(), actor.accountId()) : actor.context();
     }
 
     @GetMapping("/me/assignments")

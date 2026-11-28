@@ -11,10 +11,10 @@ import { Tabs } from '../../common/components/Tabs'
 import styles from './StyleGuidePage.module.css'
 
 const colors = [
-  { label: '기본 동작', token: '--color-primary', hex: '#0369A1' },
-  { label: '선택 표시선', token: '--color-accent', hex: '#0EA5E9' },
+  { label: '기본 동작', token: '--color-primary', hex: '#087B5A' },
+  { label: '선택 배경', token: '--color-selected', hex: '#EAF6F0' },
   { label: '본문 글자', token: '--color-ink', hex: '#0F2A43' },
-  { label: '업무 배경', token: '--color-bg', hex: '#F5F8FB' },
+  { label: '업무 배경', token: '--color-bg', hex: '#F4F7F8' },
   { label: '입력 표면', token: '--color-surface', hex: '#FFFFFF' },
   { label: '구분선', token: '--color-line', hex: '#DDE6EE' },
 ]
@@ -47,7 +47,7 @@ export function StyleGuidePage() {
       <nav aria-label="가이드 목차" className={styles.navigation}>
         {sections.map(({ id, label, icon: Icon }) => <a key={id} href={'#' + id}><Icon size={17} aria-hidden="true" />{label}</a>)}
       </nav>
-      <Link to="/login" className={styles.loginLink}>로그인 화면</Link>
+      <Link to="/work" className={styles.loginLink}>업무 화면 보기</Link>
     </aside>
     <main className={styles.main}>
       <header className={styles.hero}>
@@ -69,7 +69,7 @@ export function StyleGuidePage() {
             <h3>글꼴과 위계</h3>
             <p className={styles.titleSample}>문서와 지식</p>
             <p>문서를 등록하고 버전과 처리 상태를 확인합니다.</p>
-            <p className={styles.metadata}>Pretendard · Noto Sans KR · 맑은 고딕</p>
+            <p className={styles.metadata}>맑은 고딕 (Malgun Gothic) · 기본 본문 14px</p>
           </div>
           <div className={styles.specimen}>
             <h3>기본 간격</h3>

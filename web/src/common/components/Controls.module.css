@@ -6,7 +6,7 @@
 }
 .button:enabled:hover { background: var(--color-neutral-bg); }
 .primary, .primary:enabled { background: var(--color-primary); color: white; border-color: var(--color-primary); }
-.primary:enabled:hover { background: #075985; }
+.primary:enabled:hover { background: #06684b; }
 .danger { color: var(--color-danger); border-color: #c49a95; }
 .danger:enabled:hover { background: var(--color-danger-bg); }
 .button:disabled { background: var(--color-neutral-bg); color: var(--color-muted); border-color: var(--color-line); }

@@ -12,6 +12,7 @@ import com.ekl.common.acl.service.AuthorizationService;
 import com.ekl.common.auth.RequestActor;
 import com.ekl.common.auth.SessionContext;
 import com.ekl.common.auth.service.LoginService;
+import com.ekl.common.support.service.CommandService;
 import com.ekl.common.support.service.LocalBlobStore;
 import com.ekl.core.ai.AiCallFailure;
 import com.ekl.core.ai.GenerationPort;
@@ -33,13 +34,15 @@ class DocumentQueryBloImpl implements DocumentQueryBlo {
     private final LoginService login;
     private final AuthorizationService authorization;
     private final DocumentQueryDao dao;
+    private final CommandService commands;
     private final ObjectProvider<GenerationPort> generation;
 
-    DocumentQueryBloImpl(LoginService login, AuthorizationService authorization, DocumentQueryDao dao,
+    DocumentQueryBloImpl(LoginService login, AuthorizationService authorization, DocumentQueryDao dao, CommandService commands,
                          ObjectProvider<GenerationPort> generation) {
         this.login = login;
         this.authorization = authorization;
         this.dao = dao;
+        this.commands = commands;
         this.generation = generation;
     }
 
@@ -52,9 +55,9 @@ class DocumentQueryBloImpl implements DocumentQueryBlo {
         if (question.isBlank() || question.length() > 1000 || question.indexOf(0) >= 0 || topK < 1 || topK > 8) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        var session = login.current(actor.sessionId(), actor.accountId());
-        dao.lockOrganizationForQuery(session.organizationId());
-        session = login.current(actor.sessionId(), actor.accountId());
+        var entry = actor.context() != null ? actor.context() : login.current(actor);
+        commands.lockOrganizationForQuery(entry.organizationId());
+        var session = login.current(actor);
         if (request.caseId() != null) {
             var read = authorization.checkRead(session, request.caseId(), "CASE");
             if (!read.allowed() || read.emergency()) {

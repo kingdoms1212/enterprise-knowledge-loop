@@ -25,17 +25,17 @@ class DocumentLibraryServiceImpl implements DocumentLibraryService {
     @Override
     public LibraryPage<DocumentLibrary.DocumentRow> listDocuments(RequestActor actor, DocumentLibrary.View view,
                                                                   UUID folder, String cursor, int limit) {
-        return blo.listDocuments(login.current(actor.sessionId(), actor.accountId()), view, folder, cursor, limit);
+        return blo.listDocuments(login.current(actor), view, folder, cursor, limit);
     }
 
     @Override
     public LibraryPage<DocumentLibrary.FolderRow> listFolders(RequestActor actor, UUID department, UUID parent,
                                                               String cursor, int limit) {
-        return blo.listFolders(login.current(actor.sessionId(), actor.accountId()), department, parent, cursor, limit);
+        return blo.listFolders(login.current(actor), department, parent, cursor, limit);
     }
 
     @Override
     public DocumentLibrary.Capabilities capabilities(RequestActor actor) {
-        return blo.capabilities(login.current(actor.sessionId(), actor.accountId()));
+        return blo.capabilities(login.current(actor));
     }
 }

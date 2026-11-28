@@ -24,6 +24,12 @@ class CommandDaoImpl implements CommandDao {
     }
 
     @Override
+    public void lockOrganizationForQuery(UUID organization) {
+        jdbc.sql("select pg_advisory_xact_lock_shared(hashtextextended(cast(:org as text), 0))")
+                .param("org", organization).query((row, index) -> true).single();
+    }
+
+    @Override
     public void bumpPolicyEpoch(UUID organization) {
         jdbc.sql("""
                 insert into iam.policy_epoch (organization_id) values (:org)

@@ -24,6 +24,7 @@ import com.ekl.core.audit.service.AuditService;
 import com.ekl.core.ai.GenerationPort;
 import com.ekl.core.casework.service.CaseService;
 import com.ekl.core.distribution.service.DistributionService;
+import com.ekl.core.distribution.service.DistributionDeliveryService;
 import com.ekl.core.job.service.JobService;
 import com.ekl.core.job.service.DocumentParseJobService;
 import com.ekl.core.job.service.DocumentIndexService;
@@ -65,7 +66,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "ekl.distribution.enabled=false")
 @Import({CoreBootstrapTest.TransactionProbeService.class, CoreBootstrapTest.DummyGenerationConfiguration.class})
 class CoreBootstrapTest {
     private static final JsonMapper JSON = JsonMapper.builder().build();
@@ -137,6 +138,9 @@ class CoreBootstrapTest {
     private DistributionService distributions;
 
     @Autowired
+    private DistributionDeliveryService distributionDelivery;
+
+    @Autowired
     private JobService jobs;
 
     @Autowired
@@ -166,7 +170,7 @@ class CoreBootstrapTest {
                 "select version from public.flyway_schema_history where success order by installed_rank");
         assertThat(history.getExitCode()).as(history.getStderr()).isZero();
         assertThat(history.getStdout().lines().toList()).containsExactlyElementsOf(
-                java.util.stream.IntStream.rangeClosed(1, 22).mapToObj(Integer::toString).toList());
+                java.util.stream.IntStream.rangeClosed(1, 23).mapToObj(Integer::toString).toList());
         assertThat(jdbc.queryForObject("select current_user", String.class)).isEqualTo("ekl_app");
         assertThat(jdbc.queryForObject("select has_schema_privilege(current_user, 'iam', 'CREATE')",
                 Boolean.class)).isFalse();
@@ -209,7 +213,7 @@ class CoreBootstrapTest {
         assertThat(health.body()).contains("\"status\":\"UP\"");
 
         var documents = client.send(request("/api/v1/documents"), HttpResponse.BodyHandlers.ofString());
-        assertThat(documents.statusCode()).isEqualTo(403);
+        assertThat(documents.statusCode()).isEqualTo(401);
     }
 
     @Test
@@ -366,8 +370,9 @@ class CoreBootstrapTest {
             assertThat(authRequest(client, "GET", "/api/v1/me/assignments", null, authenticatedCookie, null)
                     .body()).contains(loginFixtureId(41).toString(), loginFixtureId(42).toString())
                     .doesNotContain(loginFixtureId(43).toString());
-            assertThat(authRequest(client, "GET", documentPath, null, authenticatedCookie, null)
-                    .statusCode()).isEqualTo(404);
+            var assignmentRequired = authRequest(client, "GET", documentPath, null, authenticatedCookie, null);
+            assertThat(assignmentRequired.statusCode()).isEqualTo(403);
+            assertThat(JSON.readTree(assignmentRequired.body()).get("code").asString()).isEqualTo("ASSIGNMENT_REQUIRED");
 
             var authenticatedCsrf = csrf(client, authenticatedCookie);
             var assignmentBody = """
@@ -426,7 +431,18 @@ class CoreBootstrapTest {
 
             exerciseWriteFlows(client, authenticatedCookie, authenticatedCsrf);
 
+            jdbc.update("update iam.assignments set status = 'ENDED', valid_to = now() where id = ?", loginFixtureId(41));
+            var ended = authRequest(client, "GET", "/api/v1/documents", null, authenticatedCookie, null);
+            assertThat(ended.statusCode()).isEqualTo(403);
+            assertThat(JSON.readTree(ended.body()).get("code").asString()).isEqualTo("ASSIGNMENT_REQUIRED");
+            var stillSignedIn = authRequest(client, "GET", "/api/v1/me", null, authenticatedCookie, null);
+            assertThat(stillSignedIn.statusCode()).isEqualTo(200);
+            assertThat(JSON.readTree(stillSignedIn.body()).get("assignmentId").isNull()).isTrue();
+
             jdbc.update("update iam.users set auth_version = auth_version + 1 where id = ?", accountId);
+            var revoked = authRequest(client, "GET", "/api/v1/documents", null, authenticatedCookie, null);
+            assertThat(revoked.statusCode()).isEqualTo(401);
+            assertThat(JSON.readTree(revoked.body()).get("code").asString()).isEqualTo("SESSION_REQUIRED");
             assertThat(authRequest(client, "GET", "/api/v1/me", null, authenticatedCookie, null)
                     .statusCode()).isEqualTo(401);
             assertThat(authRequest(client, "DELETE", "/api/v1/sessions/current", null,
@@ -734,6 +750,13 @@ class CoreBootstrapTest {
         assertThat(authRequest(client, "PATCH", knowledgePath, editBody, cookie, token).statusCode()).isEqualTo(409);
         assertThat(jdbc.queryForObject("select body from knowledge.knowledge_version_edits where version_id = ?",
                 String.class, version)).isEqualTo("Updated draft");
+        var detail = authRequest(client, "GET", "/api/v1/knowledge/versions/" + version, null, cookie, null);
+        assertThat(detail.statusCode()).as(detail.body()).isEqualTo(200);
+        assertThat(JSON.readTree(detail.body()).get("body").asString()).isEqualTo("Updated draft");
+        var drafts = authRequest(client, "GET", "/api/v1/knowledge/drafts", null, cookie, null);
+        assertThat(drafts.statusCode()).as(drafts.body()).isEqualTo(200);
+        assertThat(drafts.body()).contains(version.toString()).doesNotContain("Updated draft");
+        exerciseKnowledgeApproval(client, cookie, token, source);
 
         var distributionBody = """
                 {"version_id":"%s","department_ids":["%s"],"reason":"Command test","ack_required":true}
@@ -861,6 +884,106 @@ class CoreBootstrapTest {
                 .header(token.header(), token.value()).header("Idempotency-Key", key)
                 .POST(HttpRequest.BodyPublishers.ofString(body)).build();
         return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private void exerciseKnowledgeApproval(HttpClient client, String cookie, Csrf token, UUID source) throws Exception {
+        var organization = loginFixtureId(1);
+        var approver = loginFixtureId(81);
+        jdbc.update("insert into iam.persons (id, display_name) values (?, 'Approval test reviewer')", loginFixtureId(82));
+        jdbc.update("insert into iam.users (id, organization_id, login, display_name, person_id) values (?, ?, '00081', 'Reviewer', ?)",
+                approver, organization, loginFixtureId(82));
+        jdbc.update("insert into iam.employments (id, person_id, organization_id, employee_no, clearance_level) values (?, ?, ?, '00081', 2)",
+                loginFixtureId(83), loginFixtureId(82), organization);
+        jdbc.update("insert into iam.assignments (id, employment_id, organization_id, department_id, assignment_type) values (?, ?, ?, ?, 'PRIMARY')",
+                loginFixtureId(84), loginFixtureId(83), organization, loginFixtureId(2));
+        jdbc.update("insert into iam.role_bindings (assignment_id, role_id) values (?, ?)", loginFixtureId(84), loginFixtureId(51));
+        var password = "synthetic-reviewer-password";
+        jdbc.update("insert into iam.account_credentials (account_id, credential_type, password_hash) values (?, 'LOCAL_PASSWORD', ?)",
+                approver, passwords.encode(password));
+        var reviewCsrf = csrf(client, null);
+        var signIn = authRequest(client, "POST", "/api/v1/sessions", """
+                {"organization_id":"%s","employee_number":"00081","password":"%s"}
+                """.formatted(organization, password), reviewCsrf.cookie(), reviewCsrf);
+        assertThat(signIn.statusCode()).as(signIn.body()).isEqualTo(200);
+        var reviewCookie = cookie(signIn);
+        var reviewToken = csrf(client, reviewCookie);
+
+        var draft = keyedRequest(client, "/api/v1/knowledge", """
+                {"title":"Independent approval example","body":"Reviewed summary",
+                 "source_refs":[{"source_role":"PRIMARY","document_version_id":"%s","source_locator":"p. 1"}]}
+                """.formatted(source), cookie, token, "knowledge-approval");
+        assertThat(draft.statusCode()).as(draft.body()).isEqualTo(201);
+        var payload = JSON.readTree(draft.body());
+        var version = UUID.fromString(payload.get("version_id").asString());
+        var submitPath = "/api/v1/knowledge/" + payload.get("knowledge_id").asString() + "/versions/" + version + "/submit";
+        var submit = authRequest(client, "POST", submitPath, """
+                {"reason":"Review source","expected_version":0}
+                """, cookie, token);
+        assertThat(submit.statusCode()).as(submit.body()).isEqualTo(200);
+        var firstStep = JSON.readTree(submit.body()).get("step_id").asString();
+        var firstDecisionPath = "/api/v1/approval-steps/" + firstStep + "/decision";
+        var decision = """
+                {"decision":"APPROVE","expected_version":0}
+                """;
+        var self = keyedRequest(client, firstDecisionPath, decision, cookie, token, "self-approval");
+        assertThat(self.statusCode()).as(self.body()).isEqualTo(403);
+        var pending = authRequest(client, "GET", "/api/v1/knowledge/reviews", null, reviewCookie, null);
+        assertThat(pending.statusCode()).as(pending.body()).isEqualTo(200);
+        assertThat(pending.body()).contains(version.toString()).doesNotContain("Reviewed summary");
+        var returned = keyedRequest(client, firstDecisionPath, """
+                {"decision":"RETURN","reason":"Confirm the evidence","expected_version":0}
+                """, reviewCookie, reviewToken, "return-approval");
+        assertThat(returned.statusCode()).as(returned.body()).isEqualTo(200);
+        assertThat(jdbc.queryForObject("select state from knowledge.knowledge_versions where id = ?", String.class, version))
+                .isEqualTo("DRAFT");
+        var returnedDetail = authRequest(client, "GET", "/api/v1/knowledge/versions/" + version, null, cookie, null);
+        assertThat(returnedDetail.statusCode()).as(returnedDetail.body()).isEqualTo(200);
+        assertThat(JSON.readTree(returnedDetail.body()).get("approval").get("reason").asString())
+                .isEqualTo("Confirm the evidence");
+        var resubmit = authRequest(client, "POST", submitPath, """
+                {"reason":"Evidence confirmed","expected_version":2}
+                """, cookie, token);
+        assertThat(resubmit.statusCode()).as(resubmit.body()).isEqualTo(200);
+        var step = JSON.readTree(resubmit.body()).get("step_id").asString();
+        assertThat(step).isNotEqualTo(firstStep);
+        var decisionPath = "/api/v1/approval-steps/" + step + "/decision";
+        var approval = keyedRequest(client, decisionPath, decision, reviewCookie, reviewToken, "independent-approval");
+        assertThat(approval.statusCode()).as(approval.body()).isEqualTo(202);
+        assertThat(keyedRequest(client, decisionPath, decision, reviewCookie, reviewToken, "independent-approval").body())
+                .isEqualTo(approval.body());
+        assertThat(jdbc.queryForObject("select state from knowledge.knowledge_versions where id = ?", String.class, version))
+                .isEqualTo("PUBLISHED");
+        assertThat(jdbc.queryForObject("""
+                select state from distribution.distributions where version_id = ? and state <> 'CANCELLED'
+                """, String.class, version))
+                .isEqualTo("QUEUED");
+        assertThat(jdbc.queryForObject("select count(*) from distribution.receipts where version_id = ?", Integer.class, version))
+                .isZero();
+        assertThat(distributionDelivery.deliverNext()).isFalse();
+        var inboxPath = "/api/v1/distributions/inbox";
+        var waiting = authRequest(client, "GET", inboxPath, null, cookie, null);
+        assertThat(waiting.statusCode()).as(waiting.body()).isEqualTo(200);
+        assertThat(waiting.body()).doesNotContain(version.toString());
+
+        // Supply a ready index in this isolated database to exercise the delivery worker.
+        var index = UUID.randomUUID();
+        jdbc.update("""
+                insert into knowledge.index_revisions(id, version_id, pipeline_version_id, policy_revision,
+                    effective_policy_hash, security_metadata, vector_state, keyword_state)
+                select ?, resource_id, ?, policy_revision, effective_policy_hash, '{}', 'READY', 'READY'
+                from iam.resource_policies where resource_id = ?
+                """, index, loginFixtureId(67), version);
+        jdbc.update("update knowledge.knowledge set active_version_id = ?, active_index_revision_id = ? where id = ?",
+                version, index, UUID.fromString(payload.get("knowledge_id").asString()));
+        assertThat(distributionDelivery.deliverNext()).isTrue();
+        assertThat(distributionDelivery.deliverNext()).isFalse();
+        var inbox = authRequest(client, "GET", inboxPath, null, reviewCookie, null);
+        assertThat(inbox.statusCode()).as(inbox.body()).isEqualTo(200);
+        var list = JSON.readTree(inbox.body()).get("items");
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0).get("versionId").asString()).isEqualTo(version.toString());
+        var receiptPath = "/api/v1/distributions/" + list.get(0).get("id").asString() + "/acknowledgements";
+        assertThat(authRequest(client, "POST", receiptPath, null, reviewCookie, reviewToken).statusCode()).isEqualTo(200);
     }
 
     private Csrf csrf(HttpClient client, String sessionCookie) throws Exception {

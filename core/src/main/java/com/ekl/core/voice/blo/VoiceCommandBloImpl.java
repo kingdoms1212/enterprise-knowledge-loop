@@ -44,7 +44,7 @@ class VoiceCommandBloImpl implements VoiceCommandBlo {
 
     @Override
     public CommandResult intake(RequestActor actor, String key, VoiceChange.Intake input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         var title = CommandRules.required(input.title(), 255);
         CommandRules.required(input.body(), 100_000);
         var channel = input.channel() == null ? "MANUAL" : input.channel();
@@ -90,7 +90,7 @@ class VoiceCommandBloImpl implements VoiceCommandBlo {
 
     @Override
     public CommandResult triage(RequestActor actor, UUID id, String key, VoiceChange.Triage input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         if (!auth.hasRole(session, "VOICE_TRIAGE", null)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

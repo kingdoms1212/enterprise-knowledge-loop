@@ -21,7 +21,7 @@ function CaseWorkspace({ session }: { session: Session }) {
   const queue = useCaseQueue(session)
   const items = queue.data?.pages.flatMap((page) => page.items) ?? []
   return <div className={styles.page}>
-    <header className={styles.heading}><div><p className={styles.crumb}>업무</p><h1>Case 작업 공간</h1>
+    <header className={styles.heading}><div><p className={styles.crumb}>WORKSPACE / VOC</p><h1>VOC 처리</h1>
       <p className={styles.intro}>담당 부서에서 결정과 처리 결과를 기록합니다.</p></div></header>
     <div className={styles.columns}>
       <section className={styles.panel} aria-labelledby="case-list">

@@ -1,9 +1,12 @@
 .brand {
   display: inline-flex; align-items: center; gap: .65rem; color: var(--color-ink);
-  font-size: .9375rem; font-weight: 800; line-height: 1.23; white-space: nowrap;
+  font-size: 1.125rem; font-weight: 800; line-height: 1.25; white-space: nowrap;
 }
 .brandMark {
-  position: relative; width: 2.5rem; height: 2.5rem; display: grid; place-items: center;
-  border-radius: 9px; color: white; background: var(--color-primary);
+  position: relative; width: 3rem; height: 2rem; display: grid; place-items: center;
+  border-radius: 1rem; color: white; background: var(--color-link);
 }
-.brandMark svg + svg { position: absolute; top: .82rem; }
+.brandMark svg + svg { position: absolute; top: .66rem; }
+.enterprise, .workspace { display: block; font-size: .625rem; letter-spacing: .12em; }
+.enterprise { color: var(--color-link); margin-bottom: .15rem; }
+.workspace { color: var(--color-muted); font-weight: 400; margin-top: .25rem; }

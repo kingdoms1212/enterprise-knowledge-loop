@@ -41,12 +41,6 @@ class DocumentQueryDaoImpl implements DocumentQueryDao {
     }
 
     @Override
-    public void lockOrganizationForQuery(UUID organization) {
-        jdbc.sql("select pg_advisory_xact_lock_shared(hashtextextended(cast(:org as text), 0))")
-                .param("org", organization).query((row, index) -> true).single();
-    }
-
-    @Override
     public Optional<Pipeline> pipeline(UUID organization) {
         return jdbc.sql("""
                 select p.pipeline_version_id, coalesce(e.revision, 0) from ops.active_pipeline p

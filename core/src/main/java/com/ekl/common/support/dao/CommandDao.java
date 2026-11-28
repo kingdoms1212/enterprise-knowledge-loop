@@ -7,6 +7,7 @@ import com.ekl.common.support.CommandResult;
 
 public interface CommandDao {
     void lockOrganization(UUID organization);
+    void lockOrganizationForQuery(UUID organization);
     void bumpPolicyEpoch(UUID organization);
     UUID enqueue(String aggregateType, UUID aggregateId, long revision, String event, UUID actor, UUID version);
     boolean claim(SessionContext session, String operation, String key, byte[] hash);

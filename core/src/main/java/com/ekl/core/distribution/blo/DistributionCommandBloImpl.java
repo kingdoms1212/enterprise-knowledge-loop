@@ -35,7 +35,7 @@ class DistributionCommandBloImpl implements DistributionCommandBlo {
 
     @Override
     public CommandResult create(RequestActor actor, String key, DistributionPlan input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         if (!auth.hasRole(session, "DISTRIBUTE", null)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -72,7 +72,7 @@ class DistributionCommandBloImpl implements DistributionCommandBlo {
 
     @Override
     public CommandResult redeliver(RequestActor actor, UUID id, String key) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var distribution = dao.lock(session.organizationId(), id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -95,7 +95,7 @@ class DistributionCommandBloImpl implements DistributionCommandBlo {
 
     @Override
     public OffsetDateTime acknowledge(RequestActor actor, UUID id) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         if (session.assignmentId() == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -108,6 +108,23 @@ class DistributionCommandBloImpl implements DistributionCommandBlo {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return dao.acknowledge(id, actor.accountId());
+    }
+
+    @Override
+    public void planAutomatic(SessionContext session, UUID version, UUID department, String reason) {
+        if (!dao.withinApprovedDepartment(session.organizationId(), version, department)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+        var id = UUID.randomUUID();
+        dao.createAuto(id, version, session.accountId(), reason);
+        dao.addTarget(id, version, department);
+    }
+
+    @Override
+    public UUID queueAutomatic(SessionContext session, UUID version) {
+        var id = dao.plannedAuto(version).orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT));
+        dao.enqueuePlan(id, session.accountId());
+        return commands.enqueue("DISTRIBUTION", id, 1, "DistributionRequested", session.accountId(), version);
     }
 
     @Override

@@ -51,7 +51,7 @@ class CaseCommandBloImpl implements CaseCommandBlo {
 
     @Override
     public CommandResult decide(RequestActor actor, UUID id, CaseChange.Decide input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         var row = locked(session, id);
         CommandRules.requireVersion(row.version(), input.expectedVersion());
         if ("CLOSED".equals(row.state())) {
@@ -69,7 +69,7 @@ class CaseCommandBloImpl implements CaseCommandBlo {
 
     @Override
     public CommandResult close(RequestActor actor, UUID id, String key, CaseChange.Close input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         var row = locked(session, id);
         var type = CommandRules.required(input.type(), 40);
         var note = input.note() == null ? null : CommandRules.required(input.note(), 2000);

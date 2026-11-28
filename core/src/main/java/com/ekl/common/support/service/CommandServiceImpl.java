@@ -25,6 +25,11 @@ class CommandServiceImpl implements CommandService {
     }
 
     @Override
+    public void lockOrganizationForQuery(UUID organization) {
+        blo.lockOrganizationForQuery(organization);
+    }
+
+    @Override
     public void bumpPolicyEpoch(UUID organization) {
         blo.bumpPolicyEpoch(organization);
     }

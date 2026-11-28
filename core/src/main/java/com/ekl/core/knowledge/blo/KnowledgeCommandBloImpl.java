@@ -41,7 +41,7 @@ class KnowledgeCommandBloImpl implements KnowledgeCommandBlo {
 
     @Override
     public CommandResult editDraft(RequestActor actor, UUID id, UUID version, KnowledgeDraftEdit input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var row = dao.lock(session.organizationId(), id, version)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -60,7 +60,7 @@ class KnowledgeCommandBloImpl implements KnowledgeCommandBlo {
 
     @Override
     public CommandResult retire(RequestActor actor, UUID id, UUID version, KnowledgeRetirement input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var row = dao.lock(session.organizationId(), id, version)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

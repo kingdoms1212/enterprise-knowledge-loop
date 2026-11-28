@@ -14,5 +14,8 @@ public interface DistributionCommandBlo {
 
     OffsetDateTime acknowledge(RequestActor actor, UUID id);
 
+    void planAutomatic(SessionContext session, UUID version, UUID department, String reason);
+    UUID queueAutomatic(SessionContext session, UUID version);
+
     void withdrawVersion(SessionContext session, UUID version);
 }

@@ -1,11 +1,13 @@
 const apiRoot = '/api/v1'
 
 export class ApiError extends Error {
-  constructor(public readonly status: number) {
+  constructor(public readonly status: number, public readonly code?: string) {
     super('Core API returned ' + status)
     this.name = 'ApiError'
   }
 }
+
+export const sessionRecheckEvent = new EventTarget()
 
 export function isAuthenticationError(error: unknown): error is ApiError {
   return error instanceof ApiError && (error.status === 401 || error.status === 403)
@@ -13,6 +15,8 @@ export function isAuthenticationError(error: unknown): error is ApiError {
 
 export function apiErrorMessage(error: unknown, conflict = '다른 변경이 먼저 반영되었습니다. 새로 조회해 주세요.'): string {
   if (!(error instanceof ApiError)) return '서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도해 주세요.'
+  if (error.code === 'ASSIGNMENT_REQUIRED') return '업무 소속을 다시 선택해 주세요.'
+  if (error.code === 'ASSIGNMENT_CHANGED') return '업무 소속이 바뀌었습니다. 해당 소속에서 다시 시도해 주세요.'
   switch (error.status) {
     case 401: return '로그인이 필요합니다. 다시 로그인해 주세요.'
     case 403: return '이 작업을 수행할 권한이 없습니다.'
@@ -46,7 +50,16 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     signal,
     body: body instanceof FormData ? body : body === undefined ? undefined : JSON.stringify(body),
   })
-  if (!response.ok) throw new ApiError(response.status)
+  if (!response.ok) {
+    const problem = response.headers.get('content-type')?.includes('application/problem+json')
+      ? await response.json().catch(() => null) : null
+    const code = typeof problem?.code === 'string' ? problem.code : undefined
+    if (path !== '/sessions' && path !== '/me'
+        && (response.status === 401 || code === 'ASSIGNMENT_REQUIRED' || code === 'ASSIGNMENT_CHANGED')) {
+      sessionRecheckEvent.dispatchEvent(new Event('recheck'))
+    }
+    throw new ApiError(response.status, code)
+  }
   if (response.status === 204) return undefined as T
   return response.json() as Promise<T>
 }

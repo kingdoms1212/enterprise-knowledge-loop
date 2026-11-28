@@ -18,6 +18,12 @@ const CaseWorkspacePage = lazy(() => import('../../pages/case-workspace/CaseWork
   .then((module) => ({ default: module.CaseWorkspacePage })))
 const StyleGuidePage = lazy(() => import('../../pages/style-guide/StyleGuidePage')
   .then((module) => ({ default: module.StyleGuidePage })))
+const DocumentQueryPage = lazy(() => import('../../pages/document-query/DocumentQueryPage')
+  .then((module) => ({ default: module.DocumentQueryPage })))
+const KnowledgeWorkspacePage = lazy(() => import('../../pages/knowledge-workspace/KnowledgeWorkspacePage')
+  .then((module) => ({ default: module.KnowledgeWorkspacePage })))
+const DepartmentInboxPage = lazy(() => import('../../pages/department-inbox/DepartmentInboxPage')
+  .then((module) => ({ default: module.DepartmentInboxPage })))
 
 export function AppRouter() {
   return <BrowserRouter>
@@ -31,6 +37,9 @@ export function AppRouter() {
             <Route index element={<Navigate replace to="/work" />} />
             <Route path="/work" element={<MyWorkPage />} />
             <Route path="/documents" element={<DocumentLibraryPage />} />
+            <Route path="/query" element={<DocumentQueryPage />} />
+            <Route path="/knowledge" element={<KnowledgeWorkspacePage />} />
+            <Route path="/department-inbox" element={<DepartmentInboxPage />} />
             <Route path="/voices" element={<VoiceIntakePage />} />
             <Route path="/cases" element={<CaseWorkspacePage />} />
           </Route>

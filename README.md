@@ -29,6 +29,8 @@ DB Schema, ER Model, 상세 API, ACL 내부 모델과 같은 구현 종속적인
 - [Concept & Composition — DOCX](./docs/Enterprise_Knowledge_Loop_Concept_and_Composition_v1.docx)
 - [UI Prototype — 업무 흐름 시안 (단일 HTML)](./prototype/enterprise-knowledge-loop-workflow.html)
 - [Architecture](./architecture/)
+- [기능별 개발 내역과 검증](./docs/development-history.md)
+- [회고 작성용 프롬프트](./docs/retrospective-prompt.md)
 
 ## Core Concept
 

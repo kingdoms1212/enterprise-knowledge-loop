@@ -3,6 +3,7 @@ import { apiErrorMessage } from '../../../common/api/client'
 import { Button } from '../../../common/components/Button'
 import { EmptyState, LoadingState, Notice } from '../../../common/components/Feedback'
 import { Table } from '../../../common/components/Table'
+import { DocumentKnowledgeDraftDialog } from '../../knowledge/components/DocumentKnowledgeDraftDialog'
 import type { Session } from '../../session/api/sessionApi'
 import { useDocument } from '../model/documents'
 import { DocumentActionDialog } from './DocumentActionDialog'
@@ -20,6 +21,7 @@ export function DocumentDetailPanel({ session, id, department, onRetired }: {
 }) {
   const query = useDocument(session, id)
   const [action, setAction] = useState<DocumentAction | null>(null)
+  const [draftSource, setDraftSource] = useState<DocumentVersion | null>(null)
   const [message, setMessage] = useState('')
   if (query.isPending) return <LoadingState label="문서 상세 조회 중" />
   if (query.isError) return <div className={styles.content}>
@@ -34,10 +36,11 @@ export function DocumentDetailPanel({ session, id, department, onRetired }: {
     { key: 'publish', heading: '게시', cell: (version: DocumentVersion) => <PublishStatus status={version.publishState} /> },
     { key: 'created', heading: '등록 시각', cell: (version: DocumentVersion) => formatTime.format(new Date(version.createdAt)) },
   ]
-  const versionList = actions?.publish ? [...columns, {
+  const versionList = actions?.publish || versions.some((version) => version.publishState === 'PUBLISHED') ? [...columns, {
     key: 'action', heading: '작업', cell: (version: DocumentVersion) => <div className={styles.versionAction}>
-      {version.publishState === 'PUBLISHED' && <Button onClick={() => setAction({ type: 'unpublish', version, revision: document.rowVersion })}>게시 회수</Button>}
-      {version.publishState === 'DRAFT' && (version.parseStatus === 'PARSED'
+      {version.publishState === 'PUBLISHED' && <Button onClick={() => setDraftSource(version)}>지식 초안 작성</Button>}
+      {actions?.publish && version.publishState === 'PUBLISHED' && <Button onClick={() => setAction({ type: 'unpublish', version, revision: document.rowVersion })}>게시 회수</Button>}
+      {actions?.publish && version.publishState === 'DRAFT' && (version.parseStatus === 'PARSED'
         ? <Button onClick={() => setAction({ type: 'publish', version, revision: document.rowVersion })}>게시</Button>
         : <small>파싱 완료 후 게시 가능</small>)}
     </div>,
@@ -61,6 +64,7 @@ export function DocumentDetailPanel({ session, id, department, onRetired }: {
     {versions.length === 0 ? <EmptyState title="등록된 버전이 없습니다." description="새 버전이 등록되면 이곳에 표시됩니다." /> :
       <div className={styles.versionTable}><Table label="문서 버전 이력" rows={versions}
         rowKey={(version) => version.id} columns={versionList} /></div>}
+    {draftSource && <DocumentKnowledgeDraftDialog title={document.title} source={draftSource} onClose={() => setDraftSource(null)} />}
     <DocumentActionDialog session={session} document={document} action={action} onClose={() => setAction(null)}
       onRefresh={() => { setAction(null); void query.refetch() }}
       onDone={(type) => {

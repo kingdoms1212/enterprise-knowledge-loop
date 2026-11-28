@@ -48,7 +48,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public RegistrationPolicyPreview preview(RequestActor actor, DocumentChange.PolicyPreview input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         requireUploadTarget(session, input.department(), input.classification());
         if (input.folder() != null) {
             var read = auth.checkRead(session, input.folder(), "FOLDER");
@@ -63,7 +63,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public CommandResult create(RequestActor actor, String key, DocumentChange.Create input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         var title = CommandRules.required(input.title(), 255);
         requireUploadTarget(session, input.department(), input.classification());
         commands.lockOrganization(session.organizationId());
@@ -82,7 +82,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public CommandResult addVersion(RequestActor actor, UUID id, String key, Long version, DocumentChange.File file) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var document = locked(session, id, "WRITE");
         requireUpload(session, document.department());
@@ -96,7 +96,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public CommandResult publish(RequestActor actor, UUID id, UUID revision, String key, Long version) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var document = locked(session, id, "READ");
         requirePublisher(session, document);
@@ -116,7 +116,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public CommandResult unpublish(RequestActor actor, UUID id, UUID version, Long expectedVersion) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var document = locked(session, id, "READ");
         requirePublisher(session, document);
@@ -132,7 +132,7 @@ class DocumentCommandBloImpl implements DocumentCommandBlo {
 
     @Override
     public CommandResult retire(RequestActor actor, UUID id, DocumentChange.Retire input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         commands.lockOrganization(session.organizationId());
         var document = locked(session, id, "DOCUMENT_MANAGE");
         if (!auth.hasRole(session, "DOCUMENT_MANAGE", document.department())) {

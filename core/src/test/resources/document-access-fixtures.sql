@@ -31,7 +31,8 @@ VALUES ('82000000-0000-0000-0000-000000000054', '82000000-0000-0000-0000-0000000
 INSERT INTO iam.role_permissions (role_id, permission_code)
 SELECT '82000000-0000-0000-0000-000000000051', p.action
 FROM (VALUES ('SEARCH'), ('WRITE'), ('DOCUMENT_MANAGE'), ('DOCUMENT_UPLOAD'), ('VOICE_INTAKE_CREATE'),
-    ('VOICE_TRIAGE'), ('DECIDE'), ('RETIRE'), ('ACKNOWLEDGE'), ('CREATE'), ('DISTRIBUTE')) p(action);
+    ('VOICE_TRIAGE'), ('DECIDE'), ('RETIRE'), ('ACKNOWLEDGE'), ('CREATE'), ('DISTRIBUTE'),
+    ('SUBMIT'), ('APPROVE'), ('PUBLISH')) p(action);
 
 INSERT INTO iam.policy_change_requests (id, organization_id, target_resource_id, change_type, is_expansion,
     expected_revision, change_hash, payload, reason, requested_by, state, applied_at)
@@ -59,7 +60,7 @@ WHERE t.policy_change_id = '82000000-0000-0000-0000-000000000059'
 
 INSERT INTO iam.policy_template_entries (template_id, subject_kind, action, effect)
 SELECT '82000000-0000-0000-0000-000000000064', 'OWNER_DEPARTMENT', a.action, 'ALLOW'
-FROM (VALUES ('RETIRE'), ('DISTRIBUTE'), ('ACKNOWLEDGE')) a(action);
+FROM (VALUES ('RETIRE'), ('DISTRIBUTE'), ('ACKNOWLEDGE'), ('SUBMIT'), ('APPROVE'), ('PUBLISH')) a(action);
 
 INSERT INTO ops.model_versions (id, role, name, local_path, checksum, runtime, embedding_dim)
 VALUES ('82000000-0000-0000-0000-000000000065','EMBEDDING','Command test embeddings','/test/embed','test-a','pytorch',4),

@@ -42,7 +42,7 @@ class KnowledgeDraftBloImpl implements KnowledgeDraftBlo {
 
     @Override
     public NewKnowledge.Created create(RequestActor actor, String key, NewKnowledge input) {
-        var session = login.current(actor.sessionId(), actor.accountId());
+        var session = login.current(actor);
         if (!auth.hasRole(session, "CREATE", null)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

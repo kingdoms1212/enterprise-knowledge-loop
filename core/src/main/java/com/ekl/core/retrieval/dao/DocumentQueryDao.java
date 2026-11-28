@@ -12,7 +12,6 @@ import com.ekl.core.retrieval.DocumentQuery.Pipeline;
 import com.ekl.core.retrieval.DocumentQuery.Response;
 
 public interface DocumentQueryDao {
-    void lockOrganizationForQuery(UUID organization);
     Optional<Pipeline> pipeline(UUID organization);
     List<UUID> indexedDocuments(UUID organization);
     List<Hit> search(UUID organization, List<ResourceSearchScope> scopes, String question, int limit);

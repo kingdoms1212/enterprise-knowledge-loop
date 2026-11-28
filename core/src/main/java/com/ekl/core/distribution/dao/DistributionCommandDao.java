@@ -10,6 +10,8 @@ public interface DistributionCommandDao {
     Optional<Long> lockPublishedVersion(UUID organization, UUID version);
     boolean withinApprovedDepartment(UUID organization, UUID version, UUID department);
     void create(UUID id, UUID version, UUID actor, String reason, boolean acknowledgementRequired);
+    void createAuto(UUID id, UUID version, UUID actor, String reason);
+    Optional<UUID> plannedAuto(UUID version);
     void addTarget(UUID id, UUID version, UUID department);
     void enqueuePlan(UUID id, UUID actor);
     Optional<LockedDistribution> lock(UUID organization, UUID id);

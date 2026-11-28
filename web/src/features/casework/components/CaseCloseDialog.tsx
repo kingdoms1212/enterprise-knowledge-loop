@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRef } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
@@ -9,7 +10,9 @@ import { Notice } from '../../../common/components/Feedback'
 import { FormField, Select, Textarea, TextInput } from '../../../common/components/Fields'
 import styles from '../../../common/components/Workspace.module.css'
 import { uuidPattern } from '../../../common/utils/uuid'
+import { departmentInboxApi } from '../../knowledge/api/departmentInboxApi'
 import type { Session } from '../../session/api/sessionApi'
+import { workspaceKey } from '../../session/model/session'
 import type { CaseCloseInput, CaseDetail } from '../api/caseApi'
 import { useCaseCommand } from '../model/casework'
 import { closeLabels } from './CaseStatus'
@@ -44,13 +47,14 @@ export function CaseCloseDialog({ session, detail, onClose, onDone }: {
   const revision = useRef(detail.rowVersion)
   const previous = useRef<{ signature: string; key: string } | null>(null)
   const mutation = useCaseCommand(session, detail.work.id)
-  const { control, register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<Values>({
+  const { control, register, handleSubmit, setError, setValue, formState: { errors, isSubmitting } } = useForm<Values>({
     resolver: zodResolver(schema), defaultValues: {
       type: detail.decision ? 'RESOLVED' : 'NO_REPLY_NEEDED', note: '', result: 'SUCCESS', summary: '',
       referenceKind: 'knowledge', version: '', referenceReason: '',
     },
   })
   const type = useWatch({ control, name: 'type' })
+  const referenceKind = useWatch({ control, name: 'referenceKind' })
 
   async function submit(values: Values) {
     const body: CaseCloseInput = { close_type: values.type, close_note: values.note || null, expected_version: revision.current }
@@ -91,8 +95,12 @@ export function CaseCloseDialog({ session, detail, onClose, onDone }: {
       </>}
       {type === 'AI_REFERENCE' && <>
         <FormField id="reference-kind" label="참조 종류">
-          {(props) => <Select {...props} {...register('referenceKind')}><option value="knowledge">게시 지식</option><option value="document">게시 문서</option></Select>}
+          {(props) => <Select {...props} {...register('referenceKind', {
+            onChange: () => setValue('version', ''),
+          })}><option value="knowledge">게시 지식</option><option value="document">게시 문서</option></Select>}
         </FormField>
+        {referenceKind === 'knowledge' && <DeliveredReferencePicker session={session}
+          onSelect={(version) => setValue('version', version, { shouldValidate: true })} />}
         <FormField id="reference-version" label="게시 버전 ID" required error={errors.version?.message}>
           {(props) => <TextInput {...props} {...register('version')} required />}
         </FormField>
@@ -109,4 +117,24 @@ export function CaseCloseDialog({ session, detail, onClose, onDone }: {
         <Button type="submit" variant="primary" busy={isSubmitting}>종결 확정</Button></div>
     </form>
   </Dialog>
+}
+
+function DeliveredReferencePicker({ session, onSelect }: { session: Session; onSelect: (version: string) => void }) {
+  const query = useInfiniteQuery({
+    queryKey: [...workspaceKey(session), 'department-inbox'],
+    queryFn: ({ pageParam, signal }) => departmentInboxApi.list(pageParam, signal),
+    initialPageParam: null as string | null,
+    getNextPageParam: (page) => page.nextCursor,
+  })
+  const items = query.isError ? [] : query.data?.pages.flatMap((page) => page.items) ?? []
+  return <>
+    {items.length > 0 && <FormField id="delivered-reference" label="부서 지식함에서 선택">
+      {(props) => <Select {...props} defaultValue="" onChange={(event) => onSelect(event.target.value)}>
+        <option value="">게시 지식 선택</option>
+        {items.map((item) => <option key={item.id} value={item.versionId}>{item.title} · v{item.versionNumber}</option>)}
+      </Select>}
+    </FormField>}
+    {!query.isError && query.hasNextPage && <div><Button busy={query.isFetchingNextPage}
+      onClick={() => query.fetchNextPage()}>지식 더 보기</Button></div>}
+  </>
 }

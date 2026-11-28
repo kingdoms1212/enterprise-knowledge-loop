@@ -2,13 +2,14 @@
   color-scheme: light;
   --color-ink: #0f2a43;
   --color-muted: #52687c;
-  --color-primary: #0369a1;
-  --color-accent: #0ea5e9;
-  --color-bg: #f5f8fb;
+  --color-primary: #087b5a;
+  --color-accent: #087b5a;
+  --color-link: #0369a1;
+  --color-bg: #f4f7f8;
   --color-surface: #ffffff;
   --color-line: #dde6ee;
   --color-field-line: #8a9cad;
-  --color-selected: #e6f3fb;
+  --color-selected: #eaf6f0;
   --color-success: #216548;
   --color-success-bg: #e8f4ed;
   --color-warning: #805414;
@@ -18,7 +19,7 @@
   --color-ai: #674496;
   --color-ai-bg: #f0eafa;
   --color-neutral-bg: #edf1f4;
-  --font-sans: Pretendard, "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-sans: "Malgun Gothic", sans-serif;
   --font-mono: Consolas, ui-monospace, monospace;
   --text-small: .875rem;
   --space-1: .25rem;

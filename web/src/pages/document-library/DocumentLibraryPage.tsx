@@ -1,8 +1,8 @@
 import { FilePlus2, FolderPlus } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '../../common/components/Button'
-import { EmptyState, Notice } from '../../common/components/Feedback'
+import { Notice } from '../../common/components/Feedback'
 import { uuidPattern } from '../../common/utils/uuid'
 import { DocumentDetailPanel } from '../../features/documents/components/DocumentDetailPanel'
 import { DocumentList } from '../../features/documents/components/DocumentList'
@@ -27,6 +27,9 @@ function DocumentLibrary({ session }: { session: Session }) {
   const selectedAssignment = assignments.data?.find((item) => item.id === session.assignmentId)
   const department = selectedAssignment && { id: selectedAssignment.departmentId, name: selectedAssignment.departmentName }
   const documentId = params.get('document') ?? ''
+  const hasSelection = uuidPattern.test(documentId)
+  const targetHeading = useRef<HTMLHeadingElement>(null)
+  const previouslySelected = useRef(false)
   const rawFolder = params.get('folder') ?? ''
   const view = parseView(params.get('view'))
   const folder = view === 'MY_DEPARTMENT' && uuidPattern.test(rawFolder) ? rawFolder : ''
@@ -35,6 +38,11 @@ function DocumentLibrary({ session }: { session: Session }) {
   const [retired, setRetired] = useState(false)
   const [folderDialog, setFolderDialog] = useState<{ target: FolderRow | null } | null>(null)
   const [folderMessage, setFolderMessage] = useState('')
+
+  useEffect(() => {
+    if (hasSelection || previouslySelected.current) targetHeading.current?.focus()
+    previouslySelected.current = hasSelection
+  }, [hasSelection])
 
   function selectDocument(id: string) {
     setRetired(false)
@@ -52,44 +60,49 @@ function DocumentLibrary({ session }: { session: Session }) {
     setParams(next)
   }
 
+  function closeDocument() {
+    setParams((current) => {
+      const next = new URLSearchParams(current)
+      next.delete('document')
+      return next
+    })
+  }
+
   return <div className={styles.page}>
     <header className={styles.header}>
-      <div><p className={styles.section}>지식</p><h1>문서함</h1><p className={styles.subtitle}>사내 문서를 등록하고 버전과 처리 상태를 확인합니다.</p></div>
+      <div><p className={styles.section}>S14 / DOCUMENTS</p><h1>문서함</h1><p className={styles.subtitle}>문서를 폴더로 정리하고 버전과 권한을 관리합니다.</p></div>
       {department && <div className={styles.actions}>
-        {capabilities.data?.manageFolders && <Button onClick={() => setFolderDialog({ target: null })}>
-          <FolderPlus size={16} aria-hidden="true" />새 폴더
-        </Button>}
         {capabilities.data?.upload && <Button variant="primary" onClick={() => setUploadOpen(true)}>
           <FilePlus2 size={16} aria-hidden="true" />업로드
+        </Button>}
+        {capabilities.data?.manageFolders && <Button onClick={() => setFolderDialog({ target: null })}>
+          <FolderPlus size={16} aria-hidden="true" />새 폴더
         </Button>}
       </div>}
     </header>
     {uploaded === documentId && uploaded && <Notice tone="success" announce>문서를 등록했습니다.</Notice>}
     {retired && <Notice tone="success" announce>문서를 폐기했습니다.</Notice>}
     {folderMessage && <Notice tone="success" announce>{folderMessage}</Notice>}
-    <div className={styles.columns}>
+    <div className={styles.columns} data-detail-open={hasSelection}>
       <section className={styles.panel} aria-labelledby="folder-heading">
         <h2 className={styles.panelHeading} id="folder-heading">폴더</h2>
         <FolderTree session={session} department={department} view={view} folderId={folder} onSelect={selectFolder}
           onManage={(target) => setFolderDialog({ target })} />
       </section>
       <section className={styles.panel} aria-labelledby="lookup-heading">
-        <h2 className={styles.panelHeading} id="lookup-heading">문서 목록</h2>
+        <h2 className={styles.panelHeading} id="lookup-heading"
+          ref={hasSelection ? undefined : targetHeading} tabIndex={-1}>문서 목록</h2>
         <DocumentList session={session} view={view} folder={folder} selected={documentId} onSelect={selectDocument} />
       </section>
-      <section className={styles.panel} aria-labelledby="detail-heading">
-        <h2 className={styles.panelHeading} id="detail-heading">문서 상세</h2>
-        {uuidPattern.test(documentId)
-          ? <DocumentDetailPanel key={documentId} session={session} id={documentId} department={department} onRetired={() => {
-            setRetired(true)
-            setParams((current) => {
-              const next = new URLSearchParams(current)
-              next.delete('document')
-              return next
-            })
-          }} />
-          : <EmptyState title="선택한 문서가 없습니다." description="목록에서 문서를 선택해 주세요." />}
-      </section>
+      {hasSelection && <section className={styles.panel} aria-labelledby="detail-heading">
+        <header className={styles.detailHeading}><h2 id="detail-heading" ref={targetHeading} tabIndex={-1}>문서 상세</h2>
+          <Button onClick={closeDocument}>상세 닫기</Button>
+        </header>
+        <DocumentDetailPanel key={documentId} session={session} id={documentId} department={department} onRetired={() => {
+          setRetired(true)
+          closeDocument()
+        }} />
+      </section>}
     </div>
     {department && capabilities.data?.upload && <UploadDialog session={session} department={department} folder={folder}
       open={uploadOpen} onClose={() => setUploadOpen(false)}

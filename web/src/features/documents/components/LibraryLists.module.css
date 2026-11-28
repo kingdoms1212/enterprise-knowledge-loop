@@ -7,6 +7,7 @@
 .folderLink { width: 100%; text-align: left; padding: .375rem .5rem; border-radius: var(--radius-control); gap: .375rem; overflow-wrap: anywhere; }
 .folderLink:hover, .expand:hover, .documentRow:hover { background: var(--color-bg); }
 .folderLink[aria-current], .documentRow[aria-current] { background: var(--color-selected); color: var(--color-primary); }
+.folderLink[aria-current] { background: #e6f3fb; color: var(--color-link); box-shadow: inset 3px 0 #0ea5e9; }
 .folderNode { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .1rem; }
 .folderNode:has(> :nth-child(3)) { grid-template-columns: 2rem minmax(0, 1fr) 2rem; }
 .expand { justify-content: center; border-radius: var(--radius-control); }
@@ -17,3 +18,9 @@
 .documentLabel strong { overflow-wrap: anywhere; }
 .documentLabel small { color: var(--color-muted); }
 .listActions { display: grid; justify-items: start; gap: .5rem; padding: .75rem; }
+.documentTable { overflow-x: auto; }
+.documentTable table { min-width: 34rem; }
+.documentTitle { display: inline-flex; align-items: center; gap: .5rem; min-height: var(--control-height); color: var(--color-ink); background: none; border: 0; padding: 0; text-align: left; overflow-wrap: anywhere; font-weight: 700; }
+.documentTitle svg { flex: none; color: var(--color-link); }
+.documentTitle:hover { color: var(--color-primary); text-decoration: underline; }
+.documentTitle small { display: block; color: var(--color-muted); font-weight: 400; }

@@ -48,13 +48,32 @@ class DistributionCommandDaoImpl implements DistributionCommandDao {
 
     @Override
     public void create(UUID id, UUID version, UUID actor, String reason, boolean acknowledgementRequired) {
+        createPlanRow(id, version, actor, reason, acknowledgementRequired, "MANUAL");
+    }
+
+    @Override
+    public void createAuto(UUID id, UUID version, UUID actor, String reason) {
+        createPlanRow(id, version, actor, reason, true, "AUTO_ON_READY");
+    }
+
+    @Override
+    public Optional<UUID> plannedAuto(UUID version) {
+        return jdbc.sql("""
+                select id from distribution.distributions
+                where version_id = :version and trigger = 'AUTO_ON_READY' and state = 'PLANNED'
+                for update
+                """).param("version", version).query(UUID.class).optional();
+    }
+
+    private void createPlanRow(UUID id, UUID version, UUID actor, String reason, boolean acknowledgementRequired,
+                               String trigger) {
         jdbc.sql("""
                 insert into distribution.distributions (id, version_id, created_by, state, reason,
-                    acknowledgement_required, audience_policy, idempotency_key)
-                values (:id, :version, :actor, 'PLANNED', :reason, :ack, 'READABLE_ONLY', :key)
+                    acknowledgement_required, audience_policy, idempotency_key, trigger)
+                values (:id, :version, :actor, 'PLANNED', :reason, :ack, 'READABLE_ONLY', :key, :trigger)
                 """).param("id", id).param("version", version).param("actor", actor)
                 .param("reason", reason).param("ack", acknowledgementRequired)
-                .param("key", "manual/" + id).update();
+                .param("key", trigger + "/" + id).param("trigger", trigger).update();
         transition(id, null, "PLANNED", actor);
     }
 

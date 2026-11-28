@@ -2,6 +2,8 @@ package com.ekl.common.auth;
 
 import java.util.Map;
 
+import com.ekl.common.auth.filter.SessionContextFilter;
+import com.ekl.common.auth.service.LoginService;
 import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfException;
 
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
@@ -31,10 +35,15 @@ class CoreSecurity {
     }
 
     @Bean
-    SecurityFilterChain webSecurity(HttpSecurity http, SecurityContextRepository securityContexts) throws Exception {
+    SecurityFilterChain webSecurity(HttpSecurity http, SecurityContextRepository securityContexts, LoginService login)
+            throws Exception {
         return http.securityContext(context -> context.securityContextRepository(securityContexts))
                 .requestCache(cache -> cache.disable())
                 .logout(logout -> logout.disable())
+                .exceptionHandling(errors -> errors
+                        .authenticationEntryPoint((request, response, failure) -> SessionContextFilter.unauthorized(response))
+                        .accessDeniedHandler((request, response, failure) -> SessionContextFilter.forbidden(
+                                response, failure instanceof CsrfException ? "CSRF_REQUIRED" : "FORBIDDEN")))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(EndpointRequest.to("health")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/authentication/csrf",
@@ -45,6 +54,9 @@ class CoreSecurity {
                                 "/api/v1/document-folders", "/api/v1/document-library/capabilities").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/voices", "/api/v1/voices/capabilities",
                                 "/api/v1/voices/{id}", "/api/v1/cases", "/api/v1/cases/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/knowledge/drafts",
+                                "/api/v1/knowledge/reviews", "/api/v1/knowledge/versions/{version}",
+                                "/api/v1/distributions/inbox").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/v1/documents", "/api/v1/documents/policy-preview",
                                 "/api/v1/rag/queries",
                                 "/api/v1/documents/{id}/versions",
@@ -53,6 +65,7 @@ class CoreSecurity {
                                 "/api/v1/document-folders", "/api/v1/voices/intake", "/api/v1/voices/{id}/triage",
                                 "/api/v1/cases/{id}/close", "/api/v1/cases/{id}/decisions",
                                 "/api/v1/knowledge", "/api/v1/knowledge/{id}/versions/{version}/retire",
+                                "/api/v1/knowledge/{id}/versions/{version}/submit", "/api/v1/approval-steps/{step}/decision",
                                 "/api/v1/distributions", "/api/v1/distributions/{id}/acknowledgements",
                                 "/api/v1/distributions/{id}/redeliver").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/document-folders/{id}",
@@ -61,6 +74,7 @@ class CoreSecurity {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/sessions/current/assignment").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/sessions/current").authenticated()
                         .anyRequest().denyAll())
+                .addFilterAfter(new SessionContextFilter(login), AuthorizationFilter.class)
                 .build();
     }
 }

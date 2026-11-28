@@ -23,6 +23,11 @@ class CommandBloImpl implements CommandBlo {
     }
 
     @Override
+    public void lockOrganizationForQuery(UUID organization) {
+        dao.lockOrganizationForQuery(organization);
+    }
+
+    @Override
     public void bumpPolicyEpoch(UUID organization) {
         dao.bumpPolicyEpoch(organization);
     }
